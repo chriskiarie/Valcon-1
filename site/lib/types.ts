@@ -30,6 +30,7 @@ export type Service = {
   title: string;
   summary: string;
   isPlaceholder: boolean;
+  image: string;
 };
 
 export type Credit = {

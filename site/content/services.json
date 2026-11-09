@@ -3,18 +3,28 @@
     "slug": "charter-flights",
     "title": "Charter flights",
     "summary": "Aircraft and crew arranged around your schedule. Routes, availability and aircraft details to be confirmed with the operator.",
-    "isPlaceholder": true
+    "isPlaceholder": true,
+    "image": "/images/services/service-charter-dark-ocean.jpg"
   },
   {
     "slug": "corporate-and-group-travel",
     "title": "Corporate and group travel",
     "summary": "A considered way to move teams and guests. Service details are being confirmed for the real site.",
-    "isPlaceholder": true
+    "isPlaceholder": true,
+    "image": "/images/services/service-corporate-sunset.jpg"
   },
   {
     "slug": "fleet-and-operations",
     "title": "Fleet and operations",
     "summary": "Based at Wilson Airport, Nairobi, with the first aircraft now on the register. More operational detail to follow.",
-    "isPlaceholder": true
+    "isPlaceholder": true,
+    "image": "/images/services/service-fleet-leather-seats.jpg"
+  },
+  {
+    "slug": "premium-cabin-experience",
+    "title": "Premium cabin experience",
+    "summary": "A refined cabin experience designed for comfort and privacy.",
+    "isPlaceholder": true,
+    "image": "/images/services/service-premium-blue-cabin.jpg"
   }
 ]

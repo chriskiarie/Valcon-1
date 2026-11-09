@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="160" viewBox="0 0 640 160" role="img" aria-labelledby="plane-title">
+  <title id="plane-title">Valcon Air plane silhouette — CRJ-type regional jet</title>
+  <!-- Navy silhouette, no airline markings, nose right -->
+  <g fill="#0e2a47">
+    <!-- Fuselage: slender, slightly tapered -->
+    <path d="M40,64 Q120,60 200,62 Q280,64 360,60 Q440,56 520,58 Q560,60 580,66 Q580,86 560,92 Q520,96 440,92 Q360,88 280,90 Q200,92 120,88 Q60,84 40,74 Q28,70 40,64 Z"/>
+    <!-- Cockpit windshield hint (subtle cutout) -->
+    <path d="M70,72 Q86,72 86,80 Q70,80 Z" fill="none" stroke="#0e2a47" stroke-width="2"/>
+    <!-- Swept wing with winglets -->
+    <path d="M110,86 Q180,78 250,82 Q320,86 Q390,78 Q460,82 Q530,76 Q460,90 Q390,94 Q320,90 Q250,88 Q180,84 Q110,86 Z"/>
+    <path d="M250,70 Q260,52 270,62 Q280,70 Z" fill="#0b1626"/>
+    <path d="M390,70 Q400,52 410,62 Q420,70 Z" fill="#0b1626"/>
+    <!-- T-tail -->
+    <path d="M560,82 Q570,52 580,70 Q590,82 Z" fill="#0b1626"/>
+    <!-- Vertical stabilizer -->
+    <path d="M576,78 Q582,62 588,78 Z" fill="#0b1626"/>
+    <!-- Rear-mounted engines -->
+    <ellipse cx="160" cy="84" rx="16" ry="9" fill="#0b1626"/>
+    <ellipse cx="500" cy="84" rx="16" ry="9" fill="#0b1626"/>
+    <!-- Engine intakes -->
+    <ellipse cx="160" cy="84" rx="10" ry="5" fill="#1a2e4a"/>
+    <ellipse cx="500" cy="84" rx="10" ry="5" fill="#1a2e4a"/>
+    <!-- Subtle surface shading line along fuselage top -->
+    <path d="M60,66 Q200,62 360,64 Q520,60 Q560,66" fill="none" stroke="#1a2e4a" stroke-width="2" opacity="0.4"/>
+  </g>
+</svg>

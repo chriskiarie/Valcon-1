@@ -52,7 +52,7 @@ export default function NewArrival() {
   return (
     <section className="home-section" id="new-arrival">
       <Container>
-        <Reveal>
+        <Reveal variant="right">
           <div ref={revealRef} className="new-arrival-band">
             <p className="eyebrow new-arrival-eyebrow">New arrival</p>
             <div className="new-arrival-board">

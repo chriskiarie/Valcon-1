@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
@@ -10,12 +12,12 @@ export default function NewestAddition() {
   return (
     <section className="home-section">
       <Container>
-        <Reveal>
+        <Reveal variant="left">
           <div className="addition-band on-dark">
             <div>
               <p className="eyebrow">Newest addition</p>
-              <h2 className="band-title">
-                {newest?.name}
+              <h2 className="band-title reveal--clip-line">
+                <span className="clip-line">{newest?.name}</span>
                 {registration ? ` · ${registration}` : null}
               </h2>
               <p className="band-line">

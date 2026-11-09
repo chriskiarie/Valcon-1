@@ -11,6 +11,7 @@ import { getAircraft } from "@/lib/content";
  * reveal animation when card enters view.
  * No readable airline liveries or foreign registrations anywhere.
  * One consistent color grade across the set.
+ * Card rows cycle through left, pop, right directional entrances.
  */
 export default function FleetRow({
   onCardClick,
@@ -20,6 +21,8 @@ export default function FleetRow({
   const aircraft = getAircraft();
   const [revealed, setRevealed] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const cardVariants: ("left" | "right" | "pop")[] = ["left", "pop", "right"];
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -43,11 +46,12 @@ export default function FleetRow({
 
   return (
     <ul className="fleet-row">
-      {aircraft.map((item) => {
+      {aircraft.map((item, idx) => {
         const isRevealed = revealed.has(item.slug);
+        const variant = cardVariants[idx % cardVariants.length];
         return (
           <li
-            className={`fleet-card ${isRevealed ? "is-revealed" : ""}${
+            className={`fleet-card fleet-card--${variant} ${isRevealed ? "is-revealed" : ""}${
               onCardClick ? " fleet-card-clickable" : ""
             }`}
             id={`fleet-card-${item.slug}`}
@@ -55,8 +59,7 @@ export default function FleetRow({
             onClick={() => onCardClick?.(item.slug)}
             style={{
               opacity: isRevealed ? 1 : 0,
-              transform: isRevealed ? "translateY(0)" : "translateY(20px)",
-              cursor: onCardClick ? "pointer" : "default",
+              transform: isRevealed ? "translateX(0) translateY(0) scale(1)" : variant === "left" ? "translateX(-30px)" : variant === "right" ? "translateX(30px)" : "scale(0.94) translateY(20px)",
             }}
           >
             <div className="fleet-media">

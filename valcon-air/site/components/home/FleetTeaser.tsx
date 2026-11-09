@@ -8,7 +8,7 @@ import FleetRow from "@/components/home/FleetRow";
 import { registerFlybyTriggers } from "@/components/flyby/FlybyLayer";
 
 export default function FleetTeaser() {
-  const fleetHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const fleetHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     if (fleetHeadingRef.current) {
@@ -19,7 +19,7 @@ export default function FleetTeaser() {
   return (
     <section className="home-section" aria-labelledby="fleet-teaser-title">
       <Container>
-        <Reveal>
+        <Reveal variant="left">
           <div className="section-heading-row">
             <p className="chapter-label">02 Fleet</p>
             <h2

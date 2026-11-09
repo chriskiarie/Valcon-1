@@ -2,12 +2,19 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
+type RevealVariant = "left" | "right" | "below" | "pop" | "clip-line";
+
 type RevealProps = {
   children: ReactNode;
   className?: string;
+  variant?: RevealVariant;
 };
 
-export default function Reveal({ children, className = "" }: RevealProps) {
+export default function Reveal({
+  children,
+  className = "",
+  variant = "below",
+}: RevealProps) {
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,8 +47,10 @@ export default function Reveal({ children, className = "" }: RevealProps) {
     return () => observer.disconnect();
   }, []);
 
+  const variantClass = `reveal--${variant}`;
+
   return (
-    <div className={`reveal ${className}`.trim()} ref={elementRef}>
+    <div className={`reveal ${className} ${variantClass}`.trim()} ref={elementRef}>
       {children}
     </div>
   );

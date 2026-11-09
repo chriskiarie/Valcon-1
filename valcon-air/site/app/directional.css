@@ -1,0 +1,79 @@
+/* ============ DIRECTIONAL SCROLL CHOREOGRAPHY (Section 30) ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-shift));
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Directional variants */
+.reveal--left {
+  transform: translateX(-30px);
+}
+
+.reveal--right {
+  transform: translateX(30px);
+}
+
+.reveal--below {
+  transform: translateY(var(--reveal-shift));
+}
+
+.reveal--pop {
+  transform: scale(0.94) translateY(var(--reveal-shift));
+}
+
+.reveal.is-revealed.reveal--left,
+.reveal.is-revealed.reveal--right,
+.reveal.is-revealed.reveal--below,
+.reveal.is-revealed.reveal--pop {
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+/* Clip-line reveal for display headings - characters/lines clip in */
+.reveal--clip-line {
+  overflow: hidden;
+}
+
+.reveal--clip-line.is-revealed {
+  overflow: visible;
+}
+
+.reveal--clip-line .clip-line {
+  display: inline-block;
+}
+
+.reveal--clip-line.is-revealed .clip-line {
+  animation: clipLineReveal 0.5s var(--ease-out) forwards;
+}
+
+@keyframes clipLineReveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal--left,
+  .reveal--right,
+  .reveal--below,
+  .reveal--pop {
+    opacity: 1;
+    transform: none !important;
+    transition: none !important;
+  }
+  .clip-line {
+    clip-path: none !important;
+    animation: none !important;
+  }
+}

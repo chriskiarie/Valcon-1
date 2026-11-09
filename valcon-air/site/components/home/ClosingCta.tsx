@@ -22,7 +22,7 @@ export default function ClosingCta() {
   return (
     <section className="home-section">
       <Container>
-        <Reveal>
+        <Reveal variant="left">
           <div ref={closingBandRef} className="closing-band on-dark">
             <p className="eyebrow">Start a conversation</p>
             <h2 className="band-title">Request a quote</h2>

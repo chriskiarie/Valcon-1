@@ -17,6 +17,7 @@
 
   /* fluid type */
   --text-sm: clamp(0.875rem, 0.84rem + 0.15vw, 0.95rem);
+  --text-actionbar: clamp(0.75rem, 0.72rem + 0.1vw, 0.8125rem); /* 12-13px action bar labels */
   --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
   --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
@@ -71,7 +72,7 @@
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
   --icon-size: 1.25rem;
-  --icon-size-compact: 1.125rem;
+  --icon-size-compact: 1.375rem;
   --icon-stroke: 1.7;
   --sentinel-size: 1px;
   --nav-underline-height: 2px;
@@ -138,6 +139,7 @@
   --font-body: var(--font-text), var(--font-fallback-text);
 
   --text-caption: var(--text-sm);
+  --text-actionbar: var(--text-actionbar);
   --text-body: var(--text-base);
   --text-lead: var(--text-lg);
   --text-heading: var(--text-xl);

@@ -2231,3 +2231,23 @@
   line-height: var(--leading-tight);
   color: var(--color-ink);
 }
+/* Action bar label size (12-13px) */
+.action-bar-link {
+  font-size: var(--text-actionbar);
+}
+/* Mobile hero: stronger bottom gradient */
+@media (max-width: 767px) {
+  .hero-overlay {
+    background:
+      radial-gradient(
+        600px 600px at 50% 50%,
+        rgba(14, 42, 71, 0.4) 0%,
+        rgba(6, 11, 20, 0.95) 100%
+      ),
+      linear-gradient(
+        to top,
+        rgba(6, 11, 20, 0.95) 0%,
+        rgba(6, 11, 20, 0.4) 100%
+      );
+  }
+}

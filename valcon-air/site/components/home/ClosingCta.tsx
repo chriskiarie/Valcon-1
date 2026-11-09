@@ -5,19 +5,12 @@ import { useEffect, useRef } from "react";
 import Reveal from "@/components/Reveal";
 import { emailHref, whatsappHref } from "@/lib/contact";
 import { getSite } from "@/lib/content";
-import { registerFlybyTriggers } from "@/components/flyby/FlybyLayer";
 
 export default function ClosingCta() {
   const site = getSite();
   const showWhatsApp = Boolean(site.whatsapp);
   const showEmail = Boolean(site.email);
   const closingBandRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (closingBandRef.current) {
-      registerFlybyTriggers({ closingBand: closingBandRef.current });
-    }
-  }, []);
 
   return (
     <section className="home-section">

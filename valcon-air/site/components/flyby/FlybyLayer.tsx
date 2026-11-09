@@ -298,17 +298,6 @@ export default function FlybyLayer() {
   );
 }
 
-/** Register trigger elements with the director after mount. */
-export function registerFlybyTriggers({
-  fleetHeading,
-  closingBand,
-}: {
-  fleetHeading?: HTMLElement;
-  closingBand?: HTMLElement;
-}) {
-  flybyDirector.registerTriggerElements({ fleetHeading, closingBand });
-}
-
 /** Pause/resume flybys when modal opens/closes. */
 export function setFlybyModalOpen(open: boolean) {
   flybyDirector.setModalOpen(open);

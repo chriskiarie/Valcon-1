@@ -158,24 +158,24 @@ export class ContrailRenderer {
   emit(x: number, y: number, index: number) {
     if (!this.isRunning) return;
 
-    const count = Math.random() < 0.7 ? 1 : 2;
+    const count = Math.random() < 0.8 ? 2 : 3;
     for (let i = 0; i < count; i += 1) {
       const tint: "highlight" | "shade" =
         Math.random() < 0.5 ? "highlight" : "shade";
       this.particles.push({
         x,
         y,
-        vx: (Math.random() - 0.5) * 2,
-        vy: -(4 + Math.random() * 6), // upward drift
-        size: 0.6 + Math.random() * 0.6,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: -(3 + Math.random() * 5), // upward drift
+        size: 0.9 + Math.random() * 0.8, // bigger puffs
         alpha: 0,
         life: 0,
-        maxLife: 2.6 + Math.random() * 0.8,
+        maxLife: 3.0 + Math.random() * 1.2, // live longer
         growth: 0.6,
         rotation: Math.random() * Math.PI * 2,
         tint,
-        offsetX: (Math.random() - 0.5) * 6,
-        offsetY: (Math.random() - 0.5) * 3,
+        offsetX: (Math.random() - 0.5) * 8,
+        offsetY: (Math.random() - 0.5) * 4,
       });
     }
 
@@ -267,8 +267,8 @@ export class ContrailRenderer {
       const p = this.particles[i];
       if (p.tint !== "shade") continue;
       const sprite = this.sprites.getShadeSprite(i);
-      const size = p.size * 18 * 1.25;
-      const alpha = p.alpha * 0.35;
+      const size = p.size * 22 * 1.25;
+      const alpha = p.alpha * 0.45;
       this.ctx.save();
       this.ctx.globalAlpha = alpha;
       this.ctx.translate(p.x + p.offsetX + 3, p.y + p.offsetY + 3);
@@ -282,8 +282,8 @@ export class ContrailRenderer {
       const p = this.particles[i];
       if (p.tint !== "highlight") continue;
       const sprite = this.sprites.getHighlightSprite(i);
-      const size = p.size * 18;
-      const alpha = p.alpha;
+      const size = p.size * 22;
+      const alpha = Math.min(p.alpha * 1.15, 0.85);
       this.ctx.save();
       this.ctx.globalAlpha = alpha;
       this.ctx.translate(p.x + p.offsetX, p.y + p.offsetY);

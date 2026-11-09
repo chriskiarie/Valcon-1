@@ -5,16 +5,9 @@ import { useEffect, useRef } from "react";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
 import FleetRow from "@/components/home/FleetRow";
-import { registerFlybyTriggers } from "@/components/flyby/FlybyLayer";
 
 export default function FleetTeaser() {
   const fleetHeadingRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    if (fleetHeadingRef.current) {
-      registerFlybyTriggers({ fleetHeading: fleetHeadingRef.current });
-    }
-  }, []);
 
   return (
     <section className="home-section" aria-labelledby="fleet-teaser-title">

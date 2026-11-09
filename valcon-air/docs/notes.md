@@ -1,120 +1,142 @@
-# Build notes — steps 3 and 4 (updated)
+# Build notes — Concept B "Nightfall" (Concept A "Daylight" built in parallel)
+
+## Concept & Rules
+- This repository is **Concept B "Nightfall"** — same content contract as Concept A "Daylight", clearly different look and feel.
+- Never call this build v2 or v3.
+- Static export stays (`next.config.ts`: `output: "export"`, `images.unoptimized: true`).
+- No new dependencies beyond what is installed (GSAP already present). No external requests, analytics, or icon libraries.
+- Components read content only through `lib/content.ts`. Do not change the shape of `site.json`, `aircraft.json` or `services.json` without telling the client first.
 
 ## Done
 
-- Steps 1–2 completed (see previous notes at `docs/notes.md`).
-- Scaffold cards removed from home page (legal name, base, aircraft).
-- Header smudge fixed: scrolled header is now fully opaque, no backdrop blur; tone switches from light to dark over the hero sentinel.
-- Hero implemented: 100svh with 560px minimum, overflow:hidden, portrait/mobile crop (900×1400) and landscape desktop crop (1920×1080), AVIF/WebP/JPG each under 31KB, `fetchPriority="high"`, gradient overlay from tokens `rgba(11,22,38,0.6)` bottom to `rgba(11,22,38,0.15)` top, text contrast ≥4.5:1 (verified 7.05:1 worst case), bottom-left mobile / centred desktop copy, on-dark buttons, transparent header over hero, scroll cue hidden for reduced motion.
-- Plane animation: GSAP + MotionPathPlugin imported only in hero client component; original silhouette under 1KB; inline in shared flight-path SVG; desktop 1440×810 and mobile 360×844 variants; timeline with power2.out ease, reduced-motion static end state (plane hidden, path opacity 0.35), gsap.context cleanup, transform/opacity/stroke-dashoffset only, smooth at 4× CPU throttle, 0 CLS.
-- Home sections: 5 server-component sections (Intro, Fleet teaser, Newest addition, Services strip, Closing CTA), each wrapped by client Reveal using IntersectionObserver threshold 0.15 once; section padding `clamp(4rem, 8vw, 8rem)`; horizontal scroll-snap fleet row mobile / three-column desktop; hover lift only under `@media (hover: hover)`.
-- All `[placeholder]` text markers removed from hero, intro, newest addition, services strip, and closing CTA.
-- Confirmed copy retained plainly: "Wilson Airport, Nairobi", "Recently delivered to Wilson Airport, Nairobi.", legal name, CRJ200 LR `5Y-VAL`.
-- Footer photo credit: Jongsun Lee / Wikimedia Commons, CC BY 3.0, `Sunset At The Airport (192242589).jpeg`.
-- Concept pill added to footer: "Concept preview. Copy and images are illustrative."
-- Lighthouse mobile: 96, 94, 91 (all ≥90)
-- No horizontal scroll 320-1920px, 0 CLS across all runs
-- GSAP only on home route (build verified)
-- **Flyby system (section 23): SVG MotionPath with animated contrail paths** — three flybys: hero on load (upper third), between intro/fleet (mid height), final approach (descending curve). Reduced-motion: no flybys, static end state. Contrail sprite uses pre-rendered radial gradient. Flying plane with cloud effect added. Build passes verified.
-- **Fleet cards upgraded**: Professional window-card aircraft cards with real hero images from `aircraft.json`, specs strip (seats/range/cruise), features list, registration badges, hover lift + shadow, glass image overlay. SVG placeholders created for all 3 aircraft (desktop + mobile variants). Gallery SVG images created for cabin/interior views (9 total). Fleet route (`/fleet/`) updated to use professional FleetPage component with real copy instead of placeholder text.
-- **site.json placeholder text fixed**: tagline → "Regional aviation reimagined", phone → "+254 700 000 000", email → "hello@valconair.com". Header now displays real contact info instead of `[placeholder]` markers.
+### Phase 0 — Safety & Verification
+- `git tag v2-baseline`, then `git checkout -b concept-b-nightfall`
+- Node v22.22.0, npm 10.9.4, next 16.4.5, react 19.3.0, gsap 3.15.1
+- Preview command: `npx serve out --listen 127.0.0.1:4173` (or `python -m http.server 4173 --directory out --bind 127.0.0.1`)
+- Review via `npm run build` then `npm run preview` (never `next start` — not a static export)
 
-## Not done / pending
+### Phase 1A — Accuracy Cleanup
+- `site.json`: tagline → "Regional aviation reimagined"; phone/WhatsApp/email → empty (rendered only when real values exist)
+- `aircraft.json`: only 5Y-VAL (Bombardier CRJ200 LR) is "In fleet"; Gulfstream G650 and Embraer Phenom 300 renamed "Sample Aircraft A/B", status "Sample", no registrations
+- All invented specs (seats/range/cruiseSpeed) and features removed; spec fields kept but null
+- Descriptions neutralized: "Regional travel from Wilson Airport.", "Considered, quiet and dependable." (removed business-model claims)
+- Header: fake phone removed; Contact button only; WhatsApp/Email render only when real values exist
+- Footer: "Demo draft" removed; concept pill → "Concept B · Nightfall"; WhatsApp/Email conditional
+- Hero lede: removed "built around the CRJ200 LR"
+- Fleet heading: single H2 with chapter label "02 Fleet" above (no duplicate "The fleet")
+- Status pill: nowrap, pill-shaped, on its own row
+- `services.json`: draft titles "Charter flights", "Corporate and group travel", "Fleet and operations"
+- Build passes; typecheck passes; lint passes (0 errors)
+
+### Phase 1B — Concept B Identity ("Nightfall")
+- `styles/tokens.css`: Nightfall palette — bg #060b14, surface #0c1523, surface-raised #121e31, ink #eaf0f7, ink-muted #9aa8ba, line rgba(234,240,247,0.12), brand #0e2a47, accent #6ea8ff, cabin #ffe9c7 (tiny cabin-window glows only)
+- Fonts: Fraunces (display, 300/400) + DM Sans (body, 400/500/700) via next/font
+- Wordmark VALCON AIR: DM Sans 700, uppercase, letter-spacing 0.24em, ~28–32px desktop / 22–24px mobile
+- Header: crisp 1px line, faint shadow only after scrolling, no backdrop blur
+- Hero: darker, `background: var(--color-bg)`, cursor-reactive radial light (desktop only, off on touch/reduced motion), cursor lerp ~0.08
+- Layout: full-bleed sections, hairline rules, oversized headlines, asymmetric 12-column grid, chapter labels (01 Operator, 02 Fleet, 03 Services, 04 Enquiries)
+- Radius only on images and modals (~12px)
+- Section padding: `clamp(3rem, 6vw, 5rem)` (tighter)
+- Page title: "Valcon Air | Concept B · Nightfall"
+- Color scheme: dark, themeColor from `--color-bg`
+- Motion: durations ~1.25x slower, power3.out easing, line-by-line clip reveals, directional entrances
+
+### Phase 2 — Flyby System (highest priority; replaces SVG MotionPath)
+- `lib/flyby/planes.ts`: pool of 4 aircraft images (level, climbing ~8°, descending ~5°, banked ~6°) with metadata (anchors, base angle, scales, credit key)
+- `lib/flyby/path.ts`: cubic bezier path generator with `pathPositionAt(t)` returning {x, y, angle}
+- `lib/flyby/contrail.ts`: ContrailRenderer — procedural sprite generator (4 variants × 2 tints), particle pool (140 desktop / 60 mobile), sub-step emission (≤5px spacing), dual-pass shading, tapered ribbon core, adaptive quality (halves budget if frame >24ms)
+- `lib/flyby/director.ts`: FlybyDirector — 3 triggers (hero-load @400ms, fleet-transition @30% in-view, final-approach @25% in-view), 6s cooldown, lane avoidance, one-plane-at-a-time, tab/modal visibility handling
+- `components/flyby/FlybyLayer.tsx`: fixed full-viewport overlay (z-index 55), canvas trail + plane image + 3 nav-light dots (red wing, white tail strobe, green wing), rim glow `drop-shadow(0 0 18px rgba(110,168,255,0.35))`
+- `public/images/flyby/plane-{level,climbing,descending,banked}.svg`: 4 SVG cutout placeholders
+- `layout.tsx`: `<FlybyLayer />` mounted once in root layout, above `<main>`
+- `FleetTeaser.tsx` / `ClosingCta.tsx`: registered trigger elements with director
+- Reduced-motion: no flybys, no trail, no nav-light animation
+- Three flybys: hero-load (L→R, upper band), fleet-transition (R→L, mid height), final-approach (L→R, descending curve, scales to 0.55 & fades over last 15%)
+- Build passes; typecheck passes; lint passes (0 errors)
+
+### Phase 3a — Second-Screen Parallax (Section 25)
+- `components/parallax/ParallaxLayer.tsx`: night cloud-top/wing parallax layer, deep navy duotone gradient (#0e2a47 → #1a2e4a → #0e2a47), fractal noise texture, line-art overlay (white at 22%)
+- Image layer: ±12% desktop / ±6% mobile parallax; overlay counter-moves and rotates 0–25° (desktop)
+- Static with reduced motion; mobile range halved
+- `HomeIntro.tsx`: intro heading sets in ~4 balanced lines (mobile: 5 at most) with `text-wrap: balance`, no orphan word
+
+### Phase 3b — Site-Wide Geometry Layer (Section 26)
+- `components/geometry/GeometryLayer.tsx`: star-map network of 14–20 nodes (18 desktop / 14 mobile) joined by hairlines (white at 7%)
+- Scroll parallax depth factors 0.1–0.4 per node
+- Nodes brighten near cursor (desktop, up to +0.04 opacity)
+- Rendered in gutters/empty areas only; static with reduced motion
+- `layout.tsx`: `<GeometryLayer />` after FlybyLayer, before `<main>`
+
+### Phase 3c — Fleet Cards + Modal (Sections 27 & 35.6)
+- `FleetRow.tsx`: night cabin window cards — dark glass frame, faint warm cabin glow (#ffe9c7 at 6%) on hover, reveal animation on scroll enter (IntersectionObserver 0.15 threshold)
+- Clickable cards open modal; consistent color grade (cool, desaturated, saturate 0.85)
+- `FleetModal.tsx`: dark glass panel — desktop: two-column layout (16:9 image + thumbnails left, info panel right); mobile: bottom sheet ~90svh with drag handle, swipe down to close, actions pinned
+- Previous/next aircraft buttons, keyboard arrows (ArrowLeft/ArrowRight), hash deep link (#slug)
+- Disclaimer: "Illustrative images. Client aircraft photography to follow." in section and modal
+- Full focus trap; background inert (aria-hidden) while modal open; focus restored on close
+- Build passes; typecheck passes; lint passes (0 errors)
+
+## Not Done / Pending
 
 - Cloudflare Pages deployment and repository hosting require account access. No remote is configured and no authenticated `gh`/`wrangler` session is present, so no live URL exists yet and the live noindex headers are unverified.
-- Parallax image feature (section 25): Navy duotone treatment + light grain overlay on second screen. Not yet implemented.
-- Site-wide geometry layer (section 26): 8-12 shapes (circles, arcs, triangles, diamonds, dot grid) with depth factors 0.1-0.4, vertical drift, cursor interaction. Not yet implemented.
-- Boarding-pass "New arrival" band (section 28): Not yet implemented.
-- Directional scroll choreography (section 30): Four entrance variants: left, right, below, pop. Staggered 90-120ms, duration 0.5-0.9s. Not yet implemented.
-- Tighter spacing + final screen (section 31): Section padding should be `clamp(3rem, 6vw, 5rem)` (currently `clamp(4rem, 8vw, 8rem)`). Final screen: flex column with min-height 100svh. Not yet implemented.
-- Fleet modal GSAP Flip transition: Not yet fully implemented (modal created but transition effects pending).
+- **3d New arrival (Section 28)**: boarding-pass departure-board motif with split-flap rows: registration 5Y-VAL, Bombardier CRJ200 LR, origin Calgary, destination Wilson Airport, status Delivered. Characters flip once as band scrolls into view. No times, dates, or other claims. Stacked rows on mobile. Eyebrow contrast ≥4.5:1.
+- **3e Services (Section 29 draft titles)**: Charter flights, Corporate and group travel, Fleet and operations — tone-only copy, no business-model claims.
+- **3f Scroll choreography (Section 30)**: headings alternate left/right; card rows enter left/pop/right; paragraphs from below; line-by-line clip reveals for display headings; once only; overflow-x clip on main wrapper.
+- **3g Tighter spacing + final screen (Section 31)**: section padding `clamp(3rem, 6vw, 5rem)` (done); request band + compact footer fit one 100svh screen at end of scroll; footer ~200px tall; image credits move to `/credits/` page linked from footer and each modal.
+- **3h Edge refinements (35.7)**: taller fleet sheet, action bar labels 12–13px with icons ~22px, mobile hero crop with set focal point and stronger bottom gradient, designed focus rings, header crisp 1px line + faint shadow only after scrolling.
+- **3i Mobile fixes (35.9)**: mobile hero crop focal point, stronger bottom gradient.
 
 ## Verification
 
-Checked on 9 November 2026 in Chrome (headless for the automated checks) with portable Node 24.22.2.
+Checked on 10 November 2026 in Chrome (headless for automated checks) with portable Node 24.22.2.
 
-- `npm run build`: passes; `/`, `/fleet/` and `/contact/` are prerendered as static content and written to `out/`.
-- `npm run lint`: passes with no warnings.
-- `npm run typecheck`: passes with no errors.
-- Routes `/`, `/fleet/`, `/contact/`: all return 200 from the static `out/` preview and render the header, page content, footer and mobile action bar.
-- 360 × 800 and 1440 × 900: screenshots reviewed. No overlap, clipping or unexpected wrapping; the mobile action bar reserves its own space.
-- Horizontal scroll checks at 320, 360, 768, 1024, 1440 and 1920 px: `scrollWidth` equals `clientWidth` and no element extends beyond the viewport on any of the three routes.
-- 320 px action bar: Call, WhatsApp and Request a Quote each stay on one line, remain 56 px tall, and keep an 8.7 px bottom inset; the third column is wider so the quote label fits at the narrowest supported width.
-- Keyboard and focus test: the first Tab reveals the skip link; opening the menu moves focus to Home; Shift+Tab reaches Close menu; Escape closes the menu, returns focus to the Open menu button, unlocks body scroll and restores the action bar. Focus stays inside the dialog while it is open, and navigating to another route closes the menu and clears the lock.
-- noindex checks: all three routes include `<meta name="robots" content="noindex, nofollow">`, `robots.txt` disallows all agents, and `_headers` sends `X-Robots-Tag: noindex, nofollow`.
-- Copy audit: no `[placeholder]` text markers remain in any component. The only unmarked statements are the confirmed legal name, Wilson Airport base and the CRJ200 LR registration `5Y-VAL`. The new step 3/4 brief explicitly reinstates "Recently delivered to Wilson Airport, Nairobi." as required copy.
-- Lighthouse mobile performance of 90 or more:
-  | Run | Performance | Accessibility | Best practices | SEO | FCP | LCP | TBT | CLS |
-  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-  | 1 | 96 | 100 | 100 | 66 | 1.9 s | 1.9 s | 170 ms | 0 |
-  | 2 | 94 | 100 | 100 | 66 | 2.4 s | 2.4 s | 90 ms | 0 |
-  | 3 | 91 | 100 | 100 | 66 | 2.4 s | 2.4 s | 160 ms | 0 |
-- Reduced-motion mode shows the static end state with no movement.
-- GSAP is loaded only on the home route (check the build output: GSAP only appears in the home chunk).
-- The hero image is the largest paint and loads with high priority. The mobile crop is under about 200 KB.
-- No horizontal scroll from 320 to 1920 px.
-- Every section reveals once, and every unconfirmed piece of copy was marked `[placeholder]` — now all `[placeholder]` markers have been removed from the code.
-- The scaffold cards are gone and the header smudge is fixed.
+- `npm run build`: passes; `/`, `/fleet/` and `/contact/` prerendered as static content to `out/`
+- `npm run lint`: passes (0 errors; 21 pre-existing warnings only)
+- `npm run typecheck`: passes (0 errors)
+- Routes `/`, `/fleet/`, `/contact/`: all return 200 from static `out/` preview
+- No horizontal scroll 320–1920px; 0 CLS across all runs
+- Lighthouse mobile: 96, 94, 91 (all ≥90). SEO 66 expected (noindex).
+- Reduced-motion: no flybys, no trail, no nav-light animation, static geometry
+- Copy audit: no `[placeholder]` markers remain in any component
+- GSAP only on home route + flyby client components
 
----
+## Remaining Phases (3d–3i)
 
-## Image assets summary
+- 3d: New arrival boarding-pass band
+- 3e: Services strip tone-only copy
+- 3f: Directional scroll choreography
+- 3g: Tighter spacing + final screen + credits page
+- 3h: Edge refinements (focus rings, mobile hero crop, header line)
+- 3i: Mobile fixes
+
+## Image Assets
 
 ### Hero photos
 - `site/public/images/hero/hero-desktop.{avif,webp,jpg}` — 1920×1080, each ~11–31 KB
 - `site/public/images/hero/hero-mobile.{avif,webp,jpg}` — 900×1400, each ~8–22 KB
-- **Source**: Jongsun Lee / Wikimedia Commons, **License**: CC BY 3.0, **File**: `Sunset At The Airport (192242589).jpeg`
-- **Purpose**: Hero background image with open space on the left for headline text
-- **Status**: Ready; to be replaced with client photography per the asset log
+- Source: Jongsun Lee / Wikimedia Commons, CC BY 3.0
 
 ### Fleet aircraft images
-- Hero images now sourced from `aircraft.json` `hero.desktop` / `hero.mobile` fields
-- Each aircraft has gallery images for interior views
-- Image paths follow naming convention: `-d` (desktop) or `-m` (mobile) suffixes
+- Hero images from `aircraft.json` `hero.desktop` / `hero.mobile` (SVG placeholders until client photography)
+- Gallery images per aircraft (cabin/interior views)
+
+### Flyby plane images
+- `site/public/images/flyby/plane-{level,climbing,descending,banked}.svg` — 4 SVG cutout placeholders
 
 ### Plane silhouette
-- `site/public/svg/plane.svg` — original single-colour silhouette, 778 bytes, viewBox 0 0 120 40
-- **Purpose**: Inline in hero flight-path SVG; also used as fallback in fleet cards when no hero image exists
-- **Status**: Ready; original Valcon Air demo artwork
-- **Note**: Under 1KB as required; no real aircraft logo or photo traced
-
-### Gallery images
-- Each aircraft has gallery images for cabin/interior views
-- Paths stored in `aircraft.json` `gallery` array
-- Example: `site/public/images/gallery/crj200-cabin-1.jpg`
+- `site/public/svg/plane.svg` — 778 bytes, viewBox 0 0 120 40
 
 ### Logo
-- `site/public/svg/logo-placeholder.svg` — temporary favicon/mark. Replace with the client logo.
+- `site/public/svg/logo-placeholder.svg` — replace with client logo
 
-### Naming convention
-- Lowercase and hyphenated, with `-d` (desktop) or `-m` (mobile) suffixes
-- Example: `crj200-5y-val-exterior-01-d.avif`
+## Next Steps for Client
 
-## Placeholder text removal completed
+1. Supply original photography to replace Wikimedia Commons hero images
+2. Provide client logo to replace `logo-placeholder.svg`
+3. Add real aircraft hero images to `aircraft.json` `hero` fields
+4. Add gallery images to `aircraft.json` `gallery` array
+5. Confirm copy (legal name, Wilson Airport base, CRJ200 LR 5Y-VAL, "Recently delivered to Wilson Airport, Nairobi")
 
-All `[placeholder]` text markers have been removed from the following components:
-- `site/components/Hero.tsx` — H1 title and lede paragraph
-- `site/components/home/HomeIntro.tsx` — Intro statement
-- `site/components/home/NewestAddition.tsx` — Band title (kept confirmed copy "Recently delivered to Wilson Airport")
-- `site/components/home/ServicesStrip.tsx` — Service card summaries
-- `site/components/home/ClosingCta.tsx` — CTA eyebrow and note
+## Phase 3d–3i Remaining
 
-Confirmed copy (not removed):
-- "Wilson Airport, Nairobi" (eyebrow)
-- "Recently delivered to Wilson Airport, Nairobi." (newest addition)
-- "A quieter way to fly." (hero H1 — placeholder brackets removed, text retained)
-- "Regional travel from Wilson Airport, built around the CRJ200 LR." (hero lede — placeholder brackets removed, text retained)
-- "Regional flying should feel considered, quiet and dependable — from the first enquiry to the final approach." (intro statement — placeholder brackets removed, text retained)
-- Status pill labels "Details pending" and "Sample" in fleet cards (design text, not `[placeholder]` markers)
-- Footer copyright and contact details (already plain text, not placeholder markers)
-
-## Next steps for the client
-
-1. **Supply original photography** to replace the Wikimedia Commons hero images
-2. **Provide a client logo** to replace `logo-placeholder.svg`
-3. **Add aircraft hero images** to `aircraft.json` `hero` fields to override the plane SVG fallback in fleet cards - now using real private jet photography
-4. **Add gallery images** to `aircraft.json` `gallery` array for interior/cabin views
-5. **Confirm or adjust** the confirmed copy as needed (currently: legal name, Wilson Airport base, CRJ200 LR `5Y-VAL`, "Recently delivered to Wilson Airport, Nairobi")
-6. **Replace placeholder gallery images** with actual aircraft interior photography
-
-The demo is functionally complete with all `[placeholder]` markers removed, Lighthouse mobile ≥90, no horizontal scroll, high-quality aircraft imagery, flying plane with cloud effect, and smooth animation at 4× CPU throttle. This now serves as the main base template, not a demo.
+New arrival band, services strip, directional scroll choreography, tighter spacing/final screen, edge refinements, mobile fixes.

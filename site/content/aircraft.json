@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "crj200-lr-5y-val",
+    "name": "Bombardier CRJ200 LR",
+    "registrations": ["5Y-VAL"],
+    "status": "active",
+    "isPlaceholder": false,
+    "summary": "Recently delivered to Wilson Airport, Nairobi. Full description to follow.",
+    "specs": {
+      "seats": null,
+      "range": null,
+      "cruiseSpeed": null
+    },
+    "features": [],
+    "hero": {
+      "desktop": "/images/fleet/fleet-crj200-01.avif",
+      "mobile": "/images/fleet/fleet-crj200-01.avif",
+      "alt": "Illustrative photograph of a Bombardier CRJ200 on an apron"
+    },
+    "gallery": [],
+    "order": 1
+  },
+  {
+    "slug": "sample-aircraft-a",
+    "name": "Sample Aircraft A",
+    "registrations": [],
+    "status": "coming-soon",
+    "isPlaceholder": true,
+    "summary": "Demo card to show the layout. Details to follow.",
+    "specs": {
+      "seats": null,
+      "range": null,
+      "cruiseSpeed": null
+    },
+    "features": [],
+    "hero": {
+      "desktop": "/images/fleet/fleet-sample-a.avif",
+      "mobile": "/images/fleet/fleet-sample-a.avif",
+      "alt": "Illustrative photograph of a regional jet in flight"
+    },
+    "gallery": [],
+    "order": 2
+  },
+  {
+    "slug": "sample-aircraft-b",
+    "name": "Sample Aircraft B",
+    "registrations": [],
+    "status": "coming-soon",
+    "isPlaceholder": true,
+    "summary": "Demo card to show the layout. Details to follow.",
+    "specs": {
+      "seats": null,
+      "range": null,
+      "cruiseSpeed": null
+    },
+    "features": [],
+    "hero": {
+      "desktop": "/images/fleet/fleet-sample-b.avif",
+      "mobile": "/images/fleet/fleet-sample-b.avif",
+      "alt": "Illustrative photograph of a Bombardier CRJ200 on an apron"
+    },
+    "gallery": [],
+    "order": 3
+  }
+]

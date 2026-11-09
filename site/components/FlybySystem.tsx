@@ -10,21 +10,178 @@ gsap.registerPlugin(MotionPathPlugin);
 type Direction = "ltr" | "rtl";
 type FlybyKey = "hero" | "fleet" | "final";
 
-type Particle = {
+// ── Persistent trail data types ──────────────────────────────────────────────
+
+type RibbonPoint = {
   x: number;
   y: number;
-  vx: number;
-  vy: number;
   age: number;
   life: number;
-  baseSize: number;
-  jitter: number;
-  phase: number;
+  width: number;
+  alpha: number;
+  stream: "left" | "right"; // the two sub-streams per engine
 };
 
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
+type Wisp = {
+  x: number;
+  y: number;
+  age: number;
+  life: number;
+  scale: number;
+  alpha: number;
+  rotation: number;
+  phase: number; // for wisp lateral drift over time
+};
+
+// ── Trail renderer ──────────────────────────────────────────────────────────
+
+function renderRibbon(
+  ctx: CanvasRenderingContext2D,
+  points: RibbonPoint[],
+  isDarkBackground: boolean,
+  dpr: number
+) {
+  if (points.length < 2) return;
+
+  // Two sub-streams: points split left/right with age-driven drift
+  const leftPoints: RibbonPoint[] = [];
+  const rightPoints: RibbonPoint[] = [];
+
+  for (const p of points) {
+    const drift = (p.age / p.life) * 6; // max 6 px drift between sub-streams
+    if (p.stream === "left") {
+      leftPoints.push({ ...p, x: p.x - drift });
+    } else {
+      rightPoints.push({ ...p, x: p.x + drift });
+    }
+  }
+
+  // Shade pass colour
+  const shadeColor = isDarkBackground
+    ? "rgba(70,95,135,0.20)"
+    : "rgba(70,95,135,0.12)";
+
+  // Draw left sub-stream
+  ctx.save();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  // Width animation: grows 3→28 over life, alpha eases 0.6→0
+  function pointWidth(age: number, life: number) {
+    const w = 3 + (25 * (age / life)); // 3 to 28
+    const a = 0.6 * (1 - age / life); // 0.6 to 0
+    return { width: w * dpr, alpha: a };
+  }
+
+  // Shade pass
+  ctx.strokeStyle = shadeColor;
+  ctx.globalAlpha = 0.6;
+  ctx.lineWidth = 3 * dpr; // base, will be overridden per-segment
+
+  for (let i = 1; i < leftPoints.length; i += 1) {
+    const p0 = leftPoints[i - 1];
+    const p1 = leftPoints[i];
+    const w0 = pointWidth(p0.age, p0.life);
+    const w1 = pointWidth(p1.age, p1.life);
+    ctx.globalAlpha = Math.max(p0.alpha, p1.alpha) * 0.6;
+    ctx.lineWidth = (w0.width + w1.width) / 2;
+    ctx.beginPath();
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.stroke();
+  }
+
+  // Right sub-stream
+  ctx.globalAlpha = 0.6;
+  ctx.lineWidth = 3 * dpr;
+
+  for (let i = 1; i < rightPoints.length; i += 1) {
+    const p0 = rightPoints[i - 1];
+    const p1 = rightPoints[i];
+    const w0 = pointWidth(p0.age, p0.life);
+    const w1 = pointWidth(p1.age, p1.life);
+    ctx.globalAlpha = Math.max(p0.alpha, p1.alpha) * 0.6;
+    ctx.lineWidth = (w0.width + w1.width) / 2;
+    ctx.beginPath();
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.stroke();
+  }
+
+  // White highlight pass (on top)
+  ctx.globalAlpha = 0.6;
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 1.5 * dpr;
+
+  // Left highlight
+  for (let i = 1; i < leftPoints.length; i += 1) {
+    const p0 = leftPoints[i - 1];
+    const p1 = leftPoints[i];
+    const w0 = pointWidth(p0.age, p0.life);
+    const w1 = pointWidth(p1.age, p1.life);
+    ctx.globalAlpha = Math.min(p0.alpha, p1.alpha) * 0.4;
+    ctx.lineWidth = Math.max(1, (w0.width + w1.width) / 4);
+    ctx.beginPath();
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.stroke();
+  }
+
+  // Right highlight
+  for (let i = 1; i < rightPoints.length; i += 1) {
+    const p0 = rightPoints[i - 1];
+    const p1 = rightPoints[i];
+    const w0 = pointWidth(p0.age, p0.life);
+    const w1 = pointWidth(p1.age, p1.life);
+    ctx.globalAlpha = Math.min(p0.alpha, p1.alpha) * 0.4;
+    ctx.lineWidth = Math.max(1, (w0.width + w1.width) / 4);
+    ctx.beginPath();
+    ctx.moveTo(p0.x, p0.y);
+    ctx.lineTo(p1.x, p1.y);
+    ctx.stroke();
+  }
+
+  ctx.restore();
 }
+
+function renderWisps(
+  ctx: CanvasRenderingContext2D,
+  wisps: Wisp[],
+  dpr: number
+) {
+  if (wisps.length === 0) return;
+
+  for (const w of wisps) {
+    const effectiveScale = w.scale * (1 - w.age / w.life); // fade out
+    const effectiveAlpha = w.alpha * (1 - w.age / w.life);
+    if (effectiveAlpha < 0.002) continue;
+
+    ctx.save();
+    ctx.globalAlpha = effectiveAlpha;
+    ctx.translate(w.x, w.y);
+    ctx.rotate(w.rotation);
+    ctx.scale(effectiveScale * dpr, effectiveScale * dpr);
+
+    // Draw a soft cloud-puff: radial gradient
+    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, effectiveScale * 12);
+    gradient.addColorStop(0, `rgba(255,255,255,${effectiveAlpha * 0.8})`);
+    gradient.addColorStop(0.5, `rgba(200,220,255,${effectiveAlpha * 0.5})`);
+    gradient.addColorStop(1, "rgba(180,200,230,0)");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(-effectiveScale * 6, -effectiveScale * 6, effectiveScale * 12, effectiveScale * 12);
+    ctx.restore();
+  }
+}
+
+// ── Main FlybySystem component ──────────────────────────────────────────────
+
+type TrailState = {
+  ribbon: RibbonPoint[][];
+  wisps: Wisp[];
+  lastFrame: number;
+  frameTimes: number[];
+};
 
 export function FlybySystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -38,338 +195,304 @@ export function FlybySystem() {
     if (!canvasMaybe || !planeMaybe || !pathMaybe) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+    if (reduce) {
+      // Hide plane and clear any active trail
+      if (planeMaybe) {
+        planeMaybe.style.display = "none";
+        planeMaybe.style.opacity = "";
+        planeMaybe.style.willChange = "";
+      }
+      return;
+    }
 
     const contextMaybe = canvasMaybe.getContext("2d");
     if (!contextMaybe) return;
 
-    // Re-bind after the guards so the hoisted helpers below keep the narrowed types.
+    // Bind const values for inner functions
     const canvas = canvasMaybe;
     const plane = planeMaybe;
     const pathEl = pathMaybe;
-    const context2d = contextMaybe;
+    const ctx = contextMaybe;
 
-    const ctx = gsap.context(() => {});
-    const particles: Particle[] = [];
-    const played = new Set<FlybyKey>();
-    const observers: IntersectionObserver[] = [];
-    const timeouts: number[] = [];
-    let activeTimeline: gsap.core.Timeline | null = null;
-    let activeKey: FlybyKey | null = null;
-    let raf = 0;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    ctx.scale(dpr, dpr);
+
+    // Reduced-motion guard already checked above; continue with trail only
+    const isDarkBackground =
+      getComputedStyle(document.body).getPropertyValue("--color-bg").trim() === "#0b1626";
+
+    // ── Trail state ────────────────────────────────────────────────────────
+    let ribbon: RibbonPoint[][] = [[], []]; // [leftEngine, rightEngine]
+    let wisps: Wisp[] = [];
+    let lastFrame = 0;
+    const frameTimes: number[] = [];
+    let animationId = 0;
     let running = false;
-    let lastTime = 0;
-    let cancelled = false;
-    let resizeTimer = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    let sprite: HTMLCanvasElement | null = null;
+    let planeHidden = false;
+    let activeFlyby: "hero" | "fleet" | "final" | null = null;
+    let planeTransform = { x: 0, y: 0, rotation: 0 };
+    let engineAnchors = { left: { x: 0, y: 0 }, right: { x: 0, y: 0 } };
 
-    const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
+    // ── Engine anchor computation (from plane transform) ─────────────────────
+    function computeEngineAnchors() {
+      const w = plane.offsetWidth || 200;
+      const h = plane.offsetHeight || 80;
+      const offsetX = w / 2;
+      const offsetY = h / 2;
 
-    function makeSprite() {
-      const size = 64;
-      const offscreen = document.createElement("canvas");
-      offscreen.width = size;
-      offscreen.height = size;
-      const spriteCtx = offscreen.getContext("2d");
-      if (!spriteCtx) return offscreen;
-      const gradient = spriteCtx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-      gradient.addColorStop(0, "rgba(255,255,255,0.55)");
-      gradient.addColorStop(0.45, "rgba(255,255,255,0.26)");
-      gradient.addColorStop(1, "rgba(255,255,255,0)");
-      spriteCtx.fillStyle = gradient;
-      spriteCtx.fillRect(0, 0, size, size);
-      return offscreen;
+      // Left engine exhaust (rear fuselage)
+      engineAnchors.left = {
+        x: planeTransform.x - offsetX * 0.45 + Math.cos(planeTransform.rotation) * 12,
+        y: planeTransform.y - offsetY * 0.45 + Math.sin(planeTransform.rotation) * 12,
+      };
+
+      // Right engine exhaust
+      engineAnchors.right = {
+        x: planeTransform.x - offsetX * 0.45 - Math.cos(planeTransform.rotation) * 12,
+        y: planeTransform.y - offsetY * 0.45 - Math.sin(planeTransform.rotation) * 12,
+      };
     }
 
-    function resizeCanvas() {
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.round(window.innerWidth * dpr);
-      canvas.height = Math.round(window.innerHeight * dpr);
-      context2d.setTransform(dpr, 0, 0, dpr, 0, 0);
-      context2d.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    // ── Ribbon point generation ────────────────────────────────────────────
+    function generateRibbonPoints(
+      engine: "left" | "right",
+      maxPoints: number
+    ): RibbonPoint[] {
+      const cap = 300; // max points per engine
+      const anchors = engineAnchors[engine];
+      const points: RibbonPoint[] = [];
+
+      // Sample points; each "live" point resides 6 s, travels downward at 180 px/s
+      let t = 0;
+      const maxT = 6; // seconds of trail visible
+
+      while (t < maxT && points.length < cap) {
+        const progress = t / maxT;
+        const baseX = anchors.x;
+        const baseY = anchors.y + progress * 180;
+
+        // Two sub-streams drift apart with age (0→6 px)
+        const streamDrift = (t / maxT) * 6;
+        const xLeft = baseX - streamDrift + (Math.random() - 0.5) * 2;
+        const xRight = baseX + streamDrift + (Math.random() - 0.5) * 2;
+        const y = baseY + (Math.random() - 0.5) * 2;
+
+        // Left stream point
+        points.push({
+          x: xLeft,
+          y,
+          age: 0,
+          life: 6,
+          width: 3,
+          alpha: 0.6,
+          stream: "left",
+        });
+
+        // Right stream point
+        points.push({
+          x: xRight,
+          y,
+          age: 0,
+          life: 6,
+          width: 3,
+          alpha: 0.6,
+          stream: "right",
+        });
+
+        t += 6 / 180; // advance time step (6 px at 180 px/s)
+      }
+
+      return points;
+    }
+
+    // ── Wisp spawning ───────────────────────────────────────────────────────
+    function spawnWisps(engine: "left" | "right") {
+      if (wisps.length >= 80) return; // desktop cap
+      if (wisps.length >= 36 && window.matchMedia("(max-width: 767px)").matches)
+        return; // mobile cap
+
+      // Sample along the ribbon every 24–32 px
+      const anchors = engineAnchors[engine];
+      // Estimate trail length from anchor positions
+      const dx = 0; // engines are side-by-side, trail goes downward
+      const dy = 180; // 6 s at 180 px/s
+      const trailLength = Math.hypot(dx, dy);
+
+      const sampleCount = Math.max(1, Math.floor(trailLength / 28));
+      for (let i = 0; i < sampleCount; i += 1) {
+        if (wisps.length >= 80) break;
+        if (wisps.length >= 36 && !window.matchMedia("(max-width: 767px)").matches) break;
+
+        const t = (i / sampleCount) * trailLength;
+        const offset = (Math.random() - 0.5) * 10; // -5 to +5 px lateral
+        // Position behind the engine anchor
+        const wx = anchors.x;
+        const wy = anchors.y + dy; // down the trail
+        const life = 8 + Math.random() * 4; // 8→12 s
+        const scale = 0.5 + Math.random() * 1.7; // 0.5→2.2
+        const alpha = 0.35 + Math.random() * 0.15; // 0.35→0.5
+        const rotation = Math.random() * Math.PI * 2;
+        const phase = Math.random() * Math.PI * 2; // for lateral drift over time
+
+        wisps.push({
+          x: wx,
+          y: wy,
+          age: 0,
+          life,
+          scale,
+          alpha,
+          rotation,
+          phase,
+        });
+      }
+    }
+
+    // ── Animation loop ──────────────────────────────────────────────────────
+    function tick(now: number) {
+      if (!running) return;
+
+      const dt = Math.min(0.05, (now - lastFrame) / 1000);
+      lastFrame = now;
+
+      // Track frame time for adaptive quality
+      frameTimes.push(dt);
+      if (frameTimes.length > 20) frameTimes.shift();
+
+      const avgFrameTime =
+        frameTimes.reduce((a: number, b: number) => a + b, 0) / frameTimes.length;
+      const qualityTooSlow = avgFrameTime > 0.024; // 24 ms
+
+      // Adaptive quality: if too slow, halve wisps, then sample ribbon every 10 px effectively
+      if (qualityTooSlow) {
+        // Reduce wisp count by half (keep at least 1)
+        wisps.length = Math.max(1, Math.ceil(wisps.length / 2));
+      }
+
+      // Age and update ribbons
+      for (let eng = 0; eng < 2; eng += 1) {
+        const points = ribbon[eng];
+        for (const p of points) {
+          p.age += dt;
+        }
+
+        // Remove dead points (age >= life)
+        ribbon[eng] = points.filter((p) => p.age < p.life);
+
+        // Spawn fresh points at the rear (age reset) if under cap
+        if (points.length < 300) {
+          const newPoints = generateRibbonPoints(eng === 0 ? "left" : "right", 300);
+          // Interleave: new points at the bottom (oldest), old points above
+          ribbon[eng] = [...newPoints, ...points].filter(
+            (p, i) => i < 300,
+          );
+        }
+      }
+
+      // Age and update wisps
+      for (let i = wisps.length - 1; i >= 0; i -= 1) {
+        wisps[i].age += dt;
+        if (wisps[i].age >= wisps[i].life) {
+          wisps.splice(i, 1);
+          continue;
+        }
+
+        // Lateral drift over life using phase
+        const drift = Math.sin(wisps[i].phase || 0 + wisps[i].age * 0.3) * 0.5;
+        wisps[i].x += drift;
+        wisps[i].y += 20 * dt; // downward drift
+      }
+
+      // Spawn wisps occasionally
+      if (Math.random() < 0.03) {
+        spawnWisps("left");
+        spawnWisps("right");
+      }
+
+      // Clear canvas back to origin (viewport coordinates)
+      ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+      // Render ribbons (two-engine, two-pass)
+      renderRibbon(ctx, ribbon[0] as RibbonPoint[], isDarkBackground, dpr);
+      renderRibbon(ctx, ribbon[1] as RibbonPoint[], isDarkBackground, dpr);
+
+      // Render wisps
+      renderWisps(ctx, wisps, dpr);
+
+      animationId = window.requestAnimationFrame(tick);
+    }
+
+    // ── Start loop ────────────────────────────────────────────────────────
+    function startLoop() {
+      if (running || document.hidden) return;
+      running = true;
+      lastFrame = performance.now();
+      animationId = window.requestAnimationFrame(tick);
     }
 
     function stopLoop() {
       running = false;
-      window.cancelAnimationFrame(raf);
+      if (animationId) {
+        window.cancelAnimationFrame(animationId);
+        animationId = 0;
+      }
+      ribbon = [[], []];
+      wisps = [];
     }
 
-    function startLoop() {
-      if (running || cancelled || document.hidden) return;
-      running = true;
-      lastTime = performance.now();
-      raf = window.requestAnimationFrame(tick);
-    }
-
-    function tick(now: number) {
-      if (!running || cancelled) return;
-      const dt = Math.min(0.05, (now - lastTime) / 1000);
-      lastTime = now;
-      context2d.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      for (let index = particles.length - 1; index >= 0; index -= 1) {
-        const particle = particles[index];
-        particle.age += dt;
-        if (particle.age >= particle.life) {
-          particles.splice(index, 1);
-          continue;
+    // ── Resize handler ────────────────────────────────────────────────────
+    let resizeTimer = 0;
+    function onResize() {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        canvas.width = Math.round(window.innerWidth * dpr);
+        canvas.height = Math.round(window.innerHeight * dpr);
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stopLoop();
+        planeHidden = true;
+        if (plane) {
+          plane.style.display = "none";
+          plane.style.opacity = "";
+          plane.style.willChange = "";
         }
-
-        const progress = particle.age / particle.life;
-        particle.x += particle.vx * dt + Math.sin(particle.phase + particle.age * 1.7) * particle.jitter * dt;
-        particle.y += particle.vy * dt;
-
-        const size = particle.baseSize * (0.6 + 1.8 * progress);
-        const alpha = 0.5 * Math.pow(1 - progress, 2);
-        if (sprite && alpha > 0.002) {
-          context2d.globalAlpha = alpha;
-          context2d.drawImage(sprite, particle.x - size / 2, particle.y - size / 2, size, size);
-        }
-      }
-
-      context2d.globalAlpha = 1;
-
-      if (particles.length > 0) {
-        raf = window.requestAnimationFrame(tick);
-      } else {
-        running = false;
-      }
+      }, 150);
     }
 
-    function emit(x: number, y: number) {
-      const cap = isMobile() ? 60 : 140;
-      if (particles.length >= cap) return;
-      const count = Math.random() > 0.45 ? 2 : 1;
-      for (let index = 0; index < count; index += 1) {
-        if (particles.length >= cap) break;
-        particles.push({
-          x: x + (Math.random() * 2 - 1) * 2,
-          y: y + (Math.random() * 2 - 1) * 2,
-          vx: (Math.random() * 2 - 1) * 4,
-          vy: -(4 + Math.random() * 6),
-          age: 0,
-          life: 2.6 + Math.random() * 0.8,
-          baseSize: 8 + Math.random() * 8,
-          jitter: Math.random() * 6,
-          phase: Math.random() * Math.PI * 2,
-        });
-      }
-      startLoop();
-    }
-
-    function finishFlyby() {
-      if (activeTimeline) {
-        activeTimeline.kill();
-      }
-      activeTimeline = null;
-      activeKey = null;
-      plane.dataset.active = "false";
-      plane.style.opacity = "";
-      plane.style.willChange = "";
-    }
-
-    function buildPath(options: {
-      direction: Direction;
-      baseAltitude: number;
-      curve: number;
-      target?: HTMLElement | null;
-    }) {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const jitter = (Math.random() * 2 - 1) * 0.12;
-      const altitude = clamp(options.baseAltitude + jitter, 0.12, 0.8);
-      const y = altitude * height;
-      const offset = Math.random() * 0.08 * width;
-      const startX = options.direction === "ltr" ? -width * 0.18 - offset : width * 1.18 + offset;
-      const endX = options.direction === "ltr" ? width * 1.18 + offset : -width * 0.18 - offset;
-      const c1x = startX + (endX - startX) * 0.3;
-      const c2x = startX + (endX - startX) * 0.7;
-      const curve = options.curve * height;
-      const c1y = y + curve * 0.55;
-      const c2y = y - curve * 0.35;
-      let endY = y + curve * 0.12;
-
-      if (options.target) {
-        const rect = options.target.getBoundingClientRect();
-        endY = clamp(rect.top + rect.height * 0.35, height * 0.32, height * 0.86);
-      }
-
-      return `M ${startX.toFixed(1)} ${y.toFixed(1)} C ${c1x.toFixed(1)} ${c1y.toFixed(
-        1,
-      )} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${endX.toFixed(1)} ${endY.toFixed(1)}`;
-    }
-
-    function startFlyby(options: {
-      key: FlybyKey;
-      direction: Direction;
-      baseAltitude: number;
-      curve: number;
-      target?: HTMLElement | null;
-    }) {
-      if (cancelled || activeKey) {
-        played.add(options.key);
-        return;
-      }
-      if (played.has(options.key)) return;
-      played.add(options.key);
-
-      const duration = (isMobile() ? 5.8 : 8.2) * (0.85 + Math.random() * 0.3);
-      const directionSign = options.direction === "ltr" ? 1 : -1;
-      pathEl.setAttribute("d", buildPath(options));
-      const startPoint = pathEl.getPointAtLength(0);
-      let previous = { x: startPoint.x, y: startPoint.y };
-
-      activeKey = options.key;
-      plane.dataset.active = "true";
-      plane.style.opacity = "1";
-      plane.style.willChange = "transform, opacity";
-
-      ctx.add(() => {
-        activeTimeline = gsap.timeline({
-          defaults: { ease: "none" },
-          onComplete: finishFlyby,
-        });
-
-        activeTimeline.to(
-          plane,
-          {
-            duration,
-            motionPath: {
-              path: pathEl,
-              align: pathEl,
-              alignOrigin: [0.5, 0.5],
-              autoRotate: false,
-            },
-            onUpdate: () => {
-              const progress = activeTimeline?.progress() ?? 0;
-              const x = Number(gsap.getProperty(plane, "x"));
-              const y = Number(gsap.getProperty(plane, "y"));
-              const angle = (Math.atan2(y - previous.y, x - previous.x) * 180) / Math.PI;
-              const rotation = angle > 90 || angle < -90 ? angle - 180 : angle;
-              let scale = 0.92 + 0.08 * progress;
-              let opacity = 1;
-
-              if (options.key === "final" && progress > 0.68) {
-                const fade = (progress - 0.68) / 0.32;
-                scale *= 1 - 0.38 * fade;
-                opacity = 1 - fade;
-              }
-
-              gsap.set(plane, {
-                rotation,
-                scaleX: directionSign * scale,
-                scaleY: scale,
-                opacity,
-              });
-
-              const width = plane.offsetWidth;
-              const radians = (angle * Math.PI) / 180;
-              const tailX = x - Math.cos(radians) * width * 0.44;
-              const tailY = y - Math.sin(radians) * width * 0.44;
-              const perpendicular = radians + Math.PI / 2;
-              const spread = 2.5;
-
-              emit(tailX + Math.cos(perpendicular) * spread, tailY + Math.sin(perpendicular) * spread);
-              emit(tailX - Math.cos(perpendicular) * spread, tailY - Math.sin(perpendicular) * spread);
-              previous = { x, y };
-            },
-          },
-          0,
-        );
-      });
-    }
-
-    function setupObservers() {
-      const heroTimer = window.setTimeout(() => {
-        startFlyby({ key: "hero", direction: "ltr", baseAltitude: isMobile() ? 0.2 : 0.22, curve: 0.18 });
-      }, 420);
-      timeouts.push(heroTimer);
-
-      const fleetTrigger = document.querySelector<HTMLElement>('[data-flyby-trigger="fleet"]');
-      if (fleetTrigger) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            if (!entries.some((entry) => entry.isIntersecting)) return;
-            observer.disconnect();
-            const rect = fleetTrigger.getBoundingClientRect();
-            const altitude = clamp((rect.top - 90) / window.innerHeight, 0.14, 0.44);
-            startFlyby({ key: "fleet", direction: "rtl", baseAltitude: altitude, curve: -0.14 });
-          },
-          { rootMargin: "0px 0px -65% 0px", threshold: 0 },
-        );
-        observer.observe(fleetTrigger);
-        observers.push(observer);
-      }
-
-      const finalTrigger = document.querySelector<HTMLElement>('[data-flyby-trigger="final"]');
-      if (finalTrigger) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            if (!entries.some((entry) => entry.isIntersecting)) return;
-            observer.disconnect();
-            startFlyby({
-              key: "final",
-              direction: "ltr",
-              baseAltitude: 0.18,
-              curve: 0.5,
-              target: finalTrigger,
-            });
-          },
-          { rootMargin: "0px 0px -28% 0px", threshold: 0 },
-        );
-        observer.observe(finalTrigger);
-        observers.push(observer);
-      }
-    }
-
-    function onScrollCue() {
-      const cue = document.querySelector<HTMLElement>("[data-scroll-cue]");
-      if (cue) cue.dataset.hidden = window.scrollY > 24 ? "true" : "false";
-    }
-
-    function onVisibility() {
+    // ── Visibility change ───────────────────────────────────────────────────
+    function onVisibilityChange() {
       if (document.hidden) {
         stopLoop();
-      } else if (activeKey) {
+      } else {
         startLoop();
       }
     }
 
-    function onResize() {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(() => {
-        resizeCanvas();
-        if (activeKey) finishFlyby();
-      }, 220);
-    }
+    // ── Compute initial anchors ────────────────────────────────────────────
+    computeEngineAnchors();
 
-    sprite = makeSprite();
-    resizeCanvas();
-    setupObservers();
-    onScrollCue();
+    // Initial ribbon generation
+    ribbon[0] = generateRibbonPoints("left", 300);
+    ribbon[1] = generateRibbonPoints("right", 300);
 
-    window.addEventListener("scroll", onScrollCue, { passive: true });
+    // Start the loop
+    startLoop();
+
+    // Event listeners
     window.addEventListener("resize", onResize, { passive: true });
-    document.addEventListener("visibilitychange", onVisibility);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
-      cancelled = true;
-      timeouts.forEach((timeout) => window.clearTimeout(timeout));
-      observers.forEach((observer) => observer.disconnect());
-      window.removeEventListener("scroll", onScrollCue);
-      window.removeEventListener("resize", onResize);
-      document.removeEventListener("visibilitychange", onVisibility);
-      window.clearTimeout(resizeTimer);
       stopLoop();
-      particles.length = 0;
-      finishFlyby();
-      ctx.revert();
-      if (context2d) {
-        context2d.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      }
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      if (animationId) window.cancelAnimationFrame(animationId);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
-  }, []);
+  }, [
+    canvasRef,
+    planeRef,
+    pathRef,
+  ]);
 
   return (
     <>
@@ -377,8 +500,19 @@ export function FlybySystem() {
       <svg className="flyby-path" aria-hidden="true">
         <path ref={pathRef} fill="none" stroke="none" />
       </svg>
-      <div ref={planeRef} className="flyby-plane" data-active="false" aria-hidden="true">
-        <PlaneIllustration />
+      <div
+        ref={planeRef}
+        className="flyby-plane"
+        data-active="false"
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: "0",
+          pointerEvents: "none",
+          zIndex: 70,
+        }}
+      >
+        <PlaneIllustration className="flyby-plane-svg" />
       </div>
     </>
   );

@@ -1,0 +1,54 @@
+{
+  "name": "Valcon Air",
+  "legalName": "Valcon Air Solutions Limited",
+  "tagline": "Aviation, based at Wilson Airport, Nairobi.",
+  "base": "Wilson Airport, Nairobi, Kenya",
+  "description": "A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson Airport, Nairobi.",
+  "phone": "",
+  "phoneTel": "",
+  "whatsapp": "",
+  "email": "",
+  "socials": [],
+  "credits": [
+    {
+      "title": "Munich Airport plane handling at sunset",
+      "author": "Richard Bartz",
+      "source": "https://commons.wikimedia.org/wiki/File:Munich_Airport_plane_handling_at_sunset.jpg",
+      "licence": "CC BY-SA 2.5",
+      "usedFor": "Hero photograph",
+      "note": "Cropped and resized for this demo."
+    },
+    {
+      "title": "Above the Clouds - A Glimpse of Heaven",
+      "author": "Joma433",
+      "source": "https://commons.wikimedia.org/wiki/File:Above_the_Clouds_-_A_Glimpse_of_Heaven.jpg",
+      "licence": "CC BY-SA 4.0",
+      "usedFor": "Parallax feature",
+      "note": "Cropped, resized and duotoned for this demo."
+    },
+    {
+      "title": "Bombardier CRJ200 N96AP FDK MD1",
+      "author": "Acroterion",
+      "source": "https://commons.wikimedia.org/wiki/File:Bombardier_CRJ200_N96AP_FDK_MD1.jpg",
+      "licence": "CC BY-SA 4.0",
+      "usedFor": "Fleet card (illustrative)",
+      "note": "Cropped and resized for this demo."
+    },
+    {
+      "title": "Delta N920EV Bombardier CRJ200",
+      "author": "formulanone",
+      "source": "https://commons.wikimedia.org/wiki/File:Delta_N920EV_Bombardier_CRJ200_(19511718653).jpg",
+      "licence": "CC BY-SA 2.0",
+      "usedFor": "Fleet card (illustrative)",
+      "note": "Cropped and resized for this demo."
+    },
+    {
+      "title": "Lufthansa Bombardier CRJ200",
+      "author": "Mike Peel (www.mikepeel.net)",
+      "source": "https://commons.wikimedia.org/wiki/File:Lufthansa_Bombardier_CRJ200.jpg",
+      "licence": "CC BY-SA 4.0",
+      "usedFor": "Fleet card (illustrative)",
+      "note": "Cropped and resized for this demo."
+    }
+  ]
+}

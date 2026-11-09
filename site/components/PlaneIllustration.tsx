@@ -1,7 +1,5 @@
 "use client";
 
-import { ReactNode } from "react";
-
 export function PlaneIllustration({ className = "" }: { className?: string }) {
   return (
     <svg

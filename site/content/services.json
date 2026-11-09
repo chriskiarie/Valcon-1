@@ -2,28 +2,28 @@
   {
     "slug": "charter-flights",
     "title": "Charter flights",
-    "summary": "Aircraft and crew arranged around your schedule. Routes, availability and aircraft details to be confirmed with the operator.",
+    "summary": "Travel on your schedule. Discover flexible charter arrangements shaped around your destination, timing and journey.",
     "isPlaceholder": true,
     "image": "/images/services/service-charter-dark-ocean.jpg"
   },
   {
     "slug": "corporate-and-group-travel",
-    "title": "Corporate and group travel",
-    "summary": "A considered way to move teams and guests. Service details are being confirmed for the real site.",
+    "title": "Corporate & group travel",
+    "summary": "Move teams, executives and guests with thoughtfully coordinated air travel, tailored to the needs of every journey.",
     "isPlaceholder": true,
     "image": "/images/services/service-corporate-sunset.jpg"
   },
   {
     "slug": "fleet-and-operations",
-    "title": "Fleet and operations",
-    "summary": "Based at Wilson Airport, Nairobi, with the first aircraft now on the register. More operational detail to follow.",
+    "title": "Fleet & operations",
+    "summary": "Based at Wilson Airport, Nairobi, Valcon Air begins its journey with 5Y-VAL, a Bombardier CRJ200 LR and the first aircraft on its register.",
     "isPlaceholder": true,
     "image": "/images/services/service-fleet-leather-seats.jpg"
   },
   {
     "slug": "premium-cabin-experience",
     "title": "Premium cabin experience",
-    "summary": "A refined cabin experience designed for comfort and privacy.",
+    "summary": "Every detail matters. Experience a considered cabin environment designed to make time in the air feel effortless.",
     "isPlaceholder": true,
     "image": "/images/services/service-premium-blue-cabin.jpg"
   }

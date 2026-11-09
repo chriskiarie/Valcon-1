@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="cabin2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#cabin2)"/>
+  <!-- Aft cabin seating -->
+  <rect x="100" y="250" width="180" height="100" rx="8" fill="#94a3b8" opacity="0.5"/>
+  <rect x="320" y="250" width="180" height="100" rx="8" fill="#94a3b8" opacity="0.5"/>
+  <rect x="540" y="250" width="180" height="100" rx="8" fill="#94a3b8" opacity="0.5"/>
+  <rect x="760" y="250" width="180" height="100" rx="8" fill="#94a3b8" opacity="0.5"/>
+  <rect x="980" y="250" width="180" height="100" rx="8" fill="#94a3b8" opacity="0.5"/>
+  <!-- Galley -->
+  <rect x="100" y="450" width="180" height="250" rx="8" fill="#e2e8f0"/>
+  <rect x="130" y="480" width="120" height="100" fill="#cbd5e1" opacity="0.6"/>
+  <rect x="130" y="600" width="120" height="60" fill="#cbd5e1" opacity="0.4"/>
+  <!-- Lavatory -->
+  <rect x="900" y="450" width="200" height="250" rx="8" fill="#e2e8f0"/>
+  <circle cx="1000" cy="500" r="30" fill="#94a3b8" opacity="0.5"/>
+  <!-- Windows -->
+  <circle cx="200" cy="80" r="28" fill="#dbeafe" opacity="0.6"/>
+  <circle cx="420" cy="80" r="28" fill="#dbeafe" opacity="0.6"/>
+  <circle cx="640" cy="80" r="28" fill="#dbeafe" opacity="0.6"/>
+  <circle cx="860" cy="80" r="28" fill="#dbeafe" opacity="0.6"/>
+  <circle cx="1080" cy="80" r="28" fill="#dbeafe" opacity="0.6"/>
+  <!-- Text -->
+  <text x="600" y="380" font-family="sans-serif" font-size="24" font-weight="600" fill="#1e293b" text-anchor="middle">CRJ200 LR Aft Cabin</text>
+  <text x="600" y="410" font-family="sans-serif" font-size="16" font-weight="400" fill="#64748b" text-anchor="middle">Galley &amp; Lavatory Configuration</text>
+</svg>

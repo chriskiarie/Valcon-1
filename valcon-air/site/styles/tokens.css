@@ -1,0 +1,181 @@
+:root {
+  /* colour: Concept B "Nightfall" — dark navy palette */
+  --color-bg: #060b14;
+  --color-surface: #0c1523;
+  --color-surface-raised: #121e31;
+  --color-ink: #eaf0f7;
+  --color-ink-muted: #9aa8ba;
+  --color-line: rgba(234, 240, 247, 0.12);
+  --color-brand: #0e2a47;
+  --color-brand-ink: #ffffff;
+  --color-accent: #6ea8ff;
+  --color-focus: #6ea8ff;
+  --color-focus-inverse: #060b14;
+
+  /* cabin-window glow: tiny accents only, never a theme colour */
+  --color-cabin: #ffe9c7;
+
+  /* fluid type */
+  --text-sm: clamp(0.875rem, 0.84rem + 0.15vw, 0.95rem);
+  --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --display-l: clamp(2rem, 1.4rem + 3vw, 4rem);
+  --display-xl: clamp(2.5rem, 1.5rem + 5vw, 6rem);
+
+  /* font fallbacks: live families supplied by next/font */
+  --font-fallback-display: Georgia, "Times New Roman", serif;
+  --font-fallback-text: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* space (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* type detail */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-compact: 1.05;
+  --leading-heading: 0.94;
+  --leading-label: 1.4;
+  --leading-body: 1.65;
+  --leading-copy: 1.55;
+  --tracking-wordmark: 0.24em;
+  --tracking-eyebrow: 0.14em;
+  --tracking-label: 0.08em;
+  --tracking-nav: 0.02em;
+  --tracking-title: -0.025em;
+  --measure-title: 14ch;
+  --measure-description: 42rem;
+  --measure-copy: 38rem;
+  --measure-footer-copy: 24rem;
+  --measure-hero: 34rem;
+
+  /* shape and layout */
+  --radius-card: 0.75rem; /* about 12px on images/modals */
+  --radius-pill: 999px;
+  --container-max: 80rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --viewport-min: 20rem;
+  --tap-min: 2.75rem; /* 44px minimum touch target */
+  --border-width: 1px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --icon-size: 1.25rem;
+  --icon-size-compact: 1.125rem;
+  --icon-stroke: 1.7;
+  --sentinel-size: 1px;
+  --nav-underline-height: 2px;
+  --nav-underline-offset: 0.45rem;
+  --header-h-mobile: 4rem;
+  --header-h-desktop: 5rem;
+  --actionbar-h: 3.5rem;
+  --hero-min-height: 560px;
+  --hero-overlay-color: 6 11 20;
+  --hero-overlay-soft: 15%;
+  --hero-overlay-strong: 75%;
+  --hero-text-scrim: 52%;
+  --section-pad: clamp(3rem, 6vw, 5rem);
+  --reveal-shift: 1.5rem;
+  --fleet-card-width: 80%;
+  --header-blur: 0px; /* no backdrop blur for Concept B */
+  --header-surface-mix: 100%;
+  /* the quote label is longest; the wider third column keeps it on one line at 320px */
+  --actionbar-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr);
+  --facts-columns: repeat(3, minmax(0, 1fr));
+  --footer-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+  --footer-rule-mix: 18%;
+  --footer-muted-mix: 66%;
+  --footer-body-mix: 76%;
+  --quote-body-mix: 78%;
+  --menu-glow-mix: 12%;
+  --menu-glow-size: 36%;
+  --menu-glow-x: 85%;
+  --menu-glow-y: 12%;
+  --brand-hover-mix: 82%;
+  --z-actionbar: 40;
+  --z-menu: 50;
+  --z-header: 60;
+  --z-skip: 100;
+
+  /* motion: slower and more cinematic than Concept A */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-power3: cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast: 250ms;
+  --dur-reveal: 500ms;
+  --menu-enter-shift: 0.75rem;
+
+  /* safe areas */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Expose the tokens above as Tailwind 4 utilities. These aliases are the only
+   bridge between the design tokens and utility class names. */
+@theme inline {
+  --color-page: var(--color-bg);
+  --color-card: var(--color-surface);
+  --color-card-raised: var(--color-surface-raised);
+  --color-copy: var(--color-ink);
+  --color-copy-muted: var(--color-ink-muted);
+  --color-hairline: var(--color-line);
+  --color-navy: var(--color-brand);
+  --color-on-navy: var(--color-brand-ink);
+  --color-highlight: var(--color-accent);
+  --color-focus-ring: var(--color-focus);
+  --color-cabin-glow: var(--color-cabin);
+
+  --font-brand: var(--font-display), var(--font-fallback-display);
+  --font-body: var(--font-text), var(--font-fallback-text);
+
+  --text-caption: var(--text-sm);
+  --text-body: var(--text-base);
+  --text-lead: var(--text-lg);
+  --text-heading: var(--text-xl);
+  --text-display: var(--display-l);
+  --text-hero: var(--display-xl);
+
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-6: var(--space-6);
+  --spacing-8: var(--space-8);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+  --spacing-24: var(--space-24);
+
+  --radius-panel: var(--radius-card);
+  --radius-round: var(--radius-pill);
+
+  --ease-smooth: var(--ease-out);
+  --ease-power3: var(--ease-power3);
+  --duration-fast: var(--dur-fast);
+  --duration-reveal: var(--dur-reveal);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --dur-reveal: 700ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

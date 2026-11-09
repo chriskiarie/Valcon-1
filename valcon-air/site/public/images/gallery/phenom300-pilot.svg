@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="cabin8" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#cabin8)"/>
+  <!-- Cockpit -->
+  <rect x="100" y="150" width="400" height="300" rx="10" fill="#e2e8f0"/>
+  <rect x="140" y="190" width="160" height="180" rx="4" fill="#0f172a"/>
+  <rect x="160" y="210" width="120" height="140" fill="#1e293b"/>
+  <rect x="340" y="190" width="160" height="180" rx="4" fill="#0f172a"/>
+  <rect x="360" y="210" width="120" height="140" fill="#1e293b"/>
+  <!-- Yokes -->
+  <rect x="180" y="520" width="70" height="50" rx="4" fill="#475569"/>
+  <rect x="330" y="520" width="70" height="50" rx="4" fill="#475569"/>
+  <!-- Throttle -->
+  <rect x="260" y="620" width="180" height="35" rx="6" fill="#334155"/>
+  <!-- Text -->
+  <text x="600" y="340" font-family="sans-serif" font-size="24" font-weight="600" fill="#1e293b" text-anchor="middle">Phenom 300 Cockpit</text>
+  <text x="600" y="370" font-family="sans-serif" font-size="16" font-weight="400" fill="#64748b" text-anchor="middle">Prodigy Flight Deck</text>
+</svg>

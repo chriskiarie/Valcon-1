@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="160" viewBox="0 0 640 160">
+  <defs>
+    <filter id="glow3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- Descending ~5° nose-down -->
+  <g filter="url(#glow3)" transform="rotate(5, 320, 100)">
+    <!-- Fuselage -->
+    <path d="M60,40 Q140,35 220,40 Q300,45 380,40 Q460,35 540,40 Q580,45 600,50 Q600,70 580,75 Q540,80 460,75 Q380,70 300,75 Q220,80 140,75 Q60,80 40,70 Q20,65 40,60 Q60,40" fill="#94a3b8" opacity="0.95"/>
+    <!-- Cockpit windows -->
+    <path d="M80,48 Q100,48 100,58 Q80,58 Z" fill="#cbd5e1" opacity="0.8"/>
+    <!-- Wings -->
+    <path d="M120,70 Q200,60 280,65 Q360,70 440,60 Q520,65 Q440,75 Q360,80 Q280,85 Q200,75 Q120,70 Z" fill="#64748b" opacity="0.9"/>
+    <!-- Winglets -->
+    <path d="M220,45 Q230,25 240,35 Q250,45 Z" fill="#475569" opacity="0.9"/>
+    <path d="M420,45 Q430,25 440,35 Q450,45 Z" fill="#475569" opacity="0.9"/>
+    <!-- Tail -->
+    <path d="M60,55 Q70,25 80,45 Q90,55 Z" fill="#475569" opacity="0.9"/>
+    <!-- Engines -->
+    <ellipse cx="150" cy="68" rx="18" ry="10" fill="#475569" opacity="0.9"/>
+    <ellipse cx="490" cy="68" rx="18" ry="10" fill="#475569" opacity="0.9"/>
+  </g>
+</svg>

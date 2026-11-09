@@ -1,99 +1,107 @@
+"use client";
+
+import { ReactNode } from "react";
+
 export function PlaneIllustration({ className = "" }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 640 200"
+      viewBox="0 0 200 80"
       role="presentation"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="plane-body" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#ffffff" />
-          <stop offset="0.55" stopColor="#f4f7fa" />
-          <stop offset="1" stopColor="#bdc9d6" />
+        <linearGradient id="fuselageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#E9F0F9" stop-opacity="1" />
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="1" />
         </linearGradient>
-        <linearGradient id="plane-wing" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#e8eef4" />
-          <stop offset="1" stopColor="#8fa2b6" />
+        <linearGradient id="fuselageGradDark" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0B1626" stop-opacity="0.92" />
+          <stop offset="100%" stop-color="#1A2532" stop-opacity="0.92" />
         </linearGradient>
-        <linearGradient id="plane-engine" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f8fafc" />
-          <stop offset="0.6" stopColor="#cfd9e4" />
-          <stop offset="1" stopColor="#8194a9" />
+        <linearGradient id="windowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.4" />
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.1" />
         </linearGradient>
-        <linearGradient id="plane-fin" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f8fafc" />
-          <stop offset="1" stopColor="#b5c3d1" />
+        <linearGradient id="nacelleHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
         </linearGradient>
       </defs>
 
-      {/* T-tail */}
-      <path d="M 52 30 L 184 27 L 178 35 L 64 38 Z" fill="url(#plane-fin)" />
-      <path d="M 114 98 L 82 28 L 128 26 L 171 94 Z" fill="url(#plane-fin)" />
-      <path d="M 124 28 L 128 26 L 133 30 L 129 92 L 123 92 Z" fill="#dbe4ed" opacity="0.8" />
-
-      {/* Rear fuselage and main body */}
+      {/* Fuselage - dark mode: navy; light mode: off-white */}
       <path
-        d="M 632 95 C 644 98 646 107 636 113 C 625 121 601 127 568 129 L 206 133 C 162 133 127 126 107 114 L 95 106 L 112 95 L 204 85 L 534 81 C 575 81 607 87 632 95 Z"
-        fill="url(#plane-body)"
+        d="M20 30 Q 40 30 60 50 Q 80 70 100 70 Q 120 70 140 50 Q 160 30 180 30"
+        fill="url(#fuselageGradDark)"
+        stroke="#0e2a47"
+        stroke-width="0.5"
       />
-
-      {/* Belly shadow and livery line */}
+      {/* Fuselage top highlight (light mode) */}
       <path
-        d="M 112 114 C 128 124 160 130 204 130 L 568 126 C 590 125 608 121 622 116 L 620 121 C 604 127 584 130 566 131 L 206 135 C 160 135 127 127 107 114 Z"
-        fill="#7e90a4"
-        opacity="0.55"
+        d="M20 30 Q 40 28 60 45 Q 80 62 100 62 Q 120 62 140 45 Q 160 30 180 30"
+        fill="url(#fuselageGrad)"
+        stroke-width="0"
       />
-      <path d="M 118 118 L 610 114" stroke="#0e2a47" strokeWidth="4" strokeLinecap="round" opacity="0.92" />
-      <path d="M 122 123 L 604 119" stroke="#c9a25b" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
-
-      {/* Cabin windows */}
-      <g fill="#26384c">
-        <rect x="226" y="102" width="10" height="7" rx="3" />
-        <rect x="247" y="102" width="10" height="7" rx="3" />
-        <rect x="268" y="102" width="10" height="7" rx="3" />
-        <rect x="289" y="102" width="10" height="7" rx="3" />
-        <rect x="310" y="102" width="10" height="7" rx="3" />
-        <rect x="331" y="102" width="10" height="7" rx="3" />
-        <rect x="352" y="102" width="10" height="7" rx="3" />
-        <rect x="373" y="102" width="10" height="7" rx="3" />
-        <rect x="394" y="102" width="10" height="7" rx="3" />
-        <rect x="415" y="102" width="10" height="7" rx="3" />
-        <rect x="436" y="102" width="10" height="7" rx="3" />
-        <rect x="457" y="102" width="10" height="7" rx="3" />
-        <rect x="478" y="102" width="10" height="7" rx="3" />
-      </g>
-
-      {/* Door */}
-      <path d="M 532 98 C 536 98 538 100 538 104 L 538 118 C 538 121 536 123 532 123 L 523 123 L 523 98 Z" fill="#eef3f8" stroke="#93a5b8" strokeWidth="1.2" />
-
-      {/* Cockpit */}
-      <path d="M 586 96 C 602 96 617 99 629 104 L 625 109 C 611 106 598 104 585 103 Z" fill="#172b42" />
-      <path d="M 589 96 C 601 96 612 98 621 101" stroke="#aebdcc" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M 624 103 C 632 104 637 108 636 111 C 634 115 626 117 617 118 L 616 113 C 624 112 629 110 630 108 C 630 106 627 105 623 105 Z" fill="#d7e1eb" />
-
-      {/* Rear engine nacelle */}
+      {/* Cockpit bubble */}
+      <ellipse cx="50" cy="38" rx="14" ry="10" fill="#FFFFFF" opacity="0.3" />
+      {/* Windshield tint */}
+      <ellipse cx="50" cy="38" rx="12" ry="8" fill="#0B1626" opacity="0.15" />
+      {/* Window line */}
+      <path d="M32 30 L 68 30" stroke="url(#windowGrad)" stroke-width="0.8" fill="none" />
+      {/* Window dots */}
+      { [...Array(5)].map((_, i) => (
+        <circle
+          key={i}
+          cx={32 + (36 / 4) * i}
+          cy="34"
+          r="0.4"
+          fill="#FFFFFF"
+          opacity={0.5}
+        />
+      )) }
+      {/* Wings (swept, plan view) */}
       <path
-        d="M 178 99 C 199 95 236 95 259 100 L 276 106 C 282 108 282 116 275 120 L 255 128 C 230 133 197 132 178 125 Z"
-        fill="url(#plane-engine)"
-        stroke="#8295a9"
-        strokeWidth="1.2"
+        d="M55 45 Q 40 48 35 55 Q 30 60 32 68"
+        fill="none"
+        stroke="#0e2a47"
+        stroke-width="1.5"
+        stroke-linejoin="round"
       />
-      <path d="M 259 100 L 276 106 C 282 108 282 116 275 120 L 255 128 C 261 120 263 109 259 100 Z" fill="#33485f" />
-      <path d="M 191 103 C 208 100 232 100 251 104" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" opacity="0.65" />
-      <path d="M 183 119 C 202 125 231 127 253 122" stroke="#657a90" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
-
-      {/* Swept wing */}
-      <path d="M 286 126 L 400 181 L 449 181 L 389 126 Z" fill="url(#plane-wing)" />
-      <path d="M 286 126 L 400 181 L 414 181 L 304 126 Z" fill="#c3d0dd" opacity="0.7" />
-      <path d="M 389 126 L 449 181 L 456 181 L 402 126 Z" fill="#72869b" opacity="0.55" />
-
-      {/* Small tail bumper and details */}
-      <path d="M 106 96 L 118 91 L 119 95 L 109 100 Z" fill="#9cabb9" />
-      <path d="M 171 94 L 178 95 L 176 101 L 169 100 Z" fill="#7c8fa3" />
-      <circle cx="545" cy="110" r="1.2" fill="#8b9cad" />
-      <circle cx="555" cy="110" r="1.2" fill="#8b9cad" />
+      <path
+        d="M145 45 Q 160 48 165 55 Q 170 60 172 68"
+        fill="none"
+        stroke="#0e2a47"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+      />
+      {/* Wing leading-edge highlights */}
+      <path d="M55 45 Q 42 46 38 53" fill="#FFFFFF" opacity="0.08" />
+      <path d="M145 45 Q 158 46 152 53" fill="#FFFFFF" opacity="0.08" />
+      {/* Wing trailing-edge */}
+      <path d="M35 55 Q 28 62 22 70 Q 16 75 18 78" fill="none" stroke="#0e2a47" stroke-width="0.8" stroke-linejoin="round" />
+      <path d="M165 55 Q 172 62 178 70 Q 184 75 182 78" fill="none" stroke="#0e2a47" stroke-width="0.8" stroke-linejoin="round" />
+      {/* Wing root panel lines */}
+      <path d="M55 58 Q 45 62 40 70" fill="none" stroke="#0e2a47" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.18" />
+      <path d="M145 58 Q 155 62 160 70" fill="none" stroke="#0e2a47" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.18" />
+      {/* Engines (rear fuselage-mounted) */}
+      <path d="M78 52 Q 88 55 95 58 Q 102 62 108 62" fill="url(#fuselageGradDark)" stroke="#0e2a47" stroke-width="0.5" />
+      <path d="M112 52 Q 122 55 129 58 Q 136 62 142 62" fill="url(#fuselageGradDark)" stroke="#0e2a47" stroke-width="0.5" />
+      {/* Engine exhaust openings */}
+      <rect x="93" y="58" width="8" height="5" fill="#1a2532" opacity="0.7" />
+      <rect x="138" y="58" width="8" height="5" fill="#1a2532" opacity="0.7" />
+      {/* Wingtip lights (red left, green right) */}
+      <circle cx="30" cy="50" r="1.5" fill="#FF0000" opacity="0.9" />
+      <circle cx="170" cy="50" r="1.5" fill="#00FF00" opacity="0.9" />
+      {/* Tail horizontal stabiliser */}
+      <path d="M130 55 Q 145 52 155 58 Q 170 65 175 70" fill="none" stroke="#0e2a47" stroke-width="1" stroke-linejoin="round" />
+      {/* Tail vertical stabiliser */}
+      <path d="M170 55 Q 185 45 195 55 Q 205 65 200 75" fill="none" stroke="#0e2a47" stroke-width="1" stroke-linejoin="round" />
+      {/* Tail tip light */}
+      <circle cx="200" cy="70" r="1" fill="#FFFFFF" opacity="0.8" />
+      {/* Wing tip splitter lines */}
+      <line x1="32" y1="68" x2="28" y2="78" stroke="#0e2a47" stroke-width="0.3" opacity="0.12" />
+      <line x1="172" y1="68" x2="178" y2="78" stroke="#0e2a47" stroke-width="0.3" opacity="0.12" />
     </svg>
   );
 }

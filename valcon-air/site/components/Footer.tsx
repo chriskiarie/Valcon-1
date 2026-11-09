@@ -86,6 +86,9 @@ export default function Footer({ site }: FooterProps) {
           <p className="footer-concept-pill">
             Concept B · Nightfall
           </p>
+          <Link href="/credits/" className="footer-credits-link">
+            Image credits
+          </Link>
         </div>
 
         <p className="footer-credit">

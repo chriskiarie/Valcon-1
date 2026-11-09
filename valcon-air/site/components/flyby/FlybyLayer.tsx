@@ -5,15 +5,16 @@ import { FlybyPlaneController } from "@/lib/flyby/director";
 import { flybyDirector } from "@/lib/flyby/director";
 import { ContrailRenderer } from "@/lib/flyby/contrail";
 import { PlaneImage } from "@/lib/flyby/planes";
-import { makeFlybyPath } from "@/lib/flyby/path";
-import { pathPositionAt } from "@/lib/flyby/path";
+import { makeFlybyPath, pathPositionAt } from "@/lib/flyby/path";
 
 /**
  * FlybyLayer — Concept B Nightfall flyby system.
  *
  * A single fixed full-viewport overlay mounted once in the root layout.
- * Contains one canvas (the trail) and one plane element (image + nav lights).
+ * Contains one canvas (the trail) and one plane element (navy silhouette).
  * Runs on time, not on scroll. One plane at a time. Reduced-motion: off.
+ *
+ * Layering: above page content (z 55), below header / modal / scrim.
  */
 export default function FlybyLayer() {
   const layerRef = useRef<HTMLDivElement>(null);
@@ -31,9 +32,10 @@ export default function FlybyLayer() {
     currentPlane: null as PlaneImage | null,
     isRtl: false,
     isFinalApproach: false,
+    onComplete: null as (() => void) | null,
   });
 
-  // Plane dimensions from useState with lazy initializer (avoids ref access during render)
+  // Plane dimensions from useState with lazy initializer
   const [planeWidth, setPlaneWidth] = useState<number>(() => {
     if (typeof window === "undefined") return 0;
     return window.innerWidth >= 768 ? 240 : 150;
@@ -70,6 +72,7 @@ export default function FlybyLayer() {
     }
     stateRef.current.currentPath = null;
     stateRef.current.currentPlane = null;
+    stateRef.current.onComplete = null;
     contrailRef.current?.stop();
   }, []);
 
@@ -78,6 +81,7 @@ export default function FlybyLayer() {
       path: ReturnType<typeof makeFlybyPath>,
       plane: PlaneImage,
       durationSecParam: number,
+      onComplete: () => void,
     ) => {
       stopFlyby();
 
@@ -87,6 +91,7 @@ export default function FlybyLayer() {
       stateRef.current.startTime = performance.now();
       stateRef.current.isRtl = path.startX > path.endX;
       stateRef.current.isFinalApproach = false;
+      stateRef.current.onComplete = onComplete;
 
       const img = planeRef.current;
       const lights = navLightsRef.current;
@@ -155,6 +160,7 @@ export default function FlybyLayer() {
           rafRef.current = requestAnimationFrame(animate);
         } else {
           stopFlyby();
+          s.onComplete?.();
         }
       };
 
@@ -163,7 +169,7 @@ export default function FlybyLayer() {
     [stopFlyby, planeWidth, planeHeight],
   );
 
-  // Register controller with director
+  // Register controller with director — director calls startFlyby ONCE per flyby
   useEffect(() => {
     const controller: FlybyPlaneController = {
       startFlyby,
@@ -232,7 +238,9 @@ export default function FlybyLayer() {
           zIndex: 10,
           opacity: "0",
           willChange: "transform",
-          filter: "drop-shadow(0 0 18px rgba(110, 168, 255, 0.35))",
+          // Navy silhouette shadow — matches brief: drop-shadow(0 28px 22px rgba(11,22,38,0.22))
+          filter:
+            "drop-shadow(0 28px 22px rgba(11, 22, 38, 0.22)) drop-shadow(0 8px 16px rgba(11, 22, 38, 0.12))",
         }}
       />
       <div

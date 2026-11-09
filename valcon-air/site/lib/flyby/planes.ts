@@ -1,10 +1,9 @@
 /* ============================================================
    Concept B Nightfall — Flyby aircraft image pool
    
-   Each entry describes one aircraft image used in flybys.
-   All images are transparent WebP cutouts, side view, nose to
-   the right. Nightfall treatment: desaturated ~85%, cool tint,
-   lifted highlights. No readable airline name/logo/registration.
+   Navy silhouette of a CRJ-type regional jet, side view, nose
+   right. Solid #0e2a47 with drop-shadow applied in FlybyLayer.
+   No airline markings, no registration, no readable text.
    ============================================================ */
 
 export type PlaneImage = {
@@ -37,76 +36,75 @@ export type PlaneImage = {
 /**
  * Pool of aircraft images for flybys.
  *
+ * All entries use the same navy silhouette SVG with different
+ * baseAngle values to simulate level / climbing / descending /
+ * banked attitudes. Replace src with client-supplied WebP
+   cutouts when available.
+ *
  * Image (1) level flight — hero flyby uses (1) or (4).
  * Image (2) climbing ~8° nose-up.
  * Image (3) descending ~5° nose-down — final-approach always uses (3).
  * Image (4) gentle banked turn.
- *
- * At least two should be CRJ-family or similar regional jets.
- *
- * Note: These are SVG cutouts serving as placeholders until client-supplied
- * real aircraft photography is available. Replace src with WebP assets and
- * update creditKey accordingly.
  */
 export const PLANE_IMAGES: PlaneImage[] = [
   {
     // (1) Level flight — CRJ-family regional jet
-    src: "/images/flyby/plane-level.svg",
+    src: "/images/flyby/plane-silhouette.svg",
     width: 640,
     height: 160,
     facesRight: true,
-    tailAnchor: [0.05, 0.5],
+    tailAnchor: [0.05, 0.50],
     leftWingtipAnchor: [0.08, 0.42],
     rightWingtipAnchor: [0.92, 0.42],
-    exhaustAnchors: [[0.25, 0.55], [0.35, 0.55]],
+    exhaustAnchors: [[0.24, 0.52], [0.34, 0.52]],
     baseAngle: 0,
-    desktopScale: 0.38, // ~240px wide
-    mobileScale: 0.24,  // ~150px wide
+    desktopScale: 0.375, // ~240px wide
+    mobileScale: 0.234,  // ~150px wide
     creditKey: "flyby-plane-1",
   },
   {
     // (2) Climbing ~8° nose-up
-    src: "/images/flyby/plane-climbing.svg",
+    src: "/images/flyby/plane-silhouette.svg",
     width: 640,
     height: 160,
     facesRight: true,
-    tailAnchor: [0.05, 0.55],
-    leftWingtipAnchor: [0.08, 0.45],
-    rightWingtipAnchor: [0.92, 0.45],
-    exhaustAnchors: [[0.28, 0.58], [0.38, 0.58]],
+    tailAnchor: [0.05, 0.52],
+    leftWingtipAnchor: [0.08, 0.44],
+    rightWingtipAnchor: [0.92, 0.44],
+    exhaustAnchors: [[0.26, 0.54], [0.36, 0.54]],
     baseAngle: 8,
-    desktopScale: 0.38,
-    mobileScale: 0.24,
+    desktopScale: 0.375,
+    mobileScale: 0.234,
     creditKey: "flyby-plane-2",
   },
   {
     // (3) Descending ~5° nose-down — final approach always uses this
-    src: "/images/flyby/plane-descending.svg",
+    src: "/images/flyby/plane-silhouette.svg",
     width: 640,
     height: 160,
     facesRight: true,
-    tailAnchor: [0.05, 0.45],
-    leftWingtipAnchor: [0.08, 0.38],
-    rightWingtipAnchor: [0.92, 0.38],
-    exhaustAnchors: [[0.22, 0.52], [0.32, 0.52]],
+    tailAnchor: [0.05, 0.48],
+    leftWingtipAnchor: [0.08, 0.40],
+    rightWingtipAnchor: [0.92, 0.40],
+    exhaustAnchors: [[0.22, 0.50], [0.32, 0.50]],
     baseAngle: -5,
-    desktopScale: 0.38,
-    mobileScale: 0.24,
+    desktopScale: 0.375,
+    mobileScale: 0.234,
     creditKey: "flyby-plane-3",
   },
   {
     // (4) Gentle banked turn
-    src: "/images/flyby/plane-banked.svg",
+    src: "/images/flyby/plane-silhouette.svg",
     width: 640,
     height: 160,
     facesRight: true,
-    tailAnchor: [0.05, 0.5],
-    leftWingtipAnchor: [0.08, 0.4],
-    rightWingtipAnchor: [0.92, 0.4],
-    exhaustAnchors: [[0.26, 0.54], [0.36, 0.54]],
+    tailAnchor: [0.05, 0.50],
+    leftWingtipAnchor: [0.08, 0.41],
+    rightWingtipAnchor: [0.92, 0.41],
+    exhaustAnchors: [[0.25, 0.51], [0.35, 0.51]],
     baseAngle: 6,
-    desktopScale: 0.38,
-    mobileScale: 0.24,
+    desktopScale: 0.375,
+    mobileScale: 0.234,
     creditKey: "flyby-plane-4",
   },
 ] as const;

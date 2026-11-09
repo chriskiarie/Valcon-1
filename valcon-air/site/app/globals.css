@@ -2196,3 +2196,38 @@
     animation: none !important;
   }
 }
+/* ============ CREDITS PAGE ============ */
+.credits-section {
+  margin-bottom: var(--space-12);
+}
+
+.credits-section-title {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display), var(--font-fallback-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+}
+
+.credits-entry {
+  margin: 0 0 var(--space-4);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-copy);
+}
+
+.credits-aircraft {
+  margin-bottom: var(--space-6);
+}
+
+.credits-aircraft-name {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display), var(--font-fallback-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+}

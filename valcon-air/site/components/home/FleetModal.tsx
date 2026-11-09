@@ -237,7 +237,10 @@ export default function FleetModal({
               ) : null}
 
               <p className="fleet-modal-disclaimer">
-                Illustrative images. Client aircraft photography to follow.
+                Illustrative images. Client aircraft photography to follow.{" "}
+                <Link href="/credits/" className="fleet-modal-credits-link">
+                  Image credits
+                </Link>
               </p>
 
               <div className="fleet-modal-actions">

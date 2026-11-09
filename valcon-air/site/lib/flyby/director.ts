@@ -216,73 +216,18 @@ export class FlybyDirector {
   ) {
     if (!this.controller) return;
 
-    const startTime = this.now();
-    const endTime = startTime + durationSec;
-
-    const animate = () => {
-      if (!this.isRunning || !this.controller) return;
-
-      const t = Math.min((this.now() - startTime) / durationSec, 1);
-      const pos = pathPositionAt(path, t);
-
-      // Plane transform: translate + rotate to tangent + base angle
-      // scaleX(-1) for right-to-left, applied before rotation
-      const isRtl = path.startX > path.endX;
-      const baseAngle = plane.baseAngle;
-      const totalAngle = isRtl ? pos.angle + 180 + baseAngle : pos.angle + baseAngle;
-
-      // Scale depth: 0.92 to 1.0 along path
-      const scale = 0.92 + (1 - t) * 0.08;
-
-      // Final approach: scale down to 0.55 and fade over last 15%
-      let finalScale = scale;
-      let finalAlpha = 1;
-      if (kind === "final-approach" && t > 0.85) {
-        const landT = (t - 0.85) / 0.15;
-        finalScale = scale * (1 - landT * 0.45); // to 0.55
-        finalAlpha = 1 - landT;
-      }
-
-      this.controller.startFlyby(
-        path,
-        plane,
-        durationSec,
-        () => {
-          // Flyby complete
-        },
-      );
-
-      // Set contrail anchors from exhaust positions
-      // Transform exhaust anchors by plane's current transform
-      const cx = pos.x;
-      const cy = pos.y;
-      const angleRad = (totalAngle * Math.PI) / 180;
-      const cos = Math.cos(angleRad);
-      const sin = Math.sin(angleRad);
-      const flip = isRtl ? -1 : 1;
-
-      const anchors = plane.exhaustAnchors.map(([ax, ay]) => {
-        // Anchor is a fraction of image width/height
-        // Image is scaled: width * scale, height * scale
-        const px = ax * plane.width * scale;
-        const py = ay * plane.height * scale;
-        // Rotate and flip
-        const rx = flip * (px * cos - py * sin);
-        const ry = flip * (px * sin + py * cos);
-        return { x: cx + rx, y: cy + ry };
-      });
-
-      this.controller.setAnchors(anchors);
-
-      if (t < 1) {
-        requestAnimationFrame(animate);
-      } else {
+    // Delegate the entire animation to the controller (FlybyLayer).
+    // The controller runs its own requestAnimationFrame loop, sets
+    // contrail anchors each frame, and calls onComplete when done.
+    this.controller.startFlyby(
+      path,
+      plane,
+      durationSec,
+      () => {
         // Flyby finished
-        this.controller.stop();
-      }
-    };
-
-    requestAnimationFrame(animate);
+        this.controller?.stop();
+      },
+    );
   }
 
   /** Check if a path's vertical band (plane height + 40px) intersects protected elements. */

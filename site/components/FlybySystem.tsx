@@ -1,156 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import gsap from "gsap";
+import { useEffect, useRef, useState } from "react";
 
-// ── Types ──────────────────────────────────────────────────────────────────────
-
-type Particle = {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-  alpha: number;
-  life: number;
-  maxLife: number;
-  rotation: number;
-  driftX: number;
-  driftY: number;
-};
-
-// ── Particle system (contrail) ────────────────────────────────────────────────
-
-function spawnParticle(
-  particles: Particle[],
-  x: number,
-  y: number,
-  isMobile: boolean,
-): void {
-  const cap = isMobile ? 60 : 140;
-  if (particles.length >= cap) return;
-
-  const count = isMobile ? 1 : 2;
-  for (let i = 0; i < count; i += 1) {
-    particles.push({
-      x: x + (Math.random() - 0.5) * 4,
-      y: y + (Math.random() - 0.5) * 4,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: -(1.5 + Math.random() * 2.5), // upward drift
-      size: 0.4 + Math.random() * 0.6,
-      alpha: 0.55 + Math.random() * 0.25,
-      life: 0,
-      maxLife: 2.6 + Math.random() * 1.2,
-      rotation: Math.random() * Math.PI * 2,
-      driftX: (Math.random() - 0.5) * 0.4,
-      driftY: -(0.5 + Math.random() * 1.5),
-    });
-  }
-}
-
-function updateParticles(particles: Particle[], dt: number): void {
-  for (let i = particles.length - 1; i >= 0; i -= 1) {
-    const p = particles[i];
-    p.life += dt;
-    if (p.life >= p.maxLife) {
-      particles.splice(i, 1);
-      continue;
-    }
-    const t = p.life / p.maxLife;
-    const ease = 1 - Math.pow(1 - t, 2);
-    // Position drift
-    p.x += p.vx * dt * 60 + p.driftX * dt * 60;
-    p.y += p.vy * dt * 60 + p.driftY * dt * 60;
-    // Turbulence
-    p.x += (Math.random() - 0.5) * 0.8 * dt * 60;
-    p.y += (Math.random() - 0.5) * 0.4 * dt * 60;
-    // Size grows 0.4→2.4
-    p.size = p.size * (0.4 + (2.4 - 0.4) * ease);
-    // Alpha fades quadratically
-    p.alpha = Math.max(0, (0.75 * (1 - ease)) * (1 - t * 0.3));
-    // Rotation
-    p.rotation += dt * 0.3;
-  }
-}
-
-function renderParticles(
-  ctx: CanvasRenderingContext2D,
-  particles: Particle[],
-  dpr: number,
-): void {
-  if (particles.length === 0) return;
-
-  // Shade pass (behind)
-  for (let i = 0; i < particles.length; i += 1) {
-    const p = particles[i];
-    const size = p.size * 18 * 1.25;
-    const alpha = p.alpha * 0.3;
-    ctx!.save();
-    ctx!.globalAlpha = alpha;
-    ctx!.translate(p.x, p.y);
-    ctx!.rotate(p.rotation);
-    const grad = ctx!.createRadialGradient(0, 0, 0, 0, 0, size / 2);
-    grad.addColorStop(0, "rgba(70,95,135,0.5)");
-    grad.addColorStop(0.6, "rgba(70,95,135,0.15)");
-    grad.addColorStop(1, "rgba(70,95,135,0)");
-    ctx!.fillStyle = grad;
-    ctx!.fillRect(-size / 2, -size / 2, size, size);
-    ctx!.restore();
-  }
-
-  // Highlight pass (on top)
-  for (let i = 0; i < particles.length; i += 1) {
-    const p = particles[i];
-    const size = p.size * 18;
-    const alpha = p.alpha;
-    ctx!.save();
-    ctx!.globalAlpha = alpha;
-    ctx!.translate(p.x, p.y);
-    ctx!.rotate(p.rotation);
-    const grad = ctx!.createRadialGradient(0, 0, 0, 0, 0, size / 2);
-    grad.addColorStop(0, "rgba(255,255,255,0.85)");
-    grad.addColorStop(0.5, "rgba(255,255,255,0.35)");
-    grad.addColorStop(1, "rgba(255,255,255,0)");
-    ctx!.fillStyle = grad;
-    ctx!.fillRect(-size / 2, -size / 2, size, size);
-    ctx!.restore();
-  }
-}
-
-// ── Main component ────────────────────────────────────────────────────────────
-
-const FLIGHT_DURATION = 12; // seconds (10-14 range)
-const FLIGHT_INTERVAL = 25; // seconds (20-30 range)
 const PLANE_IMG = "/images/flyby/5y-val.jpg";
 
 export function FlybySystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const planeRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const planeRef = useRef<HTMLImageElement>(null);
   const [cardVisible, setCardVisible] = useState(false);
-  const [cardData, setCardData] = useState({ x: 0, y: 0 });
+  const [cardPos, setCardPos] = useState({ x: 0, y: 0 });
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Internal mutable state (not React state)
   const stateRef = useRef({
-    particles: [] as Particle[],
+    particles: [] as { x: number; y: number; vx: number; vy: number; size: number; alpha: number; life: number; maxLife: number }[],
     running: false,
     rafId: 0,
     lastTime: 0,
     flightActive: false,
     flightStart: 0,
-    flightEnd: 0,
-    isMobile: false,
-    dpr: 1,
-    ctx: null as CanvasRenderingContext2D | null,
     disposed: false,
-    nextFlightTimer: 0,
-    // Contrail emission state
+    nextTimer: 0,
     lastEmit: 0,
-    emitInterval: 0.05, // seconds between emissions
+    isMobile: false,
   });
 
-  // ── Check reduced motion ──────────────────────────────────────────────────
+  // Check reduced motion
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
@@ -159,7 +33,7 @@ export function FlybySystem() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // ── Setup canvas ──────────────────────────────────────────────────────────
+  // Main animation effect
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -167,17 +41,15 @@ export function FlybySystem() {
     const plane = planeRef.current;
     if (!canvas || !plane) return;
 
-    const ctx = canvas!.getContext("2d");
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const state = stateRef.current;
-    state.ctx = ctx;
     state.isMobile = window.innerWidth < 768;
-    state.dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
-    // Resize canvas
+    // Setup canvas
     function resizeCanvas() {
-      const dpr = state.dpr;
       canvas!.width = Math.round(window.innerWidth * dpr);
       canvas!.height = Math.round(window.innerHeight * dpr);
       canvas!.style.width = `${window.innerWidth}px`;
@@ -186,17 +58,13 @@ export function FlybySystem() {
     }
     resizeCanvas();
 
-    // ── Flight path ─────────────────────────────────────────────────────────
-    // Straight left to right with slight vertical drift
-    function getPathPoints() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const startY = h * (0.25 + Math.random() * 0.2); // upper band
-      const endY = startY + (Math.random() - 0.5) * h * 0.15; // slight drift
-      const cp1y = startY + (Math.random() - 0.5) * h * 0.08;
-      const cp2y = endY + (Math.random() - 0.5) * h * 0.08;
-      return { startX: -200, endX: w + 200, startY, endY, cp1y, cp2y };
-    }
+    // Flight path
+    let pathStartX = -300;
+    let pathEndX = window.innerWidth + 300;
+    let pathStartY = window.innerHeight * 0.3;
+    let pathEndY = pathStartY + (Math.random() - 0.5) * window.innerHeight * 0.1;
+    let cp1y = pathStartY + (Math.random() - 0.5) * window.innerHeight * 0.06;
+    let cp2y = pathEndY + (Math.random() - 0.5) * window.innerHeight * 0.06;
 
     function bezier(t: number, p0: number, p1: number, p2: number, p3: number) {
       const c = 1 - t;
@@ -208,9 +76,32 @@ export function FlybySystem() {
       return 3 * c * c * (p1 - p0) + 6 * c * t * (p2 - p1) + 3 * t * t * (p3 - p2);
     }
 
-    let path: ReturnType<typeof getPathPoints> | null = null;
+    // Start a flight
+    function startFlight() {
+      if (state.disposed) return;
+      if (state.flightActive) return;
+      // Wait for particles to dissolve
+      if (state.particles.length > 5) {
+        state.nextTimer = window.setTimeout(startFlight, 500);
+        return;
+      }
 
-    // ── Animation loop ──────────────────────────────────────────────────────
+      // New random path
+      pathStartY = window.innerHeight * (0.2 + Math.random() * 0.2);
+      pathEndY = pathStartY + (Math.random() - 0.5) * window.innerHeight * 0.12;
+      cp1y = pathStartY + (Math.random() - 0.5) * window.innerHeight * 0.08;
+      cp2y = pathEndY + (Math.random() - 0.5) * window.innerHeight * 0.08;
+      pathStartX = -300;
+      pathEndX = window.innerWidth + 300;
+
+      state.flightActive = true;
+      state.flightStart = performance.now();
+      state.lastEmit = 0;
+      plane!.style.opacity = "1";
+      plane!.style.visibility = "visible";
+    }
+
+    // Animation tick
     function tick(now: number) {
       if (state.disposed) return;
 
@@ -221,106 +112,124 @@ export function FlybySystem() {
       ctx!.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
       // Update particles
-      updateParticles(state.particles, dt);
+      for (let i = state.particles.length - 1; i >= 0; i -= 1) {
+        const p = state.particles[i];
+        p.life += dt;
+        if (p.life >= p.maxLife) {
+          state.particles.splice(i, 1);
+          continue;
+        }
+        const t = p.life / p.maxLife;
+        const ease = 1 - Math.pow(1 - t, 2);
+        p.x += p.vx * dt * 60;
+        p.y += p.vy * dt * 60;
+        p.x += (Math.random() - 0.5) * 0.6 * dt * 60;
+        p.y += (Math.random() - 0.5) * 0.3 * dt * 60;
+        p.size = p.size * (0.4 + (2.4 - 0.4) * ease);
+        p.alpha = Math.max(0, 0.7 * (1 - ease) * (1 - t * 0.3));
+      }
 
-      // Render particles (behind plane)
-      renderParticles(ctx!, state.particles, state.dpr);
+      // Render particles
+      for (const p of state.particles) {
+        const size = p.size * 18;
+        ctx!.save();
+        ctx!.globalAlpha = p.alpha * 0.3;
+        ctx!.translate(p.x, p.y);
+        const grad = ctx!.createRadialGradient(0, 0, 0, 0, 0, size * 0.625);
+        grad.addColorStop(0, "rgba(70,95,135,0.5)");
+        grad.addColorStop(0.6, "rgba(70,95,135,0.15)");
+        grad.addColorStop(1, "rgba(70,95,135,0)");
+        ctx!.fillStyle = grad;
+        ctx!.fillRect(-size / 2, -size / 2, size, size);
+        ctx!.restore();
+      }
+      for (const p of state.particles) {
+        const size = p.size * 18;
+        ctx!.save();
+        ctx!.globalAlpha = p.alpha;
+        ctx!.translate(p.x, p.y);
+        const grad = ctx!.createRadialGradient(0, 0, 0, 0, 0, size / 2);
+        grad.addColorStop(0, "rgba(255,255,255,0.85)");
+        grad.addColorStop(0.5, "rgba(255,255,255,0.35)");
+        grad.addColorStop(1, "rgba(255,255,255,0)");
+        ctx!.fillStyle = grad;
+        ctx!.fillRect(-size / 2, -size / 2, size, size);
+        ctx!.restore();
+      }
 
       // Flight animation
-      if (state.flightActive && path) {
+      if (state.flightActive) {
         const elapsed = (now - state.flightStart) / 1000;
-        const t = Math.min(elapsed / FLIGHT_DURATION, 1);
+        const t = Math.min(elapsed / 12, 1);
 
-        // Position along path
-        const x = bezier(t, path.startX, path.startX + (path.endX - path.startX) * 0.25, path.startX + (path.endX - path.startX) * 0.75, path.endX);
-        const y = bezier(t, path.startY, path.cp1y, path.cp2y, path.endY);
+        const x = bezier(t, pathStartX, pathStartX + (pathEndX - pathStartX) * 0.25, pathStartX + (pathEndX - pathStartX) * 0.75, pathEndX);
+        const y = bezier(t, pathStartY, cp1y, cp2y, pathEndY);
 
-        // Tangent angle for banking
-        const dx = bezierTangent(t, path.startX, path.startX + (path.endX - path.startX) * 0.25, path.startX + (path.endX - path.startX) * 0.75, path.endX);
-        const dy = bezierTangent(t, path.startY, path.cp1y, path.cp2y, path.endY);
+        const dx = bezierTangent(t, pathStartX, pathStartX + (pathEndX - pathStartX) * 0.25, pathStartX + (pathEndX - pathStartX) * 0.75, pathEndX);
+        const dy = bezierTangent(t, pathStartY, cp1y, cp2y, pathEndY);
         const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+        const bank = Math.sin(t * Math.PI) * 5;
+        const scale = 0.9 + (1 - t) * 0.1;
 
-        // Bank angle (max 6°)
-        const bank = Math.sin(t * Math.PI) * 6;
-
-        // Scale (slight depth)
-        const scale = 0.92 + (1 - t) * 0.08;
-
-        // Update plane position
         plane!.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${angle + bank}deg) scale(${scale})`;
         plane!.style.opacity = "1";
-        plane!.dataset.active = "true";
+        plane!.style.visibility = "visible";
 
-        // Emit contrail particles from behind the plane
-        if (now - state.lastEmit > state.emitInterval * 1000) {
-          // Tail position (behind plane, offset by rotation)
-          const tailOffset = -80 * scale; // behind the plane
+        // Emit contrail particles
+        if (now - state.lastEmit > 50) {
           const rad = (angle + bank) * (Math.PI / 180);
-          const tailX = x + Math.cos(rad) * tailOffset;
-          const tailY = y + Math.sin(rad) * tailOffset;
-          spawnParticle(state.particles, tailX, tailY, state.isMobile);
+          const tailX = x - Math.cos(rad) * 60 * scale;
+          const tailY = y - Math.sin(rad) * 60 * scale;
+          const cap = state.isMobile ? 60 : 140;
+          if (state.particles.length < cap) {
+            const count = state.isMobile ? 1 : 2;
+            for (let i = 0; i < count; i += 1) {
+              state.particles.push({
+                x: tailX + (Math.random() - 0.5) * 4,
+                y: tailY + (Math.random() - 0.5) * 4,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: -(1.5 + Math.random() * 2.5),
+                size: 0.4 + Math.random() * 0.6,
+                alpha: 0.55 + Math.random() * 0.25,
+                life: 0,
+                maxLife: 2.6 + Math.random() * 1.2,
+              });
+            }
+          }
           state.lastEmit = now;
         }
 
-        // Check if flight is done
+        // Flight done
         if (t >= 1) {
           state.flightActive = false;
           plane!.style.opacity = "0";
-          plane!.dataset.active = "false";
-          plane!.style.transform = "none";
+          plane!.style.visibility = "hidden";
 
-          // Schedule next flight after contrail dissolves
-          // Wait for particles to clear (max life ~4s) + interval
-          const dissolveWait = 4000 + Math.random() * 10000; // 4-14s
-          state.nextFlightTimer = window.setTimeout(() => {
+          // Schedule next flight
+          const wait = 20000 + Math.random() * 10000; // 20-30s
+          state.nextTimer = window.setTimeout(() => {
             startFlight();
-          }, FLIGHT_INTERVAL * 1000 + dissolveWait);
+          }, wait);
         }
       }
 
       state.rafId = requestAnimationFrame(tick);
     }
 
-    // ── Start a flight ──────────────────────────────────────────────────────
-    function startFlight() {
-      if (state.disposed) return;
-      if (state.flightActive) return;
-      // Wait for contrail to dissolve
-      if (state.particles.length > 0) {
-        state.nextFlightTimer = window.setTimeout(startFlight, 500);
-        return;
-      }
-
-      path = getPathPoints();
-      state.flightActive = true;
-      state.flightStart = performance.now();
-      state.lastEmit = 0;
-    }
-
-    // ── Click handler on plane ──────────────────────────────────────────────
+    // Click handler
     function handlePlaneClick(e: MouseEvent) {
       e.stopPropagation();
       if (!state.flightActive) return;
-      // Get plane position
       const rect = plane!.getBoundingClientRect();
-      setCardData({
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-      });
+      setCardPos({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
       setCardVisible(true);
     }
 
-    // ── Click handler to close card ─────────────────────────────────────────
-    function handleCardClose() {
-      setCardVisible(false);
-    }
-
-    // Make plane clickable
+    plane!.addEventListener("click", handlePlaneClick);
     plane!.style.pointerEvents = "auto";
     plane!.style.cursor = "pointer";
-    plane!.addEventListener("click", handlePlaneClick);
 
-    // ── Visibility change ────────────────────────────────────────────────────
+    // Visibility change
     function onVisibilityChange() {
       if (document.hidden) {
         if (state.rafId) cancelAnimationFrame(state.rafId);
@@ -332,44 +241,40 @@ export function FlybySystem() {
     }
     document.addEventListener("visibilitychange", onVisibilityChange);
 
-    // ── Resize handler ──────────────────────────────────────────────────────
+    // Resize
     function onResize() {
       resizeCanvas();
       state.isMobile = window.innerWidth < 768;
     }
     window.addEventListener("resize", onResize, { passive: true });
 
-    // ── Start first flight ──────────────────────────────────────────────────
-    // Initial delay before first flight
-    const initialDelay = 1000 + Math.random() * 1000;
-    state.nextFlightTimer = window.setTimeout(() => {
+    // Start first flight after 1s
+    state.nextTimer = window.setTimeout(() => {
       startFlight();
-    }, initialDelay);
+    }, 1000);
 
     // Start animation loop
     state.lastTime = performance.now();
     state.rafId = requestAnimationFrame(tick);
 
-    // ── Cleanup ──────────────────────────────────────────────────────────────
+    // Cleanup
     return () => {
       state.disposed = true;
       if (state.rafId) cancelAnimationFrame(state.rafId);
-      if (state.nextFlightTimer) clearTimeout(state.nextFlightTimer);
+      if (state.nextTimer) clearTimeout(state.nextTimer);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       plane!.removeEventListener("click", handlePlaneClick);
       state.particles = [];
-      if (ctx) ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
   }, [reducedMotion]);
 
-  // ── Card close on outside click ──────────────────────────────────────────
+  // Close card on outside click
   useEffect(() => {
     if (!cardVisible) return;
     const handler = () => setCardVisible(false);
-    const timer = setTimeout(() => {
-      document.addEventListener("click", handler);
-    }, 100);
+    const timer = setTimeout(() => document.addEventListener("click", handler), 100);
     return () => {
       clearTimeout(timer);
       document.removeEventListener("click", handler);
@@ -384,40 +289,39 @@ export function FlybySystem() {
         ref={canvasRef}
         className="contrail-canvas"
         aria-hidden="true"
+        style={{ zIndex: 5 }}
       />
-      <div
+      <img
         ref={planeRef}
+        src={PLANE_IMG}
+        alt=""
+        draggable={false}
         className="flyby-plane"
         data-active="false"
         aria-hidden="true"
         style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: 10,
+          width: "clamp(12rem, 22vw, 20rem)",
+          height: "auto",
+          opacity: 0,
+          visibility: "hidden",
           pointerEvents: "auto",
           cursor: "pointer",
+          transformOrigin: "50% 50%",
+          filter: "drop-shadow(0 8px 16px rgba(11, 22, 38, 0.3))",
         }}
-      >
-        <img
-          src={PLANE_IMG}
-          alt=""
-          draggable={false}
-          style={{
-            width: "100%",
-            height: "auto",
-            display: "block",
-            filter: "drop-shadow(0 8px 16px rgba(11, 22, 38, 0.25))",
-          }}
-        />
-      </div>
+      />
 
-      {/* Info card */}
       {cardVisible && (
         <div
-          ref={cardRef}
-          className="flyby-info-card"
           onClick={(e) => e.stopPropagation()}
           style={{
             position: "fixed",
-            left: `${Math.min(cardData.x, window.innerWidth - 280)}px`,
-            top: `${cardData.y + 20}px`,
+            left: `${Math.min(cardPos.x, window.innerWidth - 280)}px`,
+            top: `${cardPos.y + 20}px`,
             zIndex: 100,
             background: "var(--color-surface)",
             border: "1px solid var(--color-line)",

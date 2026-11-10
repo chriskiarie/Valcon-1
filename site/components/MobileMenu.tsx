@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import type { Site } from "@/lib/types";
@@ -121,13 +120,8 @@ export function MobileMenu({
     >
       <div className="mobile-menu__top">
         <span id={`${id}-title`} className="wordmark">
-          <Image
-            src="/images/logo.png"
-            alt="Valcon Air"
-            width={400}
-            height={120}
-            className="wordmark__logo"
-          />
+          <span className="wordmark__valcon">VALCON</span>
+          <span className="wordmark__air">AIR</span>
         </span>
         <button
           ref={closeRef}

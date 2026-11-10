@@ -377,11 +377,13 @@
   color: var(--color-on-dark);
 }
 
-.wordmark__logo {
-  display: block;
-  width: auto;
-  height: 3.5rem;
-  object-fit: contain;
+/* Wordmark treatment: "VALCON" in brand violet, "AIR" in brand orange-red */
+.wordmark__valcon {
+  color: var(--brand-violet);
+}
+
+.wordmark__air {
+  color: var(--brand-orange);
 }
 
 .site-nav {

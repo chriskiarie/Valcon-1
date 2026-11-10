@@ -17,8 +17,8 @@ export function Footer({ compact = false }: { compact?: boolean }) {
               <Image
                 src="/images/logo.png"
                 alt="Valcon Air"
-                width={300}
-                height={90}
+                width={400}
+                height={120}
                 className="wordmark__logo"
               />
             </Link>

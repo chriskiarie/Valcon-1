@@ -246,7 +246,7 @@
 }
 
 .btn--solid {
-  background: var(--color-brand);
+  background: var(--color-accent);
   color: var(--color-brand-ink);
 }
 
@@ -269,7 +269,7 @@
 
 @media (hover: hover) {
   .btn--solid:hover {
-    background: var(--color-brand-hover);
+    background: var(--color-brand-orange-600);
   }
 
   .btn--outline:hover {
@@ -380,7 +380,7 @@
 .wordmark__logo {
   display: block;
   width: auto;
-  height: var(--tap-min);
+  height: 3.5rem;
   object-fit: contain;
 }
 

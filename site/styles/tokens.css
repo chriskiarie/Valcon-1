@@ -44,7 +44,7 @@
   --brand-orange-900: #882B1C;
 
   /* ── Derived neutrals ── */
-  --color-bg: #F6F4FA;        /* page background: very light lavender-tinted off-white */
+  --color-bg: #FCFCFE;        /* page background: barely-tinted off-white, dialled back */
   --color-surface: #FFFFFF;   /* cards, panels, modals: white */
   --color-ink: #1E1230;       /* body text: near-black deep purple */
   --color-ink-muted: var(--brand-violet-600); /* muted text */
@@ -66,21 +66,21 @@
   --color-on-dark-rim: rgba(255, 255, 255, 0.75);
 
   /* Brand tints / washes / hovers */
-  --color-brand-hover: var(--brand-purple-600);
-  --color-brand-tint: rgba(69, 32, 106, 0.24);
-  --color-brand-wash: rgba(69, 32, 106, 0.06);
+  --color-brand-hover: var(--brand-purple-500);
+  --color-brand-tint: rgba(69, 32, 106, 0.12);
+  --color-brand-wash: rgba(69, 32, 106, 0.03);
 
   /* Overlays (photo scrims) – deep purple tints, not neutral */
-  --color-overlay-bottom: rgba(69, 32, 106, 0.6);
-  --color-overlay-top: rgba(69, 32, 106, 0.15);
-  --color-overlay-side: rgba(69, 32, 106, 0.55);
+  --color-overlay-bottom: rgba(69, 32, 106, 0.45);
+  --color-overlay-top: rgba(69, 32, 106, 0.1);
+  --color-overlay-side: rgba(69, 32, 106, 0.4);
 
   /* Scrims (modals/backdrops) – deep purple tints */
-  --color-scrim: rgba(69, 32, 106, 0.55);
-  --color-scrim-solid: rgba(69, 32, 106, 0.78);
+  --color-scrim: rgba(69, 32, 106, 0.4);
+  --color-scrim-solid: rgba(69, 32, 106, 0.6);
 
   /* Header solid state (backdrop-blurred surface) */
-  --color-header-solid: rgba(246, 244, 250, 0.9);
+  --color-header-solid: rgba(252, 252, 254, 0.9);
 
   /* Window glass effects (fleet cards) – lavender tints */
   --color-window-rim: var(--brand-violet-300);
@@ -93,23 +93,23 @@
   /* Arrival band gradients – deep purple */
   --color-arrival-glow: rgba(226, 71, 47, 0.18);
   --color-arrival-glow-strong: rgba(226, 71, 47, 0.2);
-  --color-arrival-from: var(--brand-purple);
-  --color-arrival-to: var(--brand-purple-900);
+  --color-arrival-from: var(--brand-purple-600);
+  --color-arrival-to: var(--brand-purple-800);
 
   /* Route lines (white tints on dark) */
   --color-route-line: rgba(255, 255, 255, 0.28);
   --color-route-dash: rgba(255, 255, 255, 0.3);
 
-  /* Shadows – tinted deep purple, never neutral grey */
-  --color-shadow-1: rgba(69, 32, 106, 0.08);
-  --color-shadow-2: rgba(69, 32, 106, 0.1);
-  --color-shadow-3: rgba(69, 32, 106, 0.12);
-  --color-shadow-4: rgba(69, 32, 106, 0.16);
-  --color-shadow-5: rgba(69, 32, 106, 0.2);
-  --color-shadow-6: rgba(69, 32, 106, 0.35);
+  /* Shadows – lightly tinted deep purple, dialled back */
+  --color-shadow-1: rgba(69, 32, 106, 0.04);
+  --color-shadow-2: rgba(69, 32, 106, 0.05);
+  --color-shadow-3: rgba(69, 32, 106, 0.06);
+  --color-shadow-4: rgba(69, 32, 106, 0.08);
+  --color-shadow-5: rgba(69, 32, 106, 0.1);
+  --color-shadow-6: rgba(69, 32, 106, 0.2);
 
-  /* Background geometry – deep purple */
-  --color-geometry: var(--brand-purple);
+  /* Background geometry – violet instead of deep purple, dialled back */
+  --color-geometry: var(--brand-violet-500);
 
   /* ── fluid type ── */
   --text-sm: clamp(0.875rem, 0.84rem + 0.15vw, 0.95rem);

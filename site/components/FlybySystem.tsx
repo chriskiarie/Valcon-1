@@ -176,7 +176,7 @@ export function FlybySystem() {
         plane!.style.visibility = "visible";
 
         // Emit contrail particles
-        if (now - state.lastEmit > 50) {
+        if (false && now - state.lastEmit > 50) {
           const rad = (angle + bank) * (Math.PI / 180);
           const tailX = x - Math.cos(rad) * 60 * scale;
           const tailY = y - Math.sin(rad) * 60 * scale;

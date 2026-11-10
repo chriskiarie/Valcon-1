@@ -9,11 +9,11 @@ export function ClosingCTA() {
   return (
     <div className="closing" data-flyby-trigger="final" data-reveal="below">
       <span className="eyebrow">Start a conversation</span>
-      <h2 className="closing__title">Request a quote</h2>
-      <p className="closing__support">
+      <h2 className="closing__title" data-flyby-avoid>Request a quote</h2>
+      <p className="closing__support" data-flyby-avoid>
         Tell us where you are going and the shape of the trip. We will take it from there.
       </p>
-      <div className="closing__actions">
+      <div className="closing__actions" data-flyby-avoid>
         <Button href="/contact/#quote" variant="on-dark">
           Start an enquiry
         </Button>

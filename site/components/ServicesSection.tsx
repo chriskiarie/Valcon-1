@@ -61,6 +61,7 @@ export function ServicesSection() {
               key={service.slug}
               className={`service-card ${revealed ? "is-revealed" : ""}`}
               style={{ transitionDelay: `${index * 120}ms` }}
+              data-flyby-avoid
             >
               <div className="service-media">
                 <img

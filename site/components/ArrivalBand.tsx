@@ -37,7 +37,7 @@ export function ArrivalBand() {
   return (
     <section className="section arrival" aria-labelledby="arrival-title">
       <div className="container">
-        <div ref={cardRef} className="arrival__card" data-reveal="below">
+        <div ref={cardRef} className="arrival__card" data-reveal="below" data-flyby-avoid>
           <div className="arrival__rings" aria-hidden="true">
             <span />
             <span />

@@ -183,7 +183,7 @@ export function FleetExperience({
       >
         <div className="container">
           {variant === "teaser" ? (
-            <div className="fleet-heading-row">
+            <div className="fleet-heading-row" data-flyby-avoid>
               <h2
                 id="fleet-title"
                 className="section-title"
@@ -211,6 +211,7 @@ export function FleetExperience({
                   className="fleet-card"
                   type="button"
                   data-slug={item.slug}
+                  data-flyby-avoid
                   data-reveal={reveal}
                   aria-haspopup="dialog"
                   onClick={(event) => openModal(item.slug, event.currentTarget)}
@@ -262,7 +263,7 @@ export function FleetExperience({
             })}
           </div>
 
-          <p className="fleet-note" data-reveal="below">
+          <p className="fleet-note" data-reveal="below" data-flyby-avoid>
             Illustrative images. Client aircraft photography to follow.
           </p>
         </div>

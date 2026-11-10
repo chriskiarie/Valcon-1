@@ -26,7 +26,7 @@ export function Hero() {
       <div className="hero__scrim" aria-hidden="true" />
 
       <Container className="hero__inner">
-        <div className="hero__copy">
+        <div className="hero__copy" data-flyby-avoid>
           <span className="eyebrow">Wilson Airport, Nairobi</span>
           <h1 id="hero-title" className="hero__title">
             Aviation, with a sense of place.

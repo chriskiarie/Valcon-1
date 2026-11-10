@@ -1,0 +1,4 @@
+/* Action bar label size (12-13px) */
+.action-bar-link {
+  font-size: var(--text-actionbar);
+}

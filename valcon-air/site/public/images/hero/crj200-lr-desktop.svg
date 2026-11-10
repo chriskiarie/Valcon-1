@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="sky1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15"/>
+    </filter>
+  </defs>
+  <!-- Sky background -->
+  <rect width="100%" height="100%" fill="url(#sky1)"/>
+  <!-- Sun glow -->
+  <circle cx="1600" cy="200" r="200" fill="url(#grad1)" opacity="0.15" filter="url(#blur)"/>
+  <!-- Clouds -->
+  <ellipse cx="400" cy="180" rx="180" ry="60" fill="#ffffff" opacity="0.3"/>
+  <ellipse cx="600" cy="160" rx="150" ry="50" fill="#ffffff" opacity="0.25"/>
+  <ellipse cx="1200" cy="220" rx="200" ry="70" fill="#ffffff" opacity="0.35"/>
+  <ellipse cx="1400" cy="200" rx="120" ry="40" fill="#ffffff" opacity="0.3"/>
+  <!-- Horizon -->
+  <path d="M0,700 Q500,650 1000,700 Q1400,750 1920,720 L1920,1080 L0,1080 Z" fill="#334155" opacity="0.8"/>
+  <!-- Aircraft silhouette -->
+  <g transform="translate(200, 520) scale(2.2)">
+    <path d="M120,0 Q140,-20 160,-10 Q180,0 170,20 Q160,40 120,30 Q80,40 70,20 Q60,0 80,-10 Q100,-20 120,0 Z" fill="#94a3b8" opacity="0.9"/>
+    <path d="M60,30 Q40,40 20,50 L10,45 L20,40 Q40,30 60,30 Z" fill="#cbd5e1" opacity="0.8"/>
+    <rect x="100" y="10" width="40" height="20" rx="2" fill="#64748b" opacity="0.9"/>
+  </g>
+  <!-- Text label -->
+  <text x="50" y="950" font-family="sans-serif" font-size="48" font-weight="700" fill="#ffffff" letter-spacing="2">CRJ200 LR</text>
+  <text x="50" y="990" font-family="sans-serif" font-size="24" font-weight="400" fill="#cbd5e1" letter-spacing="1">5Y-VAL  •  Wilson Airport, Nairobi</text>
+</svg>

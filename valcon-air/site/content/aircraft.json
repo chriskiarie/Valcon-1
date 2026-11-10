@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "crj200-lr-5y-val",
+    "name": "Bombardier CRJ200 LR",
+    "registrations": ["5Y-VAL"],
+    "isPlaceholder": false,
+    "summary": "Recently delivered to Wilson Airport, Nairobi.",
+    "specs": { "seats": null, "range": null, "cruiseSpeed": null },
+    "features": [],
+    "hero": { "desktop": "/images/hero/crj200-lr-desktop.svg", "mobile": "/images/hero/crj200-lr-mobile.svg", "alt": "Bombardier CRJ200 LR aircraft" },
+    "gallery": [
+      { "src": "/images/gallery/crj200-cabin-1.svg", "alt": "CRJ200 LR cabin interior" },
+      { "src": "/images/gallery/crj200-cabin-2.svg", "alt": "CRJ200 LR aft cabin" },
+      { "src": "/images/gallery/crj200-cabin-3.svg", "alt": "CRJ200 LR forward cabin" }
+    ],
+    "order": 1
+  },
+  {
+    "slug": "sample-aircraft-a",
+    "name": "Sample Aircraft A",
+    "registrations": [],
+    "isPlaceholder": true,
+    "summary": "Demo card to show the layout.",
+    "specs": { "seats": null, "range": null, "cruiseSpeed": null },
+    "features": [],
+    "hero": { "desktop": "", "mobile": "", "alt": "Sample aircraft" },
+    "gallery": [],
+    "order": 2
+  },
+  {
+    "slug": "sample-aircraft-b",
+    "name": "Sample Aircraft B",
+    "registrations": [],
+    "isPlaceholder": true,
+    "summary": "Demo card to show the layout.",
+    "specs": { "seats": null, "range": null, "cruiseSpeed": null },
+    "features": [],
+    "hero": { "desktop": "", "mobile": "", "alt": "Sample aircraft" },
+    "gallery": [],
+    "order": 3
+  }
+]

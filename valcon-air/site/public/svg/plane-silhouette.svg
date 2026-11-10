@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" role="img" aria-labelledby="title" className="plane-silhouette">
+  <title id="title">Valcon Air plane silhouette</title>
+  <defs>
+    <filter id="plane-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="1.2"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <!-- Main fuselage -->
+  <path d="M118 20 C114 17.9 108 16.8 100 16.8 L36 16.8 C26 16.8 19 17.8 14 19.6 L8 20 L14 20.4 C19 22.2 26 23.2 36 23.2 L100 23.2 C108 23.2 114 22.1 118 20 Z" fill="currentColor"/>
+  <!-- Wings -->
+  <path d="M80 17.2 C69 12 58 6.5 49 2.6 L43 2.6 C52 9 60 14 66 17.2 Z M80 22.8 C69 28 58 33.5 49 37.4 L43 37.4 C52 31 60 26 66 22.8 Z" fill="currentColor" opacity="0.9"/>
+  <!-- Tail -->
+  <path d="M30 18.6 C25 14 21 10.5 17 8.4 L11 8.4 C16 12 20 16 23 18.6 Z M30 21.4 C25 26 21 29.5 17 31.6 L11 31.6 C16 28 20 24 23 21.4 Z" fill="currentColor" opacity="0.9"/>
+  <!-- Windows -->
+  <circle cx="62" cy="15.2" r="2" fill="#e2e8f0" opacity="0.8"/>
+  <circle cx="57" cy="15.2" r="2" fill="#e2e8f0" opacity="0.8"/>
+  <circle cx="66" cy="15.2" r="2" fill="#e2e8f0" opacity="0.8"/>
+  <circle cx="70" cy="15.2" r="2" fill="#e2e8f0" opacity="0.8"/>
+</svg>

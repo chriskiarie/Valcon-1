@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Next.js build output
+.next/
+**/.next/
+out/
+**/out/
+
+# Environment files
+.env*
+**/.env*
+
+# Logs and local tooling
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large source originals: keep locally, never deploy or commit
+assets-source/photos-raw/*
+!assets-source/photos-raw/README.md
+assets-source/video-raw/*
+!assets-source/video-raw/README.md
+
+# Internal reference screenshots remain local
+assets-source/reference/*
+!assets-source/reference/README.md

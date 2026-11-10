@@ -120,7 +120,8 @@ export function MobileMenu({
     >
       <div className="mobile-menu__top">
         <span id={`${id}-title`} className="wordmark">
-          VALCON AIR
+          <span className="wordmark__valcon">VALCON</span>
+          <span className="wordmark__air">AIR</span>
         </span>
         <button
           ref={closeRef}

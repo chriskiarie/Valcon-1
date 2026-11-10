@@ -39,7 +39,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   // Keep in sync with --color-brand in styles/tokens.css.
-  themeColor: "#0e2a47",
+  themeColor: "#45206A",
 };
 
 export default function RootLayout({

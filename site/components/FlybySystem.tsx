@@ -56,10 +56,10 @@ function renderRibbon(
     }
   }
 
-  // Shade pass colour
+  // Shade pass colour – tinted deep purple, not neutral grey-blue
   const shadeColor = isDarkBackground
-    ? "rgba(70,95,135,0.20)"
-    : "rgba(70,95,135,0.12)";
+    ? "rgba(69,32,106,0.20)"
+    : "rgba(69,32,106,0.12)";
 
   // Draw left sub-stream
   ctx.save();
@@ -165,8 +165,8 @@ function renderWisps(
     // Draw a soft cloud-puff: radial gradient
     const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, effectiveScale * 12);
     gradient.addColorStop(0, `rgba(255,255,255,${effectiveAlpha * 0.8})`);
-    gradient.addColorStop(0.5, `rgba(200,220,255,${effectiveAlpha * 0.5})`);
-    gradient.addColorStop(1, "rgba(180,200,230,0)");
+    gradient.addColorStop(0.5, `rgba(124,116,184,${effectiveAlpha * 0.5})`);
+    gradient.addColorStop(1, "rgba(69,32,106,0)");
 
     ctx.fillStyle = gradient;
     ctx.fillRect(-effectiveScale * 6, -effectiveScale * 6, effectiveScale * 12, effectiveScale * 12);

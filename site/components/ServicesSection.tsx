@@ -21,6 +21,17 @@ export function ServicesSection() {
               className="service-card"
               data-reveal={variants[index % variants.length]}
             >
+              {service.image && (
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="service-card__image"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="400"
+                />
+              )}
               <h3 className="service-card__title">{service.title}</h3>
               <p className="service-card__summary">{service.summary}</p>
             </article>

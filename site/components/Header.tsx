@@ -72,7 +72,13 @@ export function Header({
       >
         <div className="container site-header__inner">
           <Link className="wordmark" href="/" aria-label="Valcon Air home">
-            VALCON AIR
+            {/* Placeholder logo — replace /public/images/logo-placeholder.svg with the actual logo when ready. */}
+            <img
+              src="/images/logo-placeholder.svg"
+              alt="Valcon Air"
+              className="wordmark__logo"
+              decoding="async"
+            />
           </Link>
 
           <nav className="site-nav" aria-label="Primary">

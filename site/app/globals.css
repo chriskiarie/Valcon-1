@@ -377,6 +377,21 @@
   color: var(--color-on-dark);
 }
 
+.wordmark__logo {
+  display: block;
+  width: auto;
+  height: var(--tap-min);
+}
+
+/* Wordmark treatment: "VALCON" in brand violet, "AIR" in brand orange-red */
+.wordmark__valcon {
+  color: var(--brand-violet);
+}
+
+.wordmark__air {
+  color: var(--brand-orange);
+}
+
 .site-nav {
   display: none;
   align-items: center;
@@ -1542,6 +1557,15 @@ body.modal-open .site-main {
 .service-card__summary {
   color: var(--color-ink-muted);
   font-size: var(--text-base);
+}
+
+.service-card__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-card);
+  object-fit: cover;
 }
 
 @media (hover: hover) {

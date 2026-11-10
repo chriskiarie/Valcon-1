@@ -15,6 +15,13 @@
     "slug": "fleet-and-operations",
     "title": "Fleet and operations",
     "summary": "Based at Wilson Airport, Nairobi, with the first aircraft now on the register. More operational detail to follow.",
+    "isPlaceholder": true,
+    "image": "/images/service-desk-placeholder.svg"
+  },
+  {
+    "slug": "chatter-services",
+    "title": "Chatter services",
+    "summary": "Crew and ground chatter services keeping flight and cabin teams in sync on every trip.",
     "isPlaceholder": true
   }
 ]

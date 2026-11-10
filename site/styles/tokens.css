@@ -1,51 +1,119 @@
 :root {
-  /* colour: placeholders, not the client's brand */
-  --color-bg: #f5f6f8;
-  --color-surface: #ffffff;
-  --color-ink: #0b1626;
-  --color-ink-muted: #4a5568;
-  --color-line: rgba(11, 22, 38, 0.12);
-  --color-brand: #0e2a47;
-  --color-brand-ink: #ffffff;
-  --color-accent: #4c8dff;
-  --color-on-dark: #ffffff;
+  /* ── Brand colours sampled from the client logo (Valcon Air wall sign) ── */
+  /* The logo has three brand colours on white: */
+  /*   Deep Purple  – emblem ring, "V", tagline text              */
+  /*   Violet       – the "VALCON" half of the wordmark           */
+  /*   Orange-Red   – the "AIR" half of the wordmark + wing stripe */
+  --brand-purple: #45206A;
+  --brand-violet: #7C74B8;
+  --brand-orange: #E2472F;
+  --brand-white: #FFFFFF;
+
+  /* ── Derived neutrals ── */
+  --color-bg: #F6F4FA;        /* page background: very light lavender-tinted off-white */
+  --color-surface: #FFFFFF;   /* cards, panels, modals: white */
+  --color-ink: #1E1230;       /* body text: near-black deep purple */
+  --color-ink-muted: var(--brand-violet-600); /* muted text */
+  --color-line: #E3DFEE;      /* borders & dividers: soft lavender-grey */
+
+  /* ── Purple tints / shades (50–900) ── */
+  --brand-purple-50: #F6F4F8;
+  --brand-purple-100: #ECE9F0;
+  --brand-purple-200: #DAD2E1;
+  --brand-purple-300: #C7BCD2;
+  --brand-purple-400: #B5A6C3;
+  --brand-purple-500: #45206A;
+  --brand-purple-600: #3E1D5F;
+  --brand-purple-700: #371A55;
+  --brand-purple-800: #30164A;
+  --brand-purple-900: #291340;
+
+  /* ── Violet tints / shades (50–900) ── */
+  --brand-violet-50: #F8F8FB;
+  --brand-violet-100: #F2F1F8;
+  --brand-violet-200: #E5E3F1;
+  --brand-violet-300: #D8D5EA;
+  --brand-violet-400: #CBC7E3;
+  --brand-violet-500: #7C74B8;
+  --brand-violet-600: #7068A6;
+  --brand-violet-700: #635D93;
+  --brand-violet-800: #575181;
+  --brand-violet-900: #4A466E;
+
+  /* ── Orange tints / shades (50–900) ── */
+  --brand-orange-50: #FEF6F5;
+  --brand-orange-100: #FCEDEA;
+  --brand-orange-200: #F9DAD5;
+  --brand-orange-300: #F6C8C1;
+  --brand-orange-400: #F3B5AC;
+  --brand-orange-500: #E2472F;
+  --brand-orange-600: #CB402A;
+  --brand-orange-700: #B53926;
+  --brand-orange-800: #9E3221;
+  --brand-orange-900: #882B1C;
+
+  /* ── Semantic colour roles (built on the brand tokens) ── */
+  --color-brand: var(--brand-purple);          /* primary: nav, headings, primary buttons */
+  --color-brand-ink: var(--brand-white);       /* text on brand colour */
+  --color-accent: var(--brand-orange);         /* signal colour: CTAs, highlights, focus */
+  --color-on-dark: var(--brand-white);         /* text on dark backgrounds */
+
+  /* On-dark variants (white tints) */
   --color-on-dark-muted: rgba(255, 255, 255, 0.76);
-  --color-overlay-bottom: rgba(11, 22, 38, 0.6);
-  --color-overlay-top: rgba(11, 22, 38, 0.15);
-  --color-overlay-side: rgba(11, 22, 38, 0.55);
-  --color-scrim: rgba(11, 22, 38, 0.55);
-  --color-scrim-solid: rgba(11, 22, 38, 0.78);
-  --color-window-rim: #e7ebf0;
-  --color-window-shade: #dfe5ec;
-  --color-geometry: #0e2a47;
-  --color-header-solid: rgba(245, 246, 248, 0.9);
-  --color-brand-hover: #15385d;
-  --color-brand-tint: rgba(14, 42, 71, 0.24);
-  --color-brand-wash: rgba(14, 42, 71, 0.06);
   --color-on-dark-line: rgba(255, 255, 255, 0.16);
   --color-on-dark-line-strong: rgba(255, 255, 255, 0.28);
   --color-on-dark-line-soft: rgba(255, 255, 255, 0.12);
   --color-on-dark-border: rgba(255, 255, 255, 0.55);
   --color-on-dark-wash: rgba(255, 255, 255, 0.1);
   --color-on-dark-rim: rgba(255, 255, 255, 0.75);
-  --color-window-inner-from: #e2e9f2;
-  --color-window-inner-to: #9cafc6;
-  --color-window-shade-end: #cdd6e1;
+
+  /* Brand tints / washes / hovers */
+  --color-brand-hover: var(--brand-purple-600);
+  --color-brand-tint: var(--brand-purple-100);
+  --color-brand-wash: var(--brand-purple-50);
+
+  /* Overlays (photo scrims) – deep purple tints, not neutral */
+  --color-overlay-bottom: rgba(69, 32, 106, 0.6);
+  --color-overlay-top: rgba(69, 32, 106, 0.15);
+  --color-overlay-side: rgba(69, 32, 106, 0.55);
+
+  /* Scrims (modals/backdrops) – deep purple tints */
+  --color-scrim: rgba(69, 32, 106, 0.55);
+  --color-scrim-solid: rgba(69, 32, 106, 0.78);
+
+  /* Header solid state (backdrop-blurred surface) */
+  --color-header-solid: rgba(246, 244, 250, 0.9);
+
+  /* Window glass effects (fleet cards) – lavender tints */
+  --color-window-rim: var(--brand-violet-200);
+  --color-window-shade: var(--brand-violet-100);
+  --color-window-inner-from: var(--brand-violet-100);
+  --color-window-inner-to: var(--brand-violet-300);
+  --color-window-shade-end: var(--brand-violet-200);
   --color-window-reflection: rgba(255, 255, 255, 0.34);
-  --color-arrival-glow: rgba(76, 141, 255, 0.18);
-  --color-arrival-glow-strong: rgba(76, 141, 255, 0.2);
-  --color-arrival-from: #123355;
-  --color-arrival-to: #071627;
+
+  /* Arrival band gradients – deep purple */
+  --color-arrival-glow: rgba(226, 71, 47, 0.18);
+  --color-arrival-glow-strong: rgba(226, 71, 47, 0.2);
+  --color-arrival-from: var(--brand-purple);
+  --color-arrival-to: var(--brand-purple-900);
+
+  /* Route lines (white tints on dark) */
   --color-route-line: rgba(255, 255, 255, 0.28);
   --color-route-dash: rgba(255, 255, 255, 0.3);
-  --color-shadow-1: rgba(11, 22, 38, 0.08);
-  --color-shadow-2: rgba(11, 22, 38, 0.1);
-  --color-shadow-3: rgba(11, 22, 38, 0.12);
-  --color-shadow-4: rgba(11, 22, 38, 0.16);
-  --color-shadow-5: rgba(11, 22, 38, 0.2);
-  --color-shadow-6: rgba(11, 22, 38, 0.35);
 
-  /* fluid type */
+  /* Shadows – tinted deep purple, never neutral grey */
+  --color-shadow-1: rgba(69, 32, 106, 0.08);
+  --color-shadow-2: rgba(69, 32, 106, 0.1);
+  --color-shadow-3: rgba(69, 32, 106, 0.12);
+  --color-shadow-4: rgba(69, 32, 106, 0.16);
+  --color-shadow-5: rgba(69, 32, 106, 0.2);
+  --color-shadow-6: rgba(69, 32, 106, 0.35);
+
+  /* Background geometry – deep purple */
+  --color-geometry: var(--brand-purple);
+
+  /* ── fluid type ── */
   --text-sm: clamp(0.875rem, 0.84rem + 0.15vw, 0.95rem);
   --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);

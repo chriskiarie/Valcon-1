@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Site } from "@/lib/types";
@@ -72,7 +73,14 @@ export function Header({
       >
         <div className="container site-header__inner">
           <Link className="wordmark" href="/" aria-label="Valcon Air home">
-            VALCON AIR
+            <Image
+              src="/images/logo.png"
+              alt="Valcon Air"
+              width={300}
+              height={90}
+              className="wordmark__logo"
+              priority
+            />
           </Link>
 
           <nav className="site-nav" aria-label="Primary">

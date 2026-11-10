@@ -377,6 +377,13 @@
   color: var(--color-on-dark);
 }
 
+.wordmark__logo {
+  display: block;
+  width: auto;
+  height: var(--tap-min);
+  object-fit: contain;
+}
+
 .site-nav {
   display: none;
   align-items: center;

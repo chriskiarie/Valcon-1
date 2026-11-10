@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getSite } from "@/lib/content";
 
 export function Footer({ compact = false }: { compact?: boolean }) {
@@ -13,7 +14,13 @@ export function Footer({ compact = false }: { compact?: boolean }) {
         <div className="footer__top">
           <div className="footer__brand">
             <Link className="wordmark" href="/" aria-label="Valcon Air home">
-              VALCON AIR
+              <Image
+                src="/images/logo.png"
+                alt="Valcon Air"
+                width={300}
+                height={90}
+                className="wordmark__logo"
+              />
             </Link>
             <p>{site.tagline}</p>
           </div>

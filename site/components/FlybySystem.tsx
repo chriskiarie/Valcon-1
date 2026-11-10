@@ -19,10 +19,9 @@ const DESKTOP_BUDGET = 140;
 const MOBILE_BUDGET = 60;
 const DESKTOP_EMIT_STEP = 7;
 const MOBILE_EMIT_STEP = 10;
-const HERO_DELAY_MS = 800;
 
 type Direction = "ltr" | "rtl";
-type TriggerKind = "hero" | "fleet" | "departure";
+type TriggerKind = "fleet" | "departure";
 type CardState = { left: number; top: number; width: number };
 
 type PathPoint = { x: number; y: number; climb: number; s: number };
@@ -321,8 +320,8 @@ function particleFrame(particle: Particle, now: number) {
 }
 
 function highlightAlpha(t: number) {
-  if (t < 0.06) return 0.45 * (t / 0.06);
-  return 0.45 * Math.pow(1 - (t - 0.06) / 0.94, 2);
+  if (t < 0.06) return 0.6 * (t / 0.06);
+  return 0.6 * Math.pow(1 - (t - 0.06) / 0.94, 1.7);
 }
 
 function coverageOf(particles: Particle[], now: number, vw: number, vh: number) {
@@ -336,35 +335,51 @@ function coverageOf(particles: Particle[], now: number, vw: number, vh: number) 
 
 function makePuffSprites() {
   const sprites: HTMLCanvasElement[] = [];
+  const size = 96;
+  const c = size / 2;
 
   for (let variant = 0; variant < 4; variant += 1) {
     const canvas = document.createElement("canvas");
-    canvas.width = 64;
-    canvas.height = 64;
+    canvas.width = size;
+    canvas.height = size;
     const ctx = canvas.getContext("2d");
     if (!ctx) continue;
 
-    const base = ctx.createRadialGradient(32, 32, 0, 32, 32, 30);
-    base.addColorStop(0, "rgba(248,252,255,0.98)");
-    base.addColorStop(0.4, "rgba(236,245,255,0.64)");
-    base.addColorStop(0.74, "rgba(216,230,248,0.22)");
-    base.addColorStop(1, "rgba(216,230,248,0)");
+    // Soft round body so the puff never shows a hard edge.
+    const base = ctx.createRadialGradient(c, c, 0, c, c, c - 2);
+    base.addColorStop(0, "rgba(255,255,255,0.99)");
+    base.addColorStop(0.42, "rgba(247,251,255,0.82)");
+    base.addColorStop(0.72, "rgba(231,240,252,0.38)");
+    base.addColorStop(1, "rgba(224,236,250,0)");
     ctx.fillStyle = base;
-    ctx.fillRect(0, 0, 64, 64);
+    ctx.fillRect(0, 0, size, size);
 
-    for (let i = 0; i < 8; i += 1) {
-      const x = 17 + Math.random() * 30;
-      const y = 17 + Math.random() * 30;
-      const radius = 7 + Math.random() * 12;
+    // Billowing lobes give the silhouette its puffy, cauliflower shape.
+    for (let i = 0; i < 12; i += 1) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.random() * c * 0.5;
+      const x = c + Math.cos(angle) * distance;
+      const y = c + Math.sin(angle) * distance;
+      const radius = c * (0.22 + Math.random() * 0.32);
       const blob = ctx.createRadialGradient(x, y, 0, x, y, radius);
-      blob.addColorStop(0, `rgba(255,255,255,${0.22 + Math.random() * 0.14})`);
-      blob.addColorStop(0.55, "rgba(240,247,255,0.12)");
+      blob.addColorStop(0, `rgba(255,255,255,${0.4 + Math.random() * 0.28})`);
+      blob.addColorStop(0.58, "rgba(242,248,255,0.22)");
       blob.addColorStop(1, "rgba(255,255,255,0)");
       ctx.fillStyle = blob;
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
       ctx.fill();
     }
+
+    // Bright core keeps the centre reading as dense cloud, not fog.
+    const core = ctx.createRadialGradient(c, c, 0, c, c, c * 0.34);
+    core.addColorStop(0, "rgba(255,255,255,0.92)");
+    core.addColorStop(0.6, "rgba(255,255,255,0.34)");
+    core.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = core;
+    ctx.beginPath();
+    ctx.arc(c, c, c * 0.34, 0, Math.PI * 2);
+    ctx.fill();
 
     sprites.push(canvas);
   }
@@ -373,17 +388,19 @@ function makePuffSprites() {
 }
 
 function makeShadeSprite() {
+  const size = 96;
+  const c = size / 2;
   const canvas = document.createElement("canvas");
-  canvas.width = 64;
-  canvas.height = 64;
+  canvas.width = size;
+  canvas.height = size;
   const ctx = canvas.getContext("2d");
   if (ctx) {
-    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 30);
+    const gradient = ctx.createRadialGradient(c, c, 0, c, c, c - 2);
     gradient.addColorStop(0, "rgba(70,95,135,1)");
     gradient.addColorStop(0.55, "rgba(70,95,135,0.55)");
     gradient.addColorStop(1, "rgba(70,95,135,0)");
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 64, 64);
+    ctx.fillRect(0, 0, size, size);
   }
   return canvas;
 }
@@ -495,8 +512,6 @@ export function FlybySystem() {
     let lastTick = performance.now();
     let fps = 60;
     let retryTimer = 0;
-    let heroTimer = 0;
-    let heroImageTimer = 0;
 
     const consumed = new Set<TriggerKind>();
     const pending = new Set<TriggerKind>();
@@ -546,7 +561,6 @@ export function FlybySystem() {
     }
 
     function triggerVisible(kind: TriggerKind) {
-      if (kind === "hero") return isVisible(".hero");
       if (kind === "fleet") return isVisible('[data-flyby-trigger="fleet"]');
       return isVisible('[data-flyby-trigger="final"]');
     }
@@ -565,8 +579,7 @@ export function FlybySystem() {
       const scale = rand(0.92, 1);
       const planeW = baseWidth * scale;
       const planeH = planeW * PLANE_ASPECT;
-      const climbDeg = rand(8, 12);
-      const climbRad = (climbDeg * Math.PI) / 180;
+      let climbDeg = rand(8, 12);
       const budget = isMobile ? MOBILE_BUDGET : DESKTOP_BUDGET;
       const emitStep = isMobile ? MOBILE_EMIT_STEP : DESKTOP_EMIT_STEP;
       const direction: Direction = kind === "fleet" ? "rtl" : "ltr";
@@ -581,38 +594,24 @@ export function FlybySystem() {
       let end: Point;
 
       if (kind === "departure") {
-        const action = document.querySelector<HTMLElement>(
-          ".closing__actions a, .closing__actions button",
-        );
-        const actionRect = action?.getBoundingClientRect();
-        const preferred =
-          actionRect && actionRect.top < vh
-            ? actionRect.top
-            : vh * 0.72;
-        const startBand = pickBand(
-          findBands(avoid, top, Math.max(top + 80, preferred - 8), planeH + 48),
-          preferred - 120,
-        );
+        // Enter from off-screen left, low, and climb away to the right.
+        const climbOut = rand(13, 17);
+        const climbOutRad = (climbOut * Math.PI) / 180;
+        climbDeg = climbOut;
 
-        const startY = startBand
-          ? startBand.bottom - planeH / 2 - 8
-          : Math.min(vh - planeH / 2 - 12, preferred - planeH / 2 - 20);
-        const startX = Math.max(
-          vw * 0.55,
-          actionRect ? actionRect.right + 18 : vw * 0.62,
-        );
+        const startX = -planeW / 2 - 40;
         const endX = vw + planeW / 2 + 40;
         const span = endX - startX;
-        const rise = span * Math.tan(climbRad);
-        const endY = startY - rise;
+        const startY = vh * 0.84;
+        const endY = Math.max(
+          headerBottom() + planeH * 0.75,
+          startY - span * Math.tan(climbOutRad),
+        );
 
         start = { x: startX, y: startY };
         end = { x: endX, y: endY };
       } else {
-        const band = pickBand(
-          bands,
-          kind === "hero" ? vh * 0.24 : vh * 0.22,
-        );
+        const band = pickBand(bands, vh * 0.22);
 
         if (!band) return null;
 
@@ -685,8 +684,8 @@ export function FlybySystem() {
         y0: anchor.y + rand(-2.5, 2.5),
         born: now,
         life,
-        d0: 16,
-        d1: (flight.isMobile ? 40 : 56) * rand(0.92, 1.08),
+        d0: 18,
+        d1: (flight.isMobile ? 48 : 66) * rand(0.92, 1.08),
         sprite: Math.floor(Math.random() * sprites.length),
         phase: rand(0, Math.PI * 2),
         jitterAmp: rand(1, 6),
@@ -941,40 +940,6 @@ export function FlybySystem() {
       resetAll(true);
     }
 
-    function onHeroReady() {
-      if (disposed) return;
-      heroTimer = window.setTimeout(() => {
-        if (disposed) return;
-        if (!isVisible(".hero")) {
-          consumed.add("hero");
-          return;
-        }
-        requestFlight("hero");
-      }, HERO_DELAY_MS);
-    }
-
-    const heroImage = document.querySelector<HTMLImageElement>(".hero__img");
-    const startHero = () => {
-      if (disposed) return;
-      window.clearTimeout(heroImageTimer);
-      if (heroImage?.decode) {
-        heroImage.decode().catch(() => undefined).finally(onHeroReady);
-      } else {
-        onHeroReady();
-      }
-    };
-
-    if (heroImage) {
-      if (heroImage.complete) {
-        startHero();
-      } else {
-        heroImage.addEventListener("load", startHero, { once: true });
-        heroImageTimer = window.setTimeout(startHero, 2500);
-      }
-    } else {
-      onHeroReady();
-    }
-
     const fleetTrigger = document.querySelector('[data-flyby-trigger="fleet"]');
     const finalTrigger = document.querySelector('[data-flyby-trigger="final"]');
 
@@ -1020,8 +985,6 @@ export function FlybySystem() {
       context.revert();
       gsap.ticker.remove(tick);
       window.clearTimeout(retryTimer);
-      window.clearTimeout(heroTimer);
-      window.clearTimeout(heroImageTimer);
       if (flight) {
         flight.tween?.kill();
         flight = null;
@@ -1033,7 +996,6 @@ export function FlybySystem() {
       window.removeEventListener("orientationchange", onResize);
       window.removeEventListener("popstate", onPopState);
       document.removeEventListener("visibilitychange", onVisibilityChange);
-      heroImage?.removeEventListener("load", startHero);
       clearTrail();
       planeEl.dataset.active = "false";
       planeEl.style.transform = "";
@@ -1052,6 +1014,16 @@ export function FlybySystem() {
       <div ref={overlayRef} className="flyby-overlay" aria-hidden="true">
         <canvas ref={canvasRef} className="flyby-canvas" />
         <div ref={planeRef} className="flyby-plane" data-active="false">
+          <img
+            className="flyby-plane__shadow"
+            src="/images/flyby/5y-val-960.webp"
+            srcSet="/images/flyby/5y-val-480.webp 480w, /images/flyby/5y-val-960.webp 960w"
+            sizes="(max-width: 767px) 208px, 320px"
+            alt=""
+            aria-hidden="true"
+            draggable={false}
+            decoding="async"
+          />
           <img
             ref={planeImgRef}
             className="flyby-plane__img"

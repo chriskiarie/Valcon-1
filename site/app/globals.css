@@ -269,7 +269,7 @@
 
 @media (hover: hover) {
   .btn--solid:hover {
-    background: var(--color-brand-orange-600);
+    background: var(--brand-orange-600);
   }
 
   .btn--outline:hover {

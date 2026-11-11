@@ -72,7 +72,8 @@ export function Header({
       >
         <div className="container site-header__inner">
           <Link className="wordmark" href="/" aria-label="Valcon Air home">
-            VALCON AIR
+            <span className="wordmark__valcon">VALCON</span>
+            <span className="wordmark__air">AIR</span>
           </Link>
 
           <nav className="site-nav" aria-label="Primary">

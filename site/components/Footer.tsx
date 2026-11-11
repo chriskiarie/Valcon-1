@@ -13,7 +13,8 @@ export function Footer({ compact = false }: { compact?: boolean }) {
         <div className="footer__top">
           <div className="footer__brand">
             <Link className="wordmark" href="/" aria-label="Valcon Air home">
-              VALCON AIR
+              <span className="wordmark__valcon">VALCON</span>
+              <span className="wordmark__air">AIR</span>
             </Link>
             <p>{site.tagline}</p>
           </div>

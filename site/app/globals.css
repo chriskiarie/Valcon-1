@@ -246,7 +246,7 @@
 }
 
 .btn--solid {
-  background: var(--color-brand);
+  background: var(--color-accent);
   color: var(--color-brand-ink);
 }
 
@@ -269,7 +269,7 @@
 
 @media (hover: hover) {
   .btn--solid:hover {
-    background: var(--color-brand-hover);
+    background: var(--color-brand-orange-600);
   }
 
   .btn--outline:hover {
@@ -375,6 +375,15 @@
 
 .site-header--over-hero:not(.site-header--solid) .wordmark {
   color: var(--color-on-dark);
+}
+
+/* Wordmark treatment: "VALCON" in brand violet, "AIR" in brand orange-red */
+.wordmark__valcon {
+  color: var(--brand-violet);
+}
+
+.wordmark__air {
+  color: var(--brand-orange);
 }
 
 .site-nav {

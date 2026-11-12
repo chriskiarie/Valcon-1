@@ -104,11 +104,25 @@ function imageUrl(image, ref, { w, h, fmt, q }) {
   return `${CDN_HOST}/images/${PROJECT}/${DATASET}/${ref.id}-${ref.width}x${ref.height}.${ref.ext}?${params}`;
 }
 
-async function download(url, file) {
+async function fetchBuffer(url) {
   const res = await fetch(url, { headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {} });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
   const buf = Buffer.from(await res.arrayBuffer());
   if (buf.length === 0) throw new Error(`empty image for ${url}`);
+  return buf;
+}
+
+async function download(url, file) {
+  const buf = await fetchBuffer(url);
+  writeFileSync(join(IMG_DIR, file), buf);
+  return buf.length;
+}
+
+// Sanity's image CDN does not serve AVIF (it answers 400), so AVIF is made here from a
+// high-quality JPEG. sharp is a direct dependency of the site.
+async function downloadAvif(url, file, q) {
+  const { default: sharp } = await import("sharp");
+  const buf = await sharp(await fetchBuffer(url)).avif({ quality: Math.max(30, q - 15), effort: 4 }).toBuffer();
   writeFileSync(join(IMG_DIR, file), buf);
   return buf.length;
 }
@@ -124,7 +138,10 @@ async function fetchImage(image, name, { w, h, formats, q = 72 }) {
   try {
     for (const fmt of formats) {
       const file = `${stem}.${fmt === "jpg" ? "jpg" : fmt}`;
-      const size = await download(imageUrl(image, ref, { w, h, fmt, q }), file);
+      const size =
+        fmt === "avif"
+          ? await downloadAvif(imageUrl(image, ref, { w, h, fmt: "jpg", q: 92 }), file, q)
+          : await download(imageUrl(image, ref, { w, h, fmt, q }), file);
       imageStats.downloaded++;
       if (size > 250 * 1024) warn(`${file} is ${Math.round(size / 1024)} KB. Ask the editor for a lighter photo or lower q.`);
     }

@@ -57,7 +57,7 @@ export const aircraft = defineType({
       type: "object",
       fields: [
         photo("desktop", "Photo", "Wide photo, 1200 x 800 or larger. Use the crop tool to choose what stays in view."),
-        defineField({ name: "alt", title: "Describe the photo", type: "string", validation: (r) => r.max(160) }),
+        defineField({ name: "alt", title: "Photo description (hidden, for screen readers)", type: "string", description: "Not shown on the page. Describes the photo for screen readers and search engines.", validation: (r) => r.max(160) }),
       ],
     }),
     defineField({
@@ -69,7 +69,7 @@ export const aircraft = defineType({
           type: "object",
           fields: [
             photo("image", "Photo"),
-            defineField({ name: "alt", title: "Describe the photo", type: "string" }),
+            defineField({ name: "alt", title: "Photo description (hidden, for screen readers)", type: "string" }),
           ],
           preview: { select: { title: "alt", media: "image" } },
         },

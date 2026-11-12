@@ -7,20 +7,22 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { IntroFeature } from "@/components/IntroFeature";
 import { ServicesSection } from "@/components/ServicesSection";
-import { getAircraft, getSite } from "@/lib/content";
+import { getAircraft, getHome, getServices, getSite } from "@/lib/content";
 
 export default function Home() {
   const site = getSite();
   const aircraft = getAircraft();
+  const home = getHome();
+  const services = getServices();
 
   return (
     <div className="page page--home">
       <Hero />
       <FlybySystem />
       <IntroFeature />
-      <FleetExperience aircraft={aircraft} site={site} variant="teaser" />
-      <ArrivalBand />
-      <ServicesSection />
+      <FleetExperience aircraft={aircraft} site={site} copy={home.fleet} variant="teaser" />
+      <ArrivalBand copy={home.arrival} />
+      <ServicesSection services={services} copy={home.services} />
       <div className="final-screen">
         <div className="final-screen__main">
           <Container>

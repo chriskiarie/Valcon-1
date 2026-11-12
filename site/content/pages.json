@@ -1,0 +1,15 @@
+{
+  "fleet": {
+    "metaDescription": "The Valcon Air concept fleet page, led by the Bombardier CRJ200 LR registered 5Y-VAL.",
+    "eyebrow": "Wilson Airport, Nairobi",
+    "title": "The fleet",
+    "lede": "The first aircraft is a Bombardier CRJ200 LR registered 5Y-VAL. More detail follows as the operator confirms it."
+  },
+  "contact": {
+    "metaDescription": "Contact page for the Valcon Air concept preview. Direct contact details are being confirmed.",
+    "title": "Contact",
+    "lede": "Valcon Air Solutions Limited is based at Wilson Airport, Nairobi. Direct contact details are being confirmed for this concept preview.",
+    "panelEyebrow": "Enquiries",
+    "panelTitle": "Get in touch"
+  }
+}

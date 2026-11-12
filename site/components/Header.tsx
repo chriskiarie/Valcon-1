@@ -7,12 +7,7 @@ import type { Site } from "@/lib/types";
 import { Button } from "@/components/Button";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ActionBar } from "@/components/ActionBar";
-
-const nav = [
-  { href: "/", label: "Home" },
-  { href: "/fleet/", label: "Fleet" },
-  { href: "/contact/", label: "Contact" },
-];
+import { Wordmark } from "@/components/Wordmark";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -71,13 +66,10 @@ export function Header({
           .join(" ")}
       >
         <div className="container site-header__inner">
-          <Link className="wordmark" href="/" aria-label="Valcon Air home">
-            <span className="wordmark__valcon">VALCON</span>
-            <span className="wordmark__air">AIR</span>
-          </Link>
+          <Wordmark site={site} />
 
           <nav className="site-nav" aria-label="Primary">
-            {nav.map((item) => (
+            {site.nav.map((item) => (
               <Link
                 key={item.href}
                 className="site-nav__link"

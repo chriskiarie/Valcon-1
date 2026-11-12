@@ -1,20 +1,22 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { getHome } from "@/lib/content";
 
 export function Hero() {
+  const { hero } = getHome();
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero__media">
         <picture>
-          <source media="(min-width: 768px)" type="image/avif" srcSet="/images/hero/hero-desktop.avif" />
-          <source media="(min-width: 768px)" type="image/webp" srcSet="/images/hero/hero-desktop.webp" />
-          <source media="(min-width: 768px)" type="image/jpeg" srcSet="/images/hero/hero-desktop.jpg" />
-          <source type="image/avif" srcSet="/images/hero/hero-mobile.avif" />
-          <source type="image/webp" srcSet="/images/hero/hero-mobile.webp" />
+          <source media="(min-width: 768px)" type="image/avif" srcSet={`${hero.image.desktop}.avif`} />
+          <source media="(min-width: 768px)" type="image/webp" srcSet={`${hero.image.desktop}.webp`} />
+          <source media="(min-width: 768px)" type="image/jpeg" srcSet={`${hero.image.desktop}.jpg`} />
+          <source type="image/avif" srcSet={`${hero.image.mobile}.avif`} />
+          <source type="image/webp" srcSet={`${hero.image.mobile}.webp`} />
           <img
             className="hero__img"
-            src="/images/hero/hero-mobile.jpg"
-            alt="An aircraft being handled on an airport apron at dusk."
+            src={`${hero.image.mobile}.jpg`}
+            alt={hero.image.alt}
             width={900}
             height={1400}
             fetchPriority="high"
@@ -27,20 +29,17 @@ export function Hero() {
 
       <Container className="hero__inner">
         <div className="hero__copy" data-flyby-avoid>
-          <span className="eyebrow">Wilson Airport, Nairobi</span>
+          <span className="eyebrow">{hero.eyebrow}</span>
           <h1 id="hero-title" className="hero__title">
-            Aviation, with a sense of place.
+            {hero.title}
           </h1>
-          <p className="hero__support">
-            A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson
-            Airport, Nairobi.
-          </p>
+          <p className="hero__support">{hero.support}</p>
           <div className="hero__actions">
             <Button href="/contact/#quote" variant="on-dark">
-              Request a quote
+              {hero.primaryCta}
             </Button>
             <Button href="/fleet/" variant="on-dark-outline">
-              View the fleet
+              {hero.secondaryCta}
             </Button>
           </div>
         </div>

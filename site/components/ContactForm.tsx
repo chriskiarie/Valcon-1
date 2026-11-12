@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "./Button";
 import type { Site } from "@/lib/types";
+import { hasEmail, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 
 export function ContactForm({ site }: { site: Site }) {
   const [form, setForm] = useState({
@@ -12,9 +13,9 @@ export function ContactForm({ site }: { site: Site }) {
     notes: "",
   });
 
-  const handleWhatsApp = () => {
+  function buildMessage() {
     const { from, dates, passengers, notes } = form;
-    const parts = [
+    return [
       "Hello,",
       "I am interested in your aviation services.",
       from ? `From: ${from}` : "",
@@ -22,34 +23,21 @@ export function ContactForm({ site }: { site: Site }) {
       passengers ? `Passengers: ${passengers}` : "",
       notes ? `Notes: ${notes}` : "",
     ]
-      .filter((s) => s.length > 0)
+      .filter((line) => line.length > 0)
       .join("\n");
+  }
 
-    const url = new URL("https://wa.me/");
-    url.searchParams.set("text", encodeURIComponent(parts));
-    window.open(url.toString(), "_blank");
+  const canWhatsapp = hasWhatsapp(site);
+  const canEmail = hasEmail(site);
+
+  const handleWhatsApp = () => {
+    if (!canWhatsapp) return;
+    window.open(whatsappHref(site, buildMessage()), "_blank", "noopener,noreferrer");
   };
 
   const handleMailto = () => {
-    const { from, dates, passengers, notes } = form;
-    const subject = "Enquiry - Valcon Air";
-    const body = [
-      "Hello,",
-      "I am interested in your aviation services.",
-      from ? `From: ${from}` : "",
-      dates ? `Dates: ${dates}` : "",
-      passengers ? `Passengers: ${passengers}` : "",
-      notes ? `Notes: ${notes}` : "",
-    ]
-      .filter((s) => s.length > 0)
-      .join("\n");
-
-    if (!site.email) return;
-
-    const url = new URL(`mailto:${site.email}`);
-    url.searchParams.set("subject", encodeURIComponent(subject));
-    url.searchParams.set("body", encodeURIComponent(body));
-    window.open(url.toString(), "_blank");
+    if (!canEmail) return;
+    window.location.href = mailtoHref(site, `Enquiry - ${site.name}`, buildMessage());
   };
 
   return (
@@ -104,12 +92,19 @@ export function ContactForm({ site }: { site: Site }) {
       </div>
 
       <div className="form-actions">
-        <Button variant="solid" onClick={handleWhatsApp} ariaLabel="Open WhatsApp">
-          WhatsApp
-        </Button>
-        <Button variant="outline" onClick={handleMailto} ariaLabel="Send email">
-          Email
-        </Button>
+        {canWhatsapp ? (
+          <Button variant="solid" onClick={handleWhatsApp} ariaLabel="Open WhatsApp">
+            WhatsApp
+          </Button>
+        ) : null}
+        {canEmail ? (
+          <Button variant={canWhatsapp ? "outline" : "solid"} onClick={handleMailto} ariaLabel="Send email">
+            Email
+          </Button>
+        ) : null}
+        {!canWhatsapp && !canEmail ? (
+          <p className="form-unavailable">{site.messages.contactUnconfirmed}</p>
+        ) : null}
         <Button variant="outline" href="/fleet/" className="ml-auto">
           View fleet
         </Button>

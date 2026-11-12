@@ -1,8 +1,7 @@
 "use client";
 
 import type { Site } from "@/lib/types";
-
-const whatsappMessage = "Hello Valcon Air, I’d like to enquire about a flight.";
+import { hasPhone, hasWhatsapp, whatsappHref } from "@/lib/contact";
 
 function PhoneIcon() {
   return (
@@ -49,16 +48,13 @@ function ContactIcon() {
 }
 
 export function ActionBar({ site, hidden }: { site: Site; hidden: boolean }) {
-  const hasPhone = site.phoneTel.trim().length > 0;
-  const hasWhatsapp = site.whatsapp.trim().length > 0;
-
-  const first = hasPhone
+  const first = hasPhone(site)
     ? { href: `tel:${site.phoneTel}`, label: "Call", icon: <PhoneIcon /> }
     : { href: "/contact/", label: "Contact", icon: <ContactIcon /> };
 
-  const second = hasWhatsapp
+  const second = hasWhatsapp(site)
     ? {
-        href: `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`,
+        href: whatsappHref(site, site.messages.whatsappGeneral),
         label: "WhatsApp",
         icon: <WhatsAppIcon />,
       }

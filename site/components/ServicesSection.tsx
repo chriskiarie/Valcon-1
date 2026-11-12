@@ -2,11 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Container } from "@/components/Container";
-import { getServices } from "@/lib/content";
+import type { Home, Service } from "@/lib/types";
 import ServiceZoomModal from "@/components/ServiceZoomModal";
 
-export function ServicesSection() {
-  const services = getServices();
+export function ServicesSection({
+  services,
+  copy,
+}: {
+  services: Service[];
+  copy: Home["services"];
+}) {
   const sectionRef = useRef<HTMLElement>(null);
   const [revealed, setRevealed] = useState(false);
   const [zoomOpen, setZoomOpen] = useState(false);
@@ -50,10 +55,10 @@ export function ServicesSection() {
     >
       <Container>
         <span className="eyebrow" data-reveal="below">
-          What we do
+          {copy.eyebrow}
         </span>
         <h2 id="services-title" className="section-title" data-reveal="left">
-          Services
+          {copy.heading}
         </h2>
         <div className="services__grid" style={{ marginTop: "var(--space-8)" }}>
           {services.map((service, index) => (
@@ -61,6 +66,7 @@ export function ServicesSection() {
               key={service.slug}
               className={`service-card ${revealed ? "is-revealed" : ""}`}
               style={{ transitionDelay: `${index * 120}ms` }}
+              data-flyby-avoid
             >
               <div className="service-media">
                 <img
@@ -86,7 +92,7 @@ export function ServicesSection() {
                   setZoomOpen(true);
                 }}
               >
-                <span className="service-zoom-label">Open image</span>
+                <span className="service-zoom-label">{copy.imageButtonLabel}</span>
                 <span className="service-zoom-icon">↗</span>
               </button>
             </article>

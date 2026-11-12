@@ -1,0 +1,31 @@
+{
+  "source_size": [
+    1600,
+    533
+  ],
+  "alpha_bbox": [
+    53,
+    97,
+    1501,
+    286
+  ],
+  "base_pitch_deg": 10.34,
+  "tail_navy_hex": "#0C1B32",
+  "tail_navy_rgb": [
+    12,
+    27,
+    50
+  ],
+  "near_engine_anchor": [
+    0.219,
+    0.578
+  ],
+  "far_engine_anchor": [
+    0.206,
+    0.522
+  ],
+  "output": {
+    "960": "5y-val-960.webp",
+    "480": "5y-val-480.webp"
+  }
+}

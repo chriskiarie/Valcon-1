@@ -29,10 +29,10 @@ function notify() {
   listeners.forEach((listener) => listener());
 }
 
-export function ConceptPill() {
+export function ConceptPill({ message }: { message: string }) {
   const visible = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  if (!visible) {
+  if (!visible || !message) {
     return null;
   }
 
@@ -47,7 +47,7 @@ export function ConceptPill() {
 
   return (
     <aside className="concept-pill" aria-label="Concept preview note">
-      <span>Concept preview. Copy and images are illustrative.</span>
+      <span>{message}</span>
       <button
         className="concept-pill__close"
         type="button"

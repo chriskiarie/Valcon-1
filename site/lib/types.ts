@@ -42,12 +42,38 @@ export type Credit = {
   note?: string;
 };
 
+export type NavItem = { href: string; label: string };
+
+/** A bare asset path (no extension) with avif, webp and jpg variants beside it. */
+export type ResponsiveImage = {
+  desktop: string;
+  mobile: string;
+  alt: string;
+};
+
 export type Site = {
   name: string;
   legalName: string;
+  /** null means the text wordmark is shown instead of a logo image. */
+  logo: { src: string; alt: string; width: number; height: number } | null;
+  wordmark: { primary: string; secondary: string };
   tagline: string;
   base: string;
   description: string;
+  metaTitle: string;
+  nav: NavItem[];
+  /** Set a notice to an empty string to hide it. */
+  notices: {
+    conceptPill: string;
+    footerNote: string;
+    illustrativeImages: string;
+  };
+  /** "{aircraft}" in whatsappAircraft is replaced with the aircraft name. */
+  messages: {
+    whatsappGeneral: string;
+    whatsappAircraft: string;
+    contactUnconfirmed: string;
+  };
   phone: string;
   phoneTel: string;
   whatsapp: string;
@@ -57,4 +83,56 @@ export type Site = {
     href: string;
   }[];
   credits: Credit[];
+};
+
+export type Home = {
+  hero: {
+    eyebrow: string;
+    title: string;
+    support: string;
+    image: ResponsiveImage;
+    primaryCta: string;
+    secondaryCta: string;
+  };
+  intro: {
+    eyebrow: string;
+    statement: string;
+    support: string;
+    image: ResponsiveImage & { caption: string };
+  };
+  fleet: { heading: string; pageHeading: string; linkLabel: string };
+  arrival: {
+    eyebrow: string;
+    aircraftSlug: string;
+    registrationLabel: string;
+    registration: string;
+    title: string;
+    line: string;
+    routeFrom: string;
+    routeTo: string;
+    buttonLabel: string;
+  };
+  services: { eyebrow: string; heading: string; imageButtonLabel: string };
+  closing: {
+    eyebrow: string;
+    title: string;
+    support: string;
+    primaryCta: string;
+  };
+};
+
+export type Pages = {
+  fleet: {
+    metaDescription: string;
+    eyebrow: string;
+    title: string;
+    lede: string;
+  };
+  contact: {
+    metaDescription: string;
+    title: string;
+    lede: string;
+    panelEyebrow: string;
+    panelTitle: string;
+  };
 };

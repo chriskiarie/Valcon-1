@@ -13,37 +13,37 @@ const shapes: Shape[] = [
   {
     className: "geometry__ring",
     depth: 0.12,
-    style: { top: "6%", right: "-12rem", width: "36rem", height: "36rem", "--shape-opacity": 0.055 } as CSSProperties,
+    style: { top: "6%", right: "-12rem", width: "36rem", height: "36rem", "--shape-opacity": 0.09 } as CSSProperties,
   },
   {
     className: "geometry__ring",
     depth: 0.22,
-    style: { top: "48%", left: "-9rem", width: "24rem", height: "24rem", "--shape-opacity": 0.065 } as CSSProperties,
+    style: { top: "48%", left: "-9rem", width: "24rem", height: "24rem", "--shape-opacity": 0.105 } as CSSProperties,
   },
   {
     className: "geometry__ring",
     depth: 0.16,
-    style: { bottom: "8%", right: "5%", width: "15rem", height: "15rem", "--shape-opacity": 0.08 } as CSSProperties,
+    style: { bottom: "8%", right: "5%", width: "15rem", height: "15rem", "--shape-opacity": 0.13 } as CSSProperties,
   },
   {
     className: "geometry__dots",
     depth: 0.3,
-    style: { top: "34%", right: "2%", width: "11rem", height: "11rem", "--shape-opacity": 0.07 } as CSSProperties,
+    style: { top: "34%", right: "2%", width: "11rem", height: "11rem", "--shape-opacity": 0.115 } as CSSProperties,
   },
   {
     className: "geometry__dots",
     depth: 0.18,
-    style: { bottom: "16%", left: "8%", width: "9rem", height: "9rem", "--shape-opacity": 0.06 } as CSSProperties,
+    style: { bottom: "16%", left: "8%", width: "9rem", height: "9rem", "--shape-opacity": 0.1 } as CSSProperties,
   },
   {
     className: "geometry__triangle",
     depth: 0.34,
-    style: { top: "25%", left: "6%", width: "0.9rem", height: "0.8rem", "--shape-opacity": 0.1 } as CSSProperties,
+    style: { top: "25%", left: "6%", width: "0.9rem", height: "0.8rem", "--shape-opacity": 0.16 } as CSSProperties,
   },
   {
     className: "geometry__triangle",
     depth: 0.26,
-    style: { top: "62%", right: "11%", width: "1.1rem", height: "1rem", "--shape-opacity": 0.08 } as CSSProperties,
+    style: { top: "62%", right: "11%", width: "1.1rem", height: "1rem", "--shape-opacity": 0.13 } as CSSProperties,
   },
   {
     className: "geometry__diamond",

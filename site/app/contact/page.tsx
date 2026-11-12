@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
-import { getSite } from "@/lib/content";
+import { getPages, getSite } from "@/lib/content";
+import { hasDirectContact, hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
+import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Contact page for the Valcon Air concept preview. Direct contact details are being confirmed.",
+  description: getPages().contact.metaDescription,
 };
 
 export default function ContactPage() {
   const site = getSite();
-  const hasContact = Boolean(site.phoneTel || site.email || site.whatsapp);
+  const { contact } = getPages();
 
   return (
     <div className="page">
@@ -22,39 +22,58 @@ export default function ContactPage() {
             {site.base}
           </span>
           <h1 id="contact-title" className="interior-hero__title" data-reveal="left">
-            Contact
+            {contact.title}
           </h1>
           <p className="interior-hero__lede" data-reveal="below">
-            Valcon Air Solutions Limited is based at Wilson Airport, Nairobi. Direct contact details
-            are being confirmed for this concept preview.
+            {contact.lede}
           </p>
         </Container>
       </section>
 
-      <section className="section" aria-labelledby="quote-title" id="quote">
+      <section className="section" aria-labelledby="enquiry-title" id="enquiry">
         <Container>
-          <div className="quote-panel" data-reveal="below">
-            <span className="eyebrow">Enquiries</span>
-            <h2 id="quote-title" className="quote-panel__title">
-              Request a quote
+          <div className="quote-panel" id="quote" data-reveal="below">
+            <span className="eyebrow">{contact.panelEyebrow}</span>
+            <h2 id="enquiry-title" className="quote-panel__title">
+              {contact.panelTitle}
             </h2>
-            <p>
-              {hasContact
-                ? "Use the contact details in the footer, or return to the fleet to choose an aircraft."
-                : "The enquiry form is the next step for this demo. Until contact details are confirmed, please use the fleet page to explore the aircraft."}
-            </p>
-            <div className="quote-panel__actions">
-              <Button href="/fleet/" variant="solid">
-                View the fleet
-              </Button>
-              <Button href="/" variant="outline">
-                Back to home
-              </Button>
-            </div>
+
+            <ContactForm site={site} />
+
+            {hasDirectContact(site) ? (
+              <div className="contact-details" data-reveal="below">
+                <h3>Contact details</h3>
+                <div className="contact-list">
+                  {hasWhatsapp(site) ? (
+                    <div className="contact-item">
+                      <a
+                        href={whatsappHref(site, site.messages.whatsappGeneral)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        WhatsApp
+                      </a>
+                      <span>{site.whatsapp}</span>
+                    </div>
+                  ) : null}
+                  {hasPhone(site) ? (
+                    <div className="contact-item">
+                      <a href={`tel:${site.phoneTel}`}>Phone</a>
+                      <span>{site.phone}</span>
+                    </div>
+                  ) : null}
+                  {hasEmail(site) ? (
+                    <div className="contact-item">
+                      <a href={mailtoHref(site)}>Email</a>
+                      <span>{site.email}</span>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
           </div>
         </Container>
       </section>
-
       <Footer />
     </div>
   );

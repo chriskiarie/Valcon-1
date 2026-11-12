@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 500" role="img" aria-labelledby="title">
-  <title id="title">Flight path illustration placeholder</title>
-  <path d="M30 380C280 330 370 170 600 220s330 180 560 70c160-77 250-112 410-90" fill="none" stroke="currentColor" stroke-dasharray="8 16" stroke-linecap="round" stroke-width="4"/>
-  <circle cx="30" cy="380" r="8" fill="currentColor"/>
-  <path d="m1548 192 22 8-22 8 5-8-5-8Z" fill="currentColor"/>
-</svg>

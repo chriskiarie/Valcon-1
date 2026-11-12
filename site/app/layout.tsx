@@ -21,13 +21,15 @@ const textFont = Manrope({
   display: "swap",
 });
 
+const siteContent = getSite();
+
 export const metadata: Metadata = {
   title: {
-    default: "Valcon Air (demo)",
-    template: "%s | Valcon Air",
+    default: siteContent.metaTitle,
+    template: `%s | ${siteContent.name}`,
   },
-  description:
-    "A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson Airport, Nairobi.",
+  description: siteContent.description,
+  // Keep the demo out of search engines. Flip both to true at launch.
   robots: {
     index: false,
     follow: false,
@@ -39,7 +41,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   // Keep in sync with --color-brand in styles/tokens.css.
-  themeColor: "#0e2a47",
+  themeColor: "#45206A",
 };
 
 export default function RootLayout({
@@ -65,7 +67,7 @@ export default function RootLayout({
         <main id="main" className="site-main" tabIndex={-1}>
           {children}
         </main>
-        <ConceptPill />
+        <ConceptPill message={site.notices.conceptPill} />
         <ScrollChoreography />
       </body>
     </html>

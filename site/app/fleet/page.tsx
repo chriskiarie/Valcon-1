@@ -2,36 +2,36 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { FleetExperience } from "@/components/FleetExperience";
 import { Footer } from "@/components/Footer";
-import { getAircraft, getSite } from "@/lib/content";
+import { getAircraft, getHome, getPages, getSite } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Fleet",
-  description:
-    "The Valcon Air concept fleet page, led by the Bombardier CRJ200 LR registered 5Y-VAL.",
+  description: getPages().fleet.metaDescription,
 };
 
 export default function FleetPage() {
   const site = getSite();
   const aircraft = getAircraft();
+  const home = getHome();
+  const { fleet } = getPages();
 
   return (
     <div className="page">
       <section className="interior-hero" aria-labelledby="fleet-page-title">
         <Container>
           <span className="eyebrow" data-reveal="left">
-            Wilson Airport, Nairobi
+            {fleet.eyebrow}
           </span>
           <h1 id="fleet-page-title" className="interior-hero__title" data-reveal="left">
-            The fleet
+            {fleet.title}
           </h1>
           <p className="interior-hero__lede" data-reveal="below">
-            The first aircraft is a Bombardier CRJ200 LR registered 5Y-VAL. More detail follows as
-            the operator confirms it.
+            {fleet.lede}
           </p>
         </Container>
       </section>
 
-      <FleetExperience aircraft={aircraft} site={site} variant="page" />
+      <FleetExperience aircraft={aircraft} site={site} copy={home.fleet} variant="page" />
       <Footer />
     </div>
   );

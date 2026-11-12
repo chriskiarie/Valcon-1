@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/Button";
+import type { Home } from "@/lib/types";
 
 function RoutePlane() {
   return (
@@ -11,7 +12,7 @@ function RoutePlane() {
   );
 }
 
-export function ArrivalBand() {
+export function ArrivalBand({ copy }: { copy: Home["arrival"] }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,13 +32,13 @@ export function ArrivalBand() {
   }, []);
 
   function openAircraft() {
-    window.dispatchEvent(new CustomEvent("valcon:open-aircraft", { detail: "crj200-lr-5y-val" }));
+    window.dispatchEvent(new CustomEvent("valcon:open-aircraft", { detail: copy.aircraftSlug }));
   }
 
   return (
     <section className="section arrival" aria-labelledby="arrival-title">
       <div className="container">
-        <div ref={cardRef} className="arrival__card" data-reveal="below">
+        <div ref={cardRef} className="arrival__card" data-reveal="below" data-flyby-avoid>
           <div className="arrival__rings" aria-hidden="true">
             <span />
             <span />
@@ -45,28 +46,28 @@ export function ArrivalBand() {
           </div>
 
           <div className="arrival__stub">
-            <span className="arrival__stub-label">Registration</span>
-            <strong className="arrival__reg">5Y-VAL</strong>
+            <span className="arrival__stub-label">{copy.registrationLabel}</span>
+            <strong className="arrival__reg">{copy.registration}</strong>
           </div>
 
           <div className="arrival__body">
-            <span className="eyebrow">New arrival</span>
+            <span className="eyebrow">{copy.eyebrow}</span>
             <h2 id="arrival-title" className="arrival__title">
-              Bombardier CRJ200 LR
+              {copy.title}
             </h2>
-            <p>Delivered to Wilson Airport, Nairobi</p>
+            <p>{copy.line}</p>
             <div className="arrival__route">
-              <span>Delivery</span>
+              <span>{copy.routeFrom}</span>
               <span className="arrival__track">
                 <span className="arrival__route-plane">
                   <RoutePlane />
                 </span>
               </span>
-              <span>Wilson Airport</span>
+              <span>{copy.routeTo}</span>
             </div>
             <div>
               <Button variant="on-dark" onClick={openAircraft}>
-                View the fleet
+                {copy.buttonLabel}
               </Button>
             </div>
           </div>

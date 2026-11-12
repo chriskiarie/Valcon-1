@@ -4,12 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import type { Site } from "@/lib/types";
-
-const nav = [
-  { href: "/", label: "Home" },
-  { href: "/fleet/", label: "Fleet" },
-  { href: "/contact/", label: "Contact" },
-];
+import { hasDirectContact, hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
+import { Wordmark } from "@/components/Wordmark";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -102,10 +98,10 @@ export function MobileMenu({
     }
   }, [pathname, open, onClose]);
 
-  const hasPhone = site.phoneTel.trim().length > 0;
-  const hasWhatsapp = site.whatsapp.trim().length > 0;
-  const hasEmail = site.email.trim().length > 0;
-  const hasDirect = hasPhone || hasWhatsapp || hasEmail;
+  const phone = hasPhone(site);
+  const whatsapp = hasWhatsapp(site);
+  const email = hasEmail(site);
+  const hasDirect = hasDirectContact(site);
 
   return (
     <div
@@ -120,7 +116,7 @@ export function MobileMenu({
     >
       <div className="mobile-menu__top">
         <span id={`${id}-title`} className="wordmark">
-          VALCON AIR
+          <Wordmark site={site} asLink={false} />
         </span>
         <button
           ref={closeRef}
@@ -134,7 +130,7 @@ export function MobileMenu({
       </div>
 
       <nav className="mobile-menu__nav" aria-label="Mobile">
-        {nav.map((item) => (
+        {site.nav.map((item) => (
           <Link
             key={item.href}
             className="mobile-menu__link"
@@ -148,22 +144,22 @@ export function MobileMenu({
       </nav>
 
       <div className="mobile-menu__contact">
-        {hasPhone ? (
+        {phone ? (
           <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
         ) : null}
-        {hasWhatsapp ? (
+        {whatsapp ? (
           <a
-            href={`https://wa.me/${site.whatsapp}`}
+            href={whatsappHref(site)}
             target="_blank"
             rel="noopener noreferrer"
           >
             WhatsApp
           </a>
         ) : null}
-        {hasEmail ? <a href={`mailto:${site.email}`}>{site.email}</a> : null}
+        {email ? <a href={mailtoHref(site)}>{site.email}</a> : null}
         {!hasDirect ? (
           <>
-            <p>Direct contact details are being confirmed for this concept preview.</p>
+            <p>{site.messages.contactUnconfirmed}</p>
             <Link href="/contact/" onClick={onClose}>
               Contact
             </Link>

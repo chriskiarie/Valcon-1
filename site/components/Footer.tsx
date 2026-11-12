@@ -1,38 +1,40 @@
 import Link from "next/link";
 import { getSite } from "@/lib/content";
+import { hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
+import { Wordmark } from "@/components/Wordmark";
 
 export function Footer({ compact = false }: { compact?: boolean }) {
   const site = getSite();
-  const hasPhone = site.phoneTel.trim().length > 0;
-  const hasWhatsapp = site.whatsapp.trim().length > 0;
-  const hasEmail = site.email.trim().length > 0;
+  const phone = hasPhone(site);
+  const whatsapp = hasWhatsapp(site);
+  const email = hasEmail(site);
 
   return (
     <footer className={`site-footer ${compact ? "site-footer--compact" : ""}`.trim()}>
       <div className="container">
         <div className="footer__top">
           <div className="footer__brand">
-            <Link className="wordmark" href="/" aria-label="Valcon Air home">
-              VALCON AIR
-            </Link>
+            <Wordmark site={site} />
             <p>{site.tagline}</p>
           </div>
 
           <nav className="footer__nav" aria-label="Footer">
-            <Link href="/">Home</Link>
-            <Link href="/fleet/">Fleet</Link>
-            <Link href="/contact/">Contact</Link>
+            {site.nav.map((item) => (
+              <Link key={item.href} href={item.href}>
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           <div className="footer__contact">
-            {hasPhone ? <a href={`tel:${site.phoneTel}`}>{site.phone}</a> : null}
-            {hasWhatsapp ? (
-              <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer">
+            {phone ? <a href={`tel:${site.phoneTel}`}>{site.phone}</a> : null}
+            {whatsapp ? (
+              <a href={whatsappHref(site)} target="_blank" rel="noopener noreferrer">
                 WhatsApp
               </a>
             ) : null}
-            {hasEmail ? <a href={`mailto:${site.email}`}>{site.email}</a> : null}
-            {!hasPhone && !hasWhatsapp && !hasEmail ? (
+            {email ? <a href={mailtoHref(site)}>{site.email}</a> : null}
+            {!phone && !whatsapp && !email ? (
               <Link href="/contact/">Contact</Link>
             ) : null}
             {site.socials.map((social) => (
@@ -48,7 +50,7 @@ export function Footer({ compact = false }: { compact?: boolean }) {
             <span>
               &copy; {new Date().getFullYear()} {site.legalName}. All rights reserved.
             </span>
-            <span>Demo draft. Content is placeholder.</span>
+            {site.notices.footerNote ? <span>{site.notices.footerNote}</span> : null}
           </div>
           <p className="footer__credits">
             Images:{" "}

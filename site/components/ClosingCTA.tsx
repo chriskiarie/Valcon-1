@@ -1,27 +1,27 @@
 import { Button } from "@/components/Button";
-import { getSite } from "@/lib/content";
+import { getHome, getSite } from "@/lib/content";
+import { hasEmail, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 
 export function ClosingCTA() {
   const site = getSite();
-  const hasWhatsapp = site.whatsapp.trim().length > 0;
-  const hasEmail = site.email.trim().length > 0;
+  const { closing } = getHome();
+  const whatsapp = hasWhatsapp(site);
+  const email = hasEmail(site);
 
   return (
     <div className="closing" data-flyby-trigger="final" data-reveal="below">
-      <span className="eyebrow">Start a conversation</span>
-      <h2 className="closing__title">Request a quote</h2>
-      <p className="closing__support">
-        Tell us where you are going and the shape of the trip. We will take it from there.
+      <span className="eyebrow">{closing.eyebrow}</span>
+      <h2 className="closing__title" data-flyby-avoid>{closing.title}</h2>
+      <p className="closing__support" data-flyby-avoid>
+        {closing.support}
       </p>
-      <div className="closing__actions">
+      <div className="closing__actions" data-flyby-avoid>
         <Button href="/contact/#quote" variant="on-dark">
-          Start an enquiry
+          {closing.primaryCta}
         </Button>
-        {hasWhatsapp ? (
+        {whatsapp ? (
           <Button
-            href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-              "Hello Valcon Air, I’d like to enquire about a flight.",
-            )}`}
+            href={whatsappHref(site, site.messages.whatsappGeneral)}
             variant="on-dark-outline"
             target="_blank"
             rel="noopener noreferrer"
@@ -29,12 +29,12 @@ export function ClosingCTA() {
             WhatsApp
           </Button>
         ) : null}
-        {hasEmail ? (
-          <Button href={`mailto:${site.email}`} variant="on-dark-outline">
+        {email ? (
+          <Button href={mailtoHref(site)} variant="on-dark-outline">
             Email
           </Button>
         ) : null}
-        {!hasWhatsapp && !hasEmail ? (
+        {!whatsapp && !email ? (
           <Button href="/fleet/" variant="on-dark-outline">
             View the fleet
           </Button>

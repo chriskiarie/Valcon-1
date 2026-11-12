@@ -386,6 +386,15 @@
   color: var(--brand-orange);
 }
 
+/* Uploaded logo replaces the text wordmark */
+.wordmark__image {
+  display: block;
+  width: auto;
+  height: 2.25rem;
+  max-width: 12rem;
+  object-fit: contain;
+}
+
 .site-nav {
   display: none;
   align-items: center;
@@ -2193,4 +2202,14 @@ body.modal-open .site-main {
   .geometry__shape {
     transform: none !important;
   }
+}
+
+.form-unavailable {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.quote-panel {
+  scroll-margin-top: calc(var(--header-h, 4rem) + var(--space-4));
 }

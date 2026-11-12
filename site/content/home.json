@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "eyebrow": "Wilson Airport, Nairobi",
+    "title": "Aviation, with a sense of place.",
+    "support": "A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson Airport, Nairobi.",
+    "image": {
+      "desktop": "/images/hero/hero-desktop",
+      "mobile": "/images/hero/hero-mobile",
+      "alt": "An aircraft being handled on an airport apron at dusk."
+    },
+    "primaryCta": "Request a quote",
+    "secondaryCta": "View the fleet"
+  },
+  "intro": {
+    "eyebrow": "The operator",
+    "statement": "A base at Wilson Airport. A first aircraft on the register. A considered way to fly.",
+    "support": "Valcon Air is based at Wilson Airport, Nairobi. Its first aircraft, a Bombardier CRJ200 LR registered 5Y-VAL, has recently been delivered.",
+    "image": {
+      "desktop": "/images/features/parallax-desktop",
+      "mobile": "/images/features/parallax-mobile",
+      "alt": "An aircraft wing above clouds at sunset.",
+      "caption": "Above the clouds. Illustrative image."
+    }
+  },
+  "fleet": {
+    "heading": "The fleet",
+    "pageHeading": "Aircraft",
+    "linkLabel": "View the fleet"
+  },
+  "arrival": {
+    "eyebrow": "New arrival",
+    "aircraftSlug": "crj200-lr-5y-val",
+    "registrationLabel": "Registration",
+    "registration": "5Y-VAL",
+    "title": "Bombardier CRJ200 LR",
+    "line": "Delivered to Wilson Airport, Nairobi",
+    "routeFrom": "Delivery",
+    "routeTo": "Wilson Airport",
+    "buttonLabel": "View the fleet"
+  },
+  "services": {
+    "eyebrow": "What we do",
+    "heading": "Services",
+    "imageButtonLabel": "Open image"
+  },
+  "closing": {
+    "eyebrow": "Start a conversation",
+    "title": "Request a quote",
+    "support": "Tell us where you are going and the shape of the trip. We will take it from there.",
+    "primaryCta": "Start an enquiry"
+  }
+}

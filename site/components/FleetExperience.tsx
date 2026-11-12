@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { Site, Aircraft } from "@/lib/types";
+import type { Site, Aircraft, Home } from "@/lib/types";
+import { aircraftMessage, hasWhatsapp, whatsappHref } from "@/lib/contact";
 import { Button } from "@/components/Button";
 import { PlaneIllustration } from "@/components/PlaneIllustration";
 
@@ -26,10 +27,12 @@ function focusableElements(root: HTMLElement) {
 export function FleetExperience({
   aircraft,
   site,
+  copy,
   variant,
 }: {
   aircraft: Aircraft[];
   site: Site;
+  copy: Home["fleet"];
   variant: "teaser" | "page";
 }) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
@@ -172,7 +175,7 @@ export function FleetExperience({
     }
   }
 
-  const heading = variant === "teaser" ? "The fleet" : "Aircraft";
+  const heading = variant === "teaser" ? copy.heading : copy.pageHeading;
 
   return (
     <>
@@ -193,7 +196,7 @@ export function FleetExperience({
                 {heading}
               </h2>
               <a className="text-link" href="/fleet/" data-reveal="right">
-                View the fleet
+                {copy.linkLabel}
               </a>
             </div>
           ) : null}
@@ -263,9 +266,11 @@ export function FleetExperience({
             })}
           </div>
 
-          <p className="fleet-note" data-reveal="below" data-flyby-avoid>
-            Illustrative images. Client aircraft photography to follow.
-          </p>
+          {site.notices.illustrativeImages ? (
+            <p className="fleet-note" data-reveal="below" data-flyby-avoid>
+              {site.notices.illustrativeImages}
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -328,21 +333,19 @@ export function FleetExperience({
                       ))}
                     </ul>
                   ) : null}
-                  <p className="fleet-modal__disclaimer">
-                    Illustrative images. Client aircraft photography to follow.
-                  </p>
+                  {site.notices.illustrativeImages ? (
+                    <p className="fleet-modal__disclaimer">{site.notices.illustrativeImages}</p>
+                  ) : null}
                   <div className="fleet-modal__actions">
                     <Button
                       href={
-                        site.whatsapp
-                          ? `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-                              `Hello Valcon Air, I’d like to enquire about the ${selected.name}.`,
-                            )}`
+                        hasWhatsapp(site)
+                          ? whatsappHref(site, aircraftMessage(site, selected.name))
                           : "/contact/#quote"
                       }
                       variant="solid"
-                      target={site.whatsapp ? "_blank" : undefined}
-                      rel={site.whatsapp ? "noopener noreferrer" : undefined}
+                      target={hasWhatsapp(site) ? "_blank" : undefined}
+                      rel={hasWhatsapp(site) ? "noopener noreferrer" : undefined}
                     >
                       Request a quote
                     </Button>

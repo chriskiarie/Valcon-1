@@ -1,0 +1,102 @@
+import { defineField, defineType } from "sanity";
+import { linkList, photo, text } from "./fields";
+
+export const siteSettings = defineType({
+  name: "siteSettings",
+  title: "Site settings",
+  type: "document",
+  groups: [
+    { name: "brand", title: "Logo and name", default: true },
+    { name: "contact", title: "Contact details" },
+    { name: "navigation", title: "Menu" },
+    { name: "notices", title: "Notices and messages" },
+    { name: "seo", title: "Search and sharing" },
+    { name: "credits", title: "Image credits" },
+  ],
+  fields: [
+    defineField({ name: "name", title: "Brand name", type: "string", group: "brand", validation: (r) => r.required() }),
+    defineField({ name: "legalName", title: "Legal company name", type: "string", group: "brand", validation: (r) => r.required() }),
+    defineField({
+      name: "logo",
+      title: "Logo",
+      type: "image",
+      group: "brand",
+      description: "Upload a PNG or SVG with a transparent background. Leave empty to show the text wordmark.",
+      fields: [defineField({ name: "alt", title: "Alt text", type: "string", initialValue: "Valcon Air" })],
+    }),
+    defineField({ name: "wordmarkPrimary", title: "Text wordmark, first word", type: "string", group: "brand", description: "Shown only when no logo is uploaded." }),
+    defineField({ name: "wordmarkSecondary", title: "Text wordmark, second word", type: "string", group: "brand" }),
+    { ...text("tagline", "Tagline", "Shown in the footer."), group: "brand" },
+    { ...text("base", "Base address", "For example: Wilson Airport, Nairobi, Kenya."), group: "contact" },
+    { ...text("phone", "Phone, as displayed", "For example: +254 700 000 000. Leave empty to hide phone buttons."), group: "contact" },
+    {
+      ...text("phoneTel", "Phone, for dialling", "Digits with country code and a plus, no spaces. For example: +254700000000."),
+      group: "contact",
+      validation: (r) => r.regex(/^\+?\d{6,15}$/, { name: "phone" }).warning("Digits only, with country code."),
+    },
+    {
+      ...text("whatsapp", "WhatsApp number", "Digits only with country code, no plus and no spaces. For example: 254700000000."),
+      group: "contact",
+      validation: (r) => r.regex(/^\d{8,15}$/, { name: "whatsapp" }).error("Digits only, with country code, no plus or spaces."),
+    },
+    {
+      ...text("email", "Email address"),
+      group: "contact",
+      validation: (r) => r.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, { name: "email" }).error("Enter a valid email address."),
+    },
+    {
+      ...linkList("socials", "Social media links", "For example: Instagram."),
+      group: "contact",
+    },
+    { ...linkList("nav", "Menu items", "Words shown in the menu."), group: "navigation" },
+    defineField({
+      name: "notices",
+      title: "Notices",
+      type: "object",
+      group: "notices",
+      description: "Small notes shown on the site. Clear a box to hide that note.",
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        text("conceptPill", "Floating note (bottom left of every page)"),
+        text("footerNote", "Footer note"),
+        text("illustrativeImages", "Note under fleet photos", "Shown under the fleet cards and inside the aircraft window."),
+      ],
+    }),
+    defineField({
+      name: "messages",
+      title: "Prefilled messages",
+      type: "object",
+      group: "notices",
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        text("whatsappGeneral", "WhatsApp message (general)"),
+        text("whatsappAircraft", "WhatsApp message (about an aircraft)", "Use {aircraft} where the aircraft name should appear."),
+        text("contactUnconfirmed", "Text shown when no contact details are set"),
+      ],
+    }),
+    { ...text("metaTitle", "Browser tab title", "Shown in the browser tab and in search results."), group: "seo" },
+    { ...text("description", "Site description", "One or two sentences for search results and link previews.", 3), group: "seo" },
+    defineField({
+      name: "credits",
+      title: "Image credits",
+      type: "array",
+      group: "credits",
+      description: "Photo credits required by each licence. Shown in the site footer.",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "title", title: "Photo title", type: "string", validation: (r) => r.required() }),
+            defineField({ name: "author", title: "Photographer", type: "string", validation: (r) => r.required() }),
+            defineField({ name: "source", title: "Link to the photo page", type: "url", validation: (r) => r.required() }),
+            defineField({ name: "licence", title: "Licence", type: "string", validation: (r) => r.required() }),
+            defineField({ name: "usedFor", title: "Where it is used", type: "string" }),
+            defineField({ name: "note", title: "Note (optional)", type: "string" }),
+          ],
+          preview: { select: { title: "title", subtitle: "author" } },
+        },
+      ],
+    }),
+  ],
+  preview: { prepare: () => ({ title: "Site settings" }) },
+});

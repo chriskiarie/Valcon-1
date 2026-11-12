@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { Home } from "@/lib/types";
 
-export function ParallaxPanel() {
+export function ParallaxPanel({ image }: { image: Home["intro"]["image"] }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
   const lineArtRef = useRef<HTMLDivElement>(null);
@@ -62,13 +63,13 @@ export function ParallaxPanel() {
     <div ref={panelRef} className="parallax" data-reveal="right">
       <div ref={mediaRef} className="parallax__media">
         <picture>
-          <source media="(min-width: 768px)" type="image/avif" srcSet="/images/features/parallax-desktop.avif" />
-          <source media="(min-width: 768px)" type="image/webp" srcSet="/images/features/parallax-desktop.webp" />
-          <source type="image/avif" srcSet="/images/features/parallax-mobile.avif" />
-          <source type="image/webp" srcSet="/images/features/parallax-mobile.webp" />
+          <source media="(min-width: 768px)" type="image/avif" srcSet={`${image.desktop}.avif`} />
+          <source media="(min-width: 768px)" type="image/webp" srcSet={`${image.desktop}.webp`} />
+          <source type="image/avif" srcSet={`${image.mobile}.avif`} />
+          <source type="image/webp" srcSet={`${image.mobile}.webp`} />
           <img
-            src="/images/features/parallax-mobile.webp"
-            alt="An aircraft wing above clouds at sunset."
+            src={`${image.mobile}.webp`}
+            alt={image.alt}
             width={900}
             height={1125}
             loading="lazy"
@@ -87,7 +88,7 @@ export function ParallaxPanel() {
           <path d="M300 155l8 12h-16l8-12ZM300 583l8 12h-16l8-12Z" fill="currentColor" fillOpacity="0.45" />
         </svg>
       </div>
-      <p className="parallax__caption">Above the clouds. Illustrative image.</p>
+      {image.caption ? <p className="parallax__caption">{image.caption}</p> : null}
     </div>
   );
 }

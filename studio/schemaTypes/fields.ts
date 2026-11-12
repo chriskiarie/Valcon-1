@@ -47,7 +47,7 @@ export const responsiveImage = (name: string, title: string, withCaption = false
       photo("mobile", "Mobile photo", "Tall photo for phones. Recommended 900 x 1400 or larger."),
       defineField({
         name: "alt",
-        title: "Describe the photo",
+        title: "Photo description (hidden, for screen readers)",
         type: "string",
         description: "One short sentence for screen readers, for example: An aircraft on the apron at dusk.",
         validation: (r) => r.required().max(160),

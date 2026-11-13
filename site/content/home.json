@@ -12,7 +12,12 @@
       {
         "desktop": "/images/hero/hero-2-desktop",
         "mobile": "/images/hero/hero-2-mobile",
-        "alt": "Valcon Air's Bombardier CRJ200, 5Y-VAL, rolling along the runway."
+        "alt": "Valcon Air's Bombardier CRJ200, 5Y-VAL, at Wilson Airport."
+      },
+      {
+        "desktop": "/images/hero/hero-3-desktop",
+        "mobile": "/images/hero/hero-3-mobile",
+        "alt": "The rear engine and tail of Valcon Air's Bombardier CRJ200, registration 5Y-VAL."
       }
     ],
     "primaryCta": "Request a quote",

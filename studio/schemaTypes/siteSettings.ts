@@ -25,6 +25,14 @@ export const siteSettings = defineType({
       fields: [defineField({ name: "alt", title: "Alt text", type: "string", initialValue: "Valcon Air" })],
     }),
     defineField({
+      name: "logoIcon",
+      title: "Logo icon (the emblem on its own)",
+      type: "image",
+      group: "brand",
+      description: "The round emblem without the name. Shown at the top left, beside the wide logo. Transparent PNG or SVG. Leave empty to show only the wide logo.",
+      fields: [defineField({ name: "alt", title: "Alt text", type: "string", description: "Leave empty. The name beside it already says Valcon Air." })],
+    }),
+    defineField({
       name: "logoCompact",
       title: "Logo for the top menu (wide and short)",
       type: "image",

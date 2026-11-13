@@ -83,5 +83,11 @@
     "alt": "Valcon Air",
     "width": 640,
     "height": 91
+  },
+  "logoIcon": {
+    "src": "/images/brand/valcon-icon.png",
+    "alt": "",
+    "width": 414,
+    "height": 360
   }
 }

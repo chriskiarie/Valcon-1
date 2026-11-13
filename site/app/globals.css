@@ -395,10 +395,34 @@
   object-fit: contain;
 }
 
-/* Short, wide logo in the top menu; the stacked logo, larger, in the footer */
+/* Emblem plus short, wide name in the top menu; the stacked logo, larger, in the footer */
+.wordmark__lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.wordmark__image--icon {
+  height: 2.9rem;
+}
+
 .wordmark__image--compact {
-  height: 1.75rem;
+  height: 1.55rem;
   max-width: 13rem;
+}
+
+@media (max-width: 767px) {
+  .wordmark__lockup {
+    gap: 0.55rem;
+  }
+
+  .wordmark__image--icon {
+    height: 2.4rem;
+  }
+
+  .wordmark__image--compact {
+    height: 1.25rem;
+  }
 }
 
 .wordmark__image--full {
@@ -875,8 +899,9 @@
 }
 
 .hero__support {
-  max-width: 33ch;
+  max-width: 31ch;
   color: var(--color-ink);
+  text-shadow: 0 0 14px rgb(252 252 254 / 0.9), 0 0 3px rgb(252 252 254 / 0.8);
   font-size: var(--text-lg);
   line-height: 1.45;
 }
@@ -930,15 +955,15 @@
 @media (min-width: 768px) {
   .hero {
     align-items: center;
-    padding-bottom: calc(var(--space-16) + 15vh);
+    padding-bottom: calc(var(--space-16) + 17vh);
   }
 
   .hero__scrim {
-    background: linear-gradient(90deg, rgb(252 252 254 / 0.78), rgb(252 252 254 / 0.4) 34%, transparent 60%);
+    background: linear-gradient(90deg, rgb(252 252 254 / 0.84), rgb(252 252 254 / 0.5) 36%, transparent 62%);
   }
 
   .hero__title {
-    font-size: clamp(3rem, 5.2vw + 0.5rem, 5rem);
+    font-size: clamp(2.8rem, 4.2vw + 0.4rem, 4.4rem);
   }
 
   .scroll-cue {
@@ -979,6 +1004,20 @@
 
   .hero__actions {
     margin-top: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero__actions {
+    flex-wrap: nowrap;
+    gap: var(--space-2);
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 0;
+    padding-inline: var(--space-3);
+    font-size: 0.9rem;
+    white-space: nowrap;
   }
 }
 

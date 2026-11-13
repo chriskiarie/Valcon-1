@@ -15,16 +15,31 @@ export function Wordmark({
   variant?: "compact" | "full";
 }) {
   const logo = variant === "compact" ? (site.logoCompact ?? site.logo) : site.logo;
+  // The emblem sits beside the wide logo in the top menu, but only when the wide logo is the name alone.
+  const icon = variant === "compact" && site.logoCompact ? site.logoIcon : null;
   const inner = logo ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className={`wordmark__image wordmark__image--${variant}`}
-      src={logo.src}
-      alt={logo.alt}
-      width={logo.width}
-      height={logo.height}
-      decoding="async"
-    />
+    <span className="wordmark__lockup">
+      {icon ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className="wordmark__image wordmark__image--icon"
+          src={icon.src}
+          alt={icon.alt}
+          width={icon.width}
+          height={icon.height}
+          decoding="async"
+        />
+      ) : null}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className={`wordmark__image wordmark__image--${variant}`}
+        src={logo.src}
+        alt={logo.alt}
+        width={logo.width}
+        height={logo.height}
+        decoding="async"
+      />
+    </span>
   ) : (
     <>
       <span className="wordmark__valcon">{site.wordmark.primary}</span>

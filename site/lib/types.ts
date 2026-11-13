@@ -60,6 +60,8 @@ export type Site = {
   logo: LogoImage | null;
   /** Optional wide, short logo for the top menu. Falls back to the full logo. */
   logoCompact?: LogoImage | null;
+  /** Optional emblem on its own, shown beside the compact logo in the top menu. */
+  logoIcon?: LogoImage | null;
   wordmark: { primary: string; secondary: string };
   tagline: string;
   base: string;

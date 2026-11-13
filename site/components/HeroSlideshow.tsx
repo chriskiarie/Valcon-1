@@ -60,9 +60,9 @@ export function HeroSlideshow({ slides }: { slides: ResponsiveImage[] }) {
                 if (i === active) setLeaving(null);
               }}
             >
-              <source media="(min-width: 768px)" type="image/avif" srcSet={`${slide.desktop}.avif`} />
-              <source media="(min-width: 768px)" type="image/webp" srcSet={`${slide.desktop}.webp`} />
-              <source media="(min-width: 768px)" type="image/jpeg" srcSet={`${slide.desktop}.jpg`} />
+              <source media="(orientation: landscape)" type="image/avif" srcSet={`${slide.desktop}.avif`} />
+              <source media="(orientation: landscape)" type="image/webp" srcSet={`${slide.desktop}.webp`} />
+              <source media="(orientation: landscape)" type="image/jpeg" srcSet={`${slide.desktop}.jpg`} />
               <source type="image/avif" srcSet={`${slide.mobile}.avif`} />
               <source type="image/webp" srcSet={`${slide.mobile}.webp`} />
               <img

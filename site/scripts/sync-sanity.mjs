@@ -216,7 +216,7 @@ async function mapSite(base, doc) {
   if (Array.isArray(doc.credits)) out.credits = stripKeys(doc.credits);
 
   // Logos: an uploaded logo replaces the committed default; with nothing uploaded the default stays.
-  for (const [field, name] of [["logo", "logo"], ["logoCompact", "logo-compact"]]) {
+  for (const [field, name] of [["logo", "logo"], ["logoCompact", "logo-compact"], ["logoIcon", "logo-icon"]]) {
     if (parseRef(doc[field])) {
       const synced = await syncLogo(doc[field], name, out.name);
       if (synced) out[field] = synced;

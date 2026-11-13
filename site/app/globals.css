@@ -175,9 +175,12 @@
 }
 
 .on-dark .eyebrow,
-.hero .eyebrow,
 .mobile-menu .eyebrow {
   color: var(--color-on-dark-muted);
+}
+
+.hero .eyebrow {
+  color: var(--color-brand);
 }
 
 .display {
@@ -311,8 +314,7 @@
 .hero :focus-visible,
 .mobile-menu :focus-visible,
 .closing :focus-visible,
-.arrival :focus-visible,
-.site-header--over-hero:not(.site-header--solid) :focus-visible {
+.arrival :focus-visible {
   outline-color: var(--color-on-dark);
 }
 
@@ -348,7 +350,7 @@
 .site-header--over-hero:not(.site-header--solid) {
   border-bottom-color: transparent;
   background: transparent;
-  color: var(--color-on-dark);
+  color: var(--color-brand);
 }
 
 .site-header__inner {
@@ -374,7 +376,7 @@
 }
 
 .site-header--over-hero:not(.site-header--solid) .wordmark {
-  color: var(--color-on-dark);
+  color: var(--color-brand);
 }
 
 /* Wordmark treatment: "VALCON" in brand violet, "AIR" in brand orange-red */
@@ -390,9 +392,23 @@
 .wordmark__image {
   display: block;
   width: auto;
-  height: 2.25rem;
-  max-width: 12rem;
   object-fit: contain;
+}
+
+/* Short, wide logo in the top menu; the stacked logo, larger, in the footer */
+.wordmark__image--compact {
+  height: 1.75rem;
+  max-width: 13rem;
+}
+
+.wordmark__image--full {
+  height: 6.5rem;
+  max-width: 14rem;
+}
+
+/* The mobile menu is dark purple: show the logo as a white silhouette there */
+.mobile-menu .wordmark__image {
+  filter: brightness(0) invert(1);
 }
 
 .site-nav {
@@ -657,8 +673,8 @@
   overflow: hidden;
   padding-top: calc(var(--safe-top) + var(--header-h) + var(--space-8));
   padding-bottom: calc(var(--safe-bottom) + var(--space-16));
-  background: var(--color-brand);
-  color: var(--color-on-dark);
+  background: var(--brand-purple-100);
+  color: var(--color-ink);
 }
 
 .hero__media,
@@ -674,6 +690,150 @@
   object-position: center;
 }
 
+/* Banner slideshow: the new photo fades in above the old one, so no purple shows through mid-fade. */
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.hero__slide[data-state="idle"] {
+  z-index: 0;
+  opacity: 0;
+}
+
+.hero__slide[data-state="leaving"] {
+  z-index: 1;
+  opacity: 1;
+}
+
+.hero__slide[data-state="active"] {
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__slide[data-state="active"] img,
+  .hero__slide[data-state="leaving"] img {
+    animation: hero-drift 11s cubic-bezier(0.2, 0.6, 0.3, 1) both;
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.07);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero__controls {
+  position: absolute;
+  right: var(--space-6);
+  bottom: calc(var(--safe-bottom) + var(--space-6));
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: #fff;
+}
+
+.hero__dots {
+  display: flex;
+}
+
+.hero__dot,
+.hero__pause {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hero__dot-line {
+  position: relative;
+  display: block;
+  width: 1.75rem;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 1px;
+  background: rgb(255 255 255 / 0.4);
+}
+
+.hero__dot-fill {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: hero-progress var(--hero-hold, 7000ms) linear forwards;
+}
+
+.hero__controls[data-playing="false"] .hero__dot-fill {
+  animation-play-state: paused;
+}
+
+@keyframes hero-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hero__pause {
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.14);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.hero__pause:hover {
+  background: rgb(255 255 255 / 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__dot-fill {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
+/* On phones the controls sit in the sky beside the small label, in brand colour, clear of the buttons */
+@media (max-width: 767px) {
+  .hero__controls {
+    top: calc(var(--safe-top) + var(--header-h) + var(--space-2) + 2.9rem);
+    right: var(--space-2);
+    bottom: auto;
+    color: var(--color-brand);
+  }
+
+  .hero__dot,
+  .hero__pause {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .hero__dot-line {
+    width: 1.25rem;
+    background: rgb(69 32 106 / 0.25);
+  }
+
+  .hero__dot-fill {
+    background: var(--color-brand);
+  }
+
+  .hero__pause {
+    background: rgb(69 32 106 / 0.1);
+  }
+}
+
 .hero__overlay,
 .hero__scrim {
   position: absolute;
@@ -681,12 +841,14 @@
   pointer-events: none;
 }
 
+/* The banner photos are bright. A soft pale wash behind the headline keeps it readable on any photo,
+   and a faint dark foot keeps the scroll cue and slideshow controls readable. */
 .hero__overlay {
-  background: linear-gradient(to top, var(--color-overlay-bottom), var(--color-overlay-top));
+  background: linear-gradient(to top, rgb(24 12 40 / 0.4), transparent 26%);
 }
 
 .hero__scrim {
-  background: linear-gradient(90deg, var(--color-overlay-side), transparent 62%);
+  background: linear-gradient(90deg, rgb(252 252 254 / 0.78), rgb(252 252 254 / 0.4) 34%, transparent 62%);
 }
 
 .hero__inner {
@@ -704,6 +866,7 @@
 
 .hero__title {
   max-width: 11ch;
+  color: var(--color-brand);
   font-family: var(--font-display), Georgia, serif;
   font-size: var(--display-xl);
   font-weight: 400;
@@ -713,9 +876,18 @@
 
 .hero__support {
   max-width: 33ch;
-  color: var(--color-on-dark-muted);
+  color: var(--color-ink);
   font-size: var(--text-lg);
   line-height: 1.45;
+}
+
+/* The second button sits on the photo, so give it a pale backing */
+.hero .btn--outline {
+  border-color: rgb(69 32 106 / 0.35);
+  background: rgb(255 255 255 / 0.72);
+  color: var(--color-brand);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .hero__actions {
@@ -758,11 +930,15 @@
 @media (min-width: 768px) {
   .hero {
     align-items: center;
-    padding-bottom: var(--space-16);
+    padding-bottom: calc(var(--space-16) + 15vh);
   }
 
   .hero__scrim {
-    background: linear-gradient(90deg, var(--color-overlay-side), transparent 60%);
+    background: linear-gradient(90deg, rgb(252 252 254 / 0.78), rgb(252 252 254 / 0.4) 34%, transparent 60%);
+  }
+
+  .hero__title {
+    font-size: clamp(3rem, 5.2vw + 0.5rem, 5rem);
   }
 
   .scroll-cue {
@@ -771,12 +947,38 @@
 }
 
 @media (max-width: 767px) {
+  /* Headline in the sky at the top, buttons at the foot, the aircraft between them */
   .hero {
-    padding-bottom: calc(var(--safe-bottom) + var(--actionbar-h) + var(--space-16) + var(--space-4));
+    align-items: stretch;
+    padding-top: calc(var(--safe-top) + var(--header-h) + var(--space-4));
+    padding-bottom: calc(var(--safe-bottom) + var(--actionbar-h) + 4.75rem);
   }
 
   .hero__scrim {
-    background: linear-gradient(to top, var(--color-overlay-side), transparent 70%);
+    background: linear-gradient(to bottom, rgb(252 252 254 / 0.72), rgb(252 252 254 / 0.3) 38%, transparent 55%);
+  }
+
+  .hero__inner {
+    display: flex;
+  }
+
+  .hero__copy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 12vw, 3.4rem);
+  }
+
+  .hero__support {
+    display: none;
+  }
+
+  .hero__actions {
+    margin-top: auto;
   }
 }
 

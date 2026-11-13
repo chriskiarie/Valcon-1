@@ -14,7 +14,7 @@ export function Footer({ compact = false }: { compact?: boolean }) {
       <div className="container">
         <div className="footer__top">
           <div className="footer__brand">
-            <Wordmark site={site} />
+            <Wordmark site={site} variant="full" />
             <p>{site.tagline}</p>
           </div>
 

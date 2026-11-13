@@ -1,7 +1,12 @@
 {
   "name": "Valcon Air",
   "legalName": "Valcon Air Solutions Limited",
-  "logo": null,
+  "logo": {
+    "src": "/images/brand/valcon-logo.png",
+    "alt": "Valcon Air. Feel the difference.",
+    "width": 640,
+    "height": 369
+  },
   "wordmark": {
     "primary": "VALCON",
     "secondary": "AIR"
@@ -41,14 +46,6 @@
   "socials": [],
   "credits": [
     {
-      "title": "Munich Airport plane handling at sunset",
-      "author": "Richard Bartz",
-      "source": "https://commons.wikimedia.org/wiki/File:Munich_Airport_plane_handling_at_sunset.jpg",
-      "licence": "CC BY-SA 2.5",
-      "usedFor": "Hero photograph",
-      "note": "Cropped and resized for this demo."
-    },
-    {
       "title": "Above the Clouds - A Glimpse of Heaven",
       "author": "Joma433",
       "source": "https://commons.wikimedia.org/wiki/File:Above_the_Clouds_-_A_Glimpse_of_Heaven.jpg",
@@ -80,5 +77,11 @@
       "usedFor": "Fleet card (illustrative)",
       "note": "Cropped and resized for this demo."
     }
-  ]
+  ],
+  "logoCompact": {
+    "src": "/images/brand/valcon-wordmark.png",
+    "alt": "Valcon Air",
+    "width": 640,
+    "height": 91
+  }
 }

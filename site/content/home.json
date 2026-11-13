@@ -3,11 +3,18 @@
     "eyebrow": "Wilson Airport, Nairobi",
     "title": "Aviation, with a sense of place.",
     "support": "A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson Airport, Nairobi.",
-    "image": {
-      "desktop": "/images/hero/hero-desktop",
-      "mobile": "/images/hero/hero-mobile",
-      "alt": "An aircraft being handled on an airport apron at dusk."
-    },
+    "slides": [
+      {
+        "desktop": "/images/hero/hero-1-desktop",
+        "mobile": "/images/hero/hero-1-mobile",
+        "alt": "Valcon Air's Bombardier CRJ200 taxiing towards the camera."
+      },
+      {
+        "desktop": "/images/hero/hero-2-desktop",
+        "mobile": "/images/hero/hero-2-mobile",
+        "alt": "Valcon Air's Bombardier CRJ200, 5Y-VAL, rolling along the runway."
+      }
+    ],
     "primaryCta": "Request a quote",
     "secondaryCta": "View the fleet"
   },

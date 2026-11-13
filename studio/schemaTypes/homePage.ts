@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { responsiveImage, text } from "./fields";
+import { responsiveImage, text, bannerPhotos } from "./fields";
 
 const group = (name: string, title: string, fields: ReturnType<typeof defineField>[]) =>
   defineField({ name, title, type: "object", options: { collapsible: true, collapsed: false }, fields });
@@ -13,7 +13,7 @@ export const homePage = defineType({
       text("eyebrow", "Small line above the headline"),
       text("title", "Headline", "Keep it short. It sets in two lines.", 2),
       text("support", "Supporting line", undefined, 3),
-      responsiveImage("image", "Banner photo"),
+      bannerPhotos("slides", "Banner photos"),
       text("primaryCta", "Main button label"),
       text("secondaryCta", "Second button label"),
     ]),

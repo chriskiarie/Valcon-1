@@ -51,11 +51,15 @@ export type ResponsiveImage = {
   alt: string;
 };
 
+export type LogoImage = { src: string; alt: string; width: number; height: number };
+
 export type Site = {
   name: string;
   legalName: string;
   /** null means the text wordmark is shown instead of a logo image. */
-  logo: { src: string; alt: string; width: number; height: number } | null;
+  logo: LogoImage | null;
+  /** Optional wide, short logo for the top menu. Falls back to the full logo. */
+  logoCompact?: LogoImage | null;
   wordmark: { primary: string; secondary: string };
   tagline: string;
   base: string;
@@ -90,7 +94,8 @@ export type Home = {
     eyebrow: string;
     title: string;
     support: string;
-    image: ResponsiveImage;
+    /** One or more banner photos. Two or more crossfade. */
+    slides: ResponsiveImage[];
     primaryCta: string;
     secondaryCta: string;
   };

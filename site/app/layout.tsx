@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { BackgroundGeometry } from "@/components/BackgroundGeometry";
+import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
 import { Header } from "@/components/Header";
 import { ScrollChoreography } from "@/components/ScrollChoreography";
@@ -67,6 +68,7 @@ export default function RootLayout({
         <main id="main" className="site-main" tabIndex={-1}>
           {children}
         </main>
+        <CursorGlow />
         <ConceptPill message={site.notices.conceptPill} />
         <ScrollChoreography />
       </body>

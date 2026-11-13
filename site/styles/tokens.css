@@ -144,7 +144,7 @@
   --gutter: clamp(1rem, 4vw, 3rem);
   --tap-min: 2.75rem; /* 44px minimum touch target */
   --header-h: 4rem;
-  --header-h-desktop: 5rem;
+  --header-h-desktop: 5.5rem;
   --actionbar-h: 3.5rem;
   --section-pad: clamp(3rem, 6vw, 5rem);
   --hero-min: 35rem;

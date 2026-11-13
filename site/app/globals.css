@@ -403,12 +403,12 @@
 }
 
 .wordmark__image--icon {
-  height: 3.5rem;
+  height: 4.3rem;
 }
 
 .wordmark__image--compact {
-  height: 1.9rem;
-  max-width: 16rem;
+  height: 2.3rem;
+  max-width: 19rem;
 }
 
 @media (max-width: 767px) {
@@ -417,11 +417,11 @@
   }
 
   .wordmark__image--icon {
-    height: 2.9rem;
+    height: 3.2rem;
   }
 
   .wordmark__image--compact {
-    height: 1.4rem;
+    height: 1.55rem;
   }
 }
 
@@ -448,7 +448,7 @@
   align-items: center;
   min-height: var(--tap-min);
   color: inherit;
-  font-size: var(--text-sm);
+  font-size: 1.0625rem;
   font-weight: 600;
   text-decoration: none;
 }
@@ -479,8 +479,8 @@
 
 .site-header__quote {
   min-height: var(--tap-min);
-  padding-inline: var(--space-4);
-  font-size: var(--text-sm);
+  padding-inline: var(--space-5);
+  font-size: 1.0625rem;
 }
 
 .menu-toggle {
@@ -2489,4 +2489,71 @@ body.modal-open .site-main {
 
 .quote-panel {
   scroll-margin-top: calc(var(--header-h, 4rem) + var(--space-4));
+}
+
+/* Cursor glow: a faint two-colour light that follows the mouse on desktop */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 45;
+  width: 36rem;
+  height: 36rem;
+  margin: -18rem 0 0 -18rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(236 58 0 / 0.09) 0%,
+    rgb(63 0 130 / 0.1) 26%,
+    rgb(63 0 130 / 0.04) 48%,
+    transparent 68%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 500ms var(--ease-out);
+  will-change: transform;
+}
+
+.cursor-glow[data-on="true"] {
+  opacity: 1;
+}
+
+/* Over dark purple surfaces the glow turns white and lavender so it still reads */
+.cursor-glow[data-tone="dark"] {
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.2) 0%,
+    rgb(203 199 227 / 0.14) 26%,
+    rgb(236 58 0 / 0.06) 48%,
+    transparent 68%
+  );
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* Tablets: keep the larger header from crowding */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .wordmark__image--icon {
+    height: 3.2rem;
+  }
+
+  .wordmark__image--compact {
+    height: 1.55rem;
+  }
+
+  .site-nav,
+  .site-header__actions {
+    gap: var(--space-4);
+  }
+
+  .site-nav__link,
+  .site-header__quote {
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
 }

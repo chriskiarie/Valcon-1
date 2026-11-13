@@ -955,7 +955,7 @@
 @media (min-width: 768px) {
   .hero {
     align-items: center;
-    padding-bottom: calc(var(--space-16) + 17vh);
+    padding-bottom: calc(var(--space-16) + 25vh);
   }
 
   .hero__scrim {

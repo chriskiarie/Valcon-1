@@ -190,7 +190,6 @@ export function FleetExperience({
               <h2
                 id="fleet-title"
                 className="section-title"
-                data-flyby-trigger="fleet"
                 data-reveal="left"
               >
                 {heading}

@@ -2551,9 +2551,9 @@ body.modal-open .site-main {
   top: 0;
   left: 0;
   z-index: 45;
-  width: 36rem;
-  height: 36rem;
-  margin: -18rem 0 0 -18rem;
+  width: 15rem;
+  height: 15rem;
+  margin: -7.5rem 0 0 -7.5rem;
   border-radius: 50%;
   background: radial-gradient(
     circle,
@@ -2694,32 +2694,6 @@ body.modal-open .site-main {
   transform-origin: left center;
 }
 
-.contact-band__flight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  transform: translate3d(0, 0, 0);
-}
-
-.contact-band__plane {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 3rem;
-  margin-top: -0.675rem;
-  color: var(--brand-purple);
-  transform: translateX(-100%);
-}
-
-.contact-band__plane svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .contact-band__grid {
   display: grid;
   gap: var(--space-8) var(--space-6);
@@ -2769,8 +2743,11 @@ body.modal-open .site-main {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .js .contact-band:not(.is-flying) .contact-band__item,
   .js .contact-band:not(.is-flying) .contact-band__head {
+    opacity: 0;
+  }
+
+  .js .contact-band .contact-band__item:not(.is-revealed) {
     opacity: 0;
   }
 
@@ -2778,58 +2755,14 @@ body.modal-open .site-main {
     animation: band-pop 700ms var(--ease-out) both;
   }
 
-  .js .contact-band.is-flying .contact-band__trail {
-    animation: band-trail var(--fly-time) var(--fly-ease) 300ms both;
-  }
-
-  .js .contact-band.is-flying .contact-band__flight {
-    animation: band-fly var(--fly-time) var(--fly-ease) 300ms both;
-  }
-
-  .js .contact-band.is-flying .contact-band__plane {
-    animation: band-lift 700ms ease-in 2.7s both;
-  }
-
-  .js .contact-band.is-flying .contact-band__item {
+  .js .contact-band .contact-band__item.is-revealed {
     animation: band-pop 800ms var(--ease-out) both;
-    animation-delay: calc(0.9s + var(--i) * 0.42s);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact-band__plane {
-    display: none;
-  }
-
   .contact-band__trail {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes band-fly {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-@keyframes band-trail {
-  from {
-    transform: scaleX(0);
-  }
-
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes band-lift {
-  to {
-    opacity: 0;
-    transform: translate(-100%, -14px) rotate(-8deg);
+    transform: scaleX(1) !important;
   }
 }
 

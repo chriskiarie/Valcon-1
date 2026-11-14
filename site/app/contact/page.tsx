@@ -68,6 +68,22 @@ export default function ContactPage() {
                       <span>{site.email}</span>
                     </div>
                   ) : null}
+                  {site.address.trim() ? (
+                    <div className="contact-item">
+                      <strong>Visit</strong>
+                      <span>
+                        {site.address}, {site.base}
+                      </span>
+                    </div>
+                  ) : null}
+                  {site.hours.map((row) => (
+                    <div key={row.days} className="contact-item">
+                      <strong>Hours</strong>
+                      <span>
+                        {row.days}, {row.time}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             ) : null}

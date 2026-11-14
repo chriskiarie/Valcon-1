@@ -1,25 +1,25 @@
 :root {
   /* ── Brand colours from the Valcon Air logo ── */
-  /*   Deep Purple  – emblem ring, "V", tagline text              #45206A */
+  /*   Deep Purple  – emblem ring, "V", tagline text              #3F0082 */
   /*   Violet       – the "VALCON" half of the wordmark           #7C74B8 */
-  /*   Orange-Red   – the "AIR" half of the wordmark + wing stripe #E2472F */
-  --brand-purple: #45206A;
+  /*   Orange-Red   – the "AIR" half of the wordmark + wing stripe #EC3A00 */
+  --brand-purple: #3F0082;
   --brand-violet: #7C74B8;
-  --brand-orange: #E2472F;
+  --brand-orange: #EC3A00;
   --brand-white: #FFFFFF;
 
   /* ── Brand tints / shades (50–900) ── */
   /* Purple */
-  --brand-purple-50: #F6F4F8;
-  --brand-purple-100: #ECE9F0;
-  --brand-purple-200: #DAD2E1;
-  --brand-purple-300: #C7BCD2;
-  --brand-purple-400: #B5A6C3;
-  --brand-purple-500: #45206A;
-  --brand-purple-600: #3E1D5F;
-  --brand-purple-700: #371A55;
-  --brand-purple-800: #30164A;
-  --brand-purple-900: #291340;
+  --brand-purple-50: #F7F5FA;
+  --brand-purple-100: #EEE8F4;
+  --brand-purple-200: #DCD1E8;
+  --brand-purple-300: #C9B8DC;
+  --brand-purple-400: #B69ED0;
+  --brand-purple-500: #3F0082;
+  --brand-purple-600: #3B0079;
+  --brand-purple-700: #360070;
+  --brand-purple-800: #310065;
+  --brand-purple-900: #2C005B;
   /* Violet */
   --brand-violet-50: #F8F8FB;
   --brand-violet-100: #F2F1F8;
@@ -32,16 +32,16 @@
   --brand-violet-800: #575181;
   --brand-violet-900: #4A466E;
   /* Orange */
-  --brand-orange-50: #FEF6F5;
-  --brand-orange-100: #FCEDEA;
-  --brand-orange-200: #F9DAD5;
-  --brand-orange-300: #F6C8C1;
-  --brand-orange-400: #F3B5AC;
-  --brand-orange-500: #E2472F;
-  --brand-orange-600: #CB402A;
-  --brand-orange-700: #B53926;
-  --brand-orange-800: #9E3221;
-  --brand-orange-900: #882B1C;
+  --brand-orange-50: #FEF7F5;
+  --brand-orange-100: #FDEDE8;
+  --brand-orange-200: #FCDCD1;
+  --brand-orange-300: #FAC8B8;
+  --brand-orange-400: #F8B49E;
+  --brand-orange-500: #EC3A00;
+  --brand-orange-600: #DB3600;
+  --brand-orange-700: #CB3200;
+  --brand-orange-800: #B82D00;
+  --brand-orange-900: #A52900;
 
   /* ── Derived neutrals ── */
   --color-bg: #FCFCFE;        /* page background: barely-tinted off-white, dialled back */
@@ -67,17 +67,17 @@
 
   /* Brand tints / washes / hovers */
   --color-brand-hover: var(--brand-purple-500);
-  --color-brand-tint: rgba(69, 32, 106, 0.12);
-  --color-brand-wash: rgba(69, 32, 106, 0.03);
+  --color-brand-tint: rgba(63, 0, 130, 0.12);
+  --color-brand-wash: rgba(63, 0, 130, 0.03);
 
   /* Overlays (photo scrims) – deep purple tints, not neutral */
-  --color-overlay-bottom: rgba(69, 32, 106, 0.45);
-  --color-overlay-top: rgba(69, 32, 106, 0.1);
-  --color-overlay-side: rgba(69, 32, 106, 0.4);
+  --color-overlay-bottom: rgba(63, 0, 130, 0.45);
+  --color-overlay-top: rgba(63, 0, 130, 0.1);
+  --color-overlay-side: rgba(63, 0, 130, 0.4);
 
   /* Scrims (modals/backdrops) – deep purple tints */
-  --color-scrim: rgba(69, 32, 106, 0.4);
-  --color-scrim-solid: rgba(69, 32, 106, 0.6);
+  --color-scrim: rgba(63, 0, 130, 0.4);
+  --color-scrim-solid: rgba(63, 0, 130, 0.6);
 
   /* Header solid state (backdrop-blurred surface) */
   --color-header-solid: rgba(252, 252, 254, 0.9);
@@ -91,8 +91,8 @@
   --color-window-reflection: rgba(255, 255, 255, 0.34);
 
   /* Arrival band gradients – deep purple */
-  --color-arrival-glow: rgba(226, 71, 47, 0.18);
-  --color-arrival-glow-strong: rgba(226, 71, 47, 0.2);
+  --color-arrival-glow: rgba(236, 58, 0, 0.18);
+  --color-arrival-glow-strong: rgba(236, 58, 0, 0.2);
   --color-arrival-from: var(--brand-purple-600);
   --color-arrival-to: var(--brand-purple-800);
 
@@ -101,12 +101,12 @@
   --color-route-dash: rgba(255, 255, 255, 0.3);
 
   /* Shadows – lightly tinted deep purple, dialled back */
-  --color-shadow-1: rgba(69, 32, 106, 0.04);
-  --color-shadow-2: rgba(69, 32, 106, 0.05);
-  --color-shadow-3: rgba(69, 32, 106, 0.06);
-  --color-shadow-4: rgba(69, 32, 106, 0.08);
-  --color-shadow-5: rgba(69, 32, 106, 0.1);
-  --color-shadow-6: rgba(69, 32, 106, 0.2);
+  --color-shadow-1: rgba(63, 0, 130, 0.04);
+  --color-shadow-2: rgba(63, 0, 130, 0.05);
+  --color-shadow-3: rgba(63, 0, 130, 0.06);
+  --color-shadow-4: rgba(63, 0, 130, 0.08);
+  --color-shadow-5: rgba(63, 0, 130, 0.1);
+  --color-shadow-6: rgba(63, 0, 130, 0.2);
 
   /* Background geometry – violet instead of deep purple, dialled back */
   --color-geometry: var(--brand-violet-500);

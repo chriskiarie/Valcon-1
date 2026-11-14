@@ -60,5 +60,19 @@
     "title": "Request a quote",
     "support": "Tell us where you are going and the shape of the trip. We will take it from there.",
     "primaryCta": "Start an enquiry"
+  },
+  "visit": {
+    "eyebrow": "Visit and call",
+    "title": "Find us at Wilson Airport.",
+    "line": "Call, email or come by during office hours. We take it from there.",
+    "addressLabel": "Visit",
+    "phoneLabel": "Call",
+    "emailLabel": "Email",
+    "hoursLabel": "Office hours"
+  },
+  "gallery": {
+    "eyebrow": "In motion",
+    "heading": "Valcon Air, up close",
+    "videos": []
   }
 }

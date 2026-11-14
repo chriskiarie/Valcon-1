@@ -55,6 +55,24 @@ export const siteSettings = defineType({
       group: "contact",
       validation: (r) => r.regex(/^\d{8,15}$/, { name: "whatsapp" }).error("Digits only, with country code, no plus or spaces."),
     },
+    { ...text("address", "Building and floor", "For example: Skyward Building, 4th Floor. Shown with the base address above."), group: "contact" },
+    {
+      name: "hours",
+      title: "Opening hours",
+      type: "array",
+      group: "contact",
+      description: "One row per day range, for example Monday to Friday, 8 am to 5 pm.",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "days", title: "Days", type: "string", validation: (r) => r.required() }),
+            defineField({ name: "time", title: "Hours", type: "string", validation: (r) => r.required() }),
+          ],
+          preview: { select: { title: "days", subtitle: "time" } },
+        },
+      ],
+    },
     {
       ...text("email", "Email address"),
       group: "contact",

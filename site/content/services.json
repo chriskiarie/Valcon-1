@@ -1,30 +1,23 @@
 [
   {
-    "slug": "charter-flights",
-    "title": "Charter flights",
-    "summary": "Travel on your schedule. Discover flexible charter arrangements shaped around your destination, timing and journey.",
-    "isPlaceholder": true,
-    "image": "/images/services/service-charter-dark-ocean.jpg"
+    "slug": "charter",
+    "title": "Charter",
+    "summary": "Your aircraft, your schedule. Private and group flights for executives, teams, events and safari travel. You tell us where and when, and we arrange the aircraft, crew, permits and airport handling.",
+    "isPlaceholder": false,
+    "image": "/images/services/service-charter.jpg"
   },
   {
-    "slug": "corporate-and-group-travel",
-    "title": "Corporate & group travel",
-    "summary": "Move teams, executives and guests with thoughtfully coordinated air travel, tailored to the needs of every journey.",
-    "isPlaceholder": true,
-    "image": "/images/services/service-corporate-sunset.jpg"
+    "slug": "acmi",
+    "title": "ACMI",
+    "summary": "An aircraft and crew, ready to fly. ACMI means Aircraft, Crew, Maintenance and Insurance: airlines and cargo carriers add capacity without buying a plane. You cover fuel, airport fees and permits, and run the flights on your own schedule.",
+    "isPlaceholder": false,
+    "image": "/images/services/service-acmi.jpg"
   },
   {
-    "slug": "fleet-and-operations",
-    "title": "Fleet & operations",
-    "summary": "Based at Wilson Airport, Nairobi, Valcon Air begins its journey with 5Y-VAL, a Bombardier CRJ200 LR and the first aircraft on its register.",
+    "slug": "specialized-operations",
+    "title": "Specialized operations",
+    "summary": "Flights that do not fit a normal schedule: medical evacuations, humanitarian airlifts, aerial surveys, and support for energy and peace-keeping missions. Flown by certified crews, often to remote airstrips, on longer contracts.",
     "isPlaceholder": true,
-    "image": "/images/services/service-fleet-leather-seats.jpg"
-  },
-  {
-    "slug": "premium-cabin-experience",
-    "title": "Premium cabin experience",
-    "summary": "Every detail matters. Experience a considered cabin environment designed to make time in the air feel effortless.",
-    "isPlaceholder": true,
-    "image": "/images/services/service-premium-blue-cabin.jpg"
+    "image": "/images/services/service-specialized.jpg"
   }
 ]

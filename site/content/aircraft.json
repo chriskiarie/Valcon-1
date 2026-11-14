@@ -2,16 +2,21 @@
   {
     "slug": "crj200-lr-5y-val",
     "name": "Bombardier CRJ200 LR",
-    "registrations": ["5Y-VAL"],
+    "registrations": [
+      "5Y-VAL"
+    ],
     "status": "active",
     "isPlaceholder": false,
-    "summary": "Recently delivered to Wilson Airport, Nairobi. Full description to follow.",
+    "summary": "Valcon Air's first aircraft, delivered to Wilson Airport, Nairobi. A regional jet built for fast, comfortable flights on short and medium routes.",
     "specs": {
-      "seats": null,
-      "range": null,
-      "cruiseSpeed": null
+      "seats": 50,
+      "range": "Up to 3,150 km (1,700 nm)",
+      "cruiseSpeed": "About 785 km/h (424 kt)"
     },
-    "features": [],
+    "features": [
+      "Cabin about 12.4 m long, 2.5 m wide and 1.85 m high",
+      "Seating up to 50 in the standard layout; cabin layout for 5Y-VAL to be confirmed"
+    ],
     "hero": {
       "desktop": "/images/fleet/fleet-crj200-01.avif",
       "mobile": "/images/fleet/fleet-crj200-01.avif",

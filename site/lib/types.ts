@@ -80,6 +80,10 @@ export type Site = {
     whatsappAircraft: string;
     contactUnconfirmed: string;
   };
+  /** Street or building line, shown on the contact page, footer and home page. */
+  address: string;
+  /** Opening hours, one row per day range. */
+  hours: { days: string; time: string }[];
   phone: string;
   phoneTel: string;
   whatsapp: string;
@@ -120,6 +124,20 @@ export type Home = {
     buttonLabel: string;
   };
   services: { eyebrow: string; heading: string; imageButtonLabel: string };
+  visit: {
+    eyebrow: string;
+    title: string;
+    line: string;
+    addressLabel: string;
+    phoneLabel: string;
+    emailLabel: string;
+    hoursLabel: string;
+  };
+  gallery: {
+    eyebrow: string;
+    heading: string;
+    videos: { src: string; caption: string }[];
+  };
   closing: {
     eyebrow: string;
     title: string;

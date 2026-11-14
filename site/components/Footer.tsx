@@ -27,6 +27,11 @@ export function Footer({ compact = false }: { compact?: boolean }) {
           </nav>
 
           <div className="footer__contact">
+            {site.address.trim() ? (
+              <span>
+                {site.address}, {site.base}
+              </span>
+            ) : null}
             {phone ? <a href={`tel:${site.phoneTel}`}>{site.phone}</a> : null}
             {whatsapp ? (
               <a href={whatsappHref(site)} target="_blank" rel="noopener noreferrer">
@@ -37,6 +42,11 @@ export function Footer({ compact = false }: { compact?: boolean }) {
             {!phone && !whatsapp && !email ? (
               <Link href="/contact/">Contact</Link>
             ) : null}
+            {site.hours.map((row) => (
+              <span key={row.days}>
+                {row.days}, {row.time}
+              </span>
+            ))}
             {site.socials.map((social) => (
               <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer">
                 {social.label}

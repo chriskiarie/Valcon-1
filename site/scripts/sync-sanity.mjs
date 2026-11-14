@@ -196,10 +196,17 @@ async function mapSite(base, doc) {
     messages: doc.messages,
   });
   // Contact details, notices and socials are authoritative: clearing a field removes it.
-  out.phone = doc.phone?.trim() ?? "";
-  out.phoneTel = (doc.phoneTel?.trim() || out.phone.replace(/[^\d+]/g, "")) ?? "";
+  // Phone, email, address and hours fall back to the committed company details when left empty.
+  const dialable = (value) => {
+    const digits = value.replace(/[^\d+]/g, "");
+    return digits.startsWith("0") ? `+254${digits.slice(1)}` : digits;
+  };
+  out.phone = has(doc.phone) ? doc.phone.trim() : (base.phone ?? "");
+  out.phoneTel = has(doc.phoneTel) ? doc.phoneTel.trim() : has(doc.phone) ? dialable(doc.phone) : (base.phoneTel ?? "");
+  out.address = has(doc.address) ? doc.address.trim() : (base.address ?? "");
+  out.hours = Array.isArray(doc.hours) && doc.hours.length ? stripKeys(doc.hours) : (base.hours ?? []);
   out.whatsapp = (doc.whatsapp ?? "").replace(/\D/g, "");
-  out.email = doc.email?.trim() ?? "";
+  out.email = has(doc.email) ? doc.email.trim() : (base.email ?? "");
   out.socials = stripKeys(doc.socials ?? []);
   out.notices = {
     conceptPill: doc.notices?.conceptPill ?? "",
@@ -258,8 +265,19 @@ async function mapHome(base, doc) {
     fleet: doc.fleet,
     arrival: doc.arrival,
     services: doc.services,
+    visit: doc.visit,
     closing: doc.closing,
   });
+  // Gallery videos are uploaded files served straight from the Sanity CDN.
+  const videos = (Array.isArray(doc.gallery?.videos) ? doc.gallery.videos : []).flatMap((item) => {
+    const m = typeof item?.video?.asset?._ref === "string" && item.video.asset._ref.match(/^file-([a-f0-9]+)-([a-z0-9]+)$/i);
+    return m ? [{ src: `${CDN_HOST}/files/${PROJECT}/${DATASET}/${m[1]}.${m[2]}`, caption: item.caption ?? "" }] : [];
+  });
+  out.gallery = {
+    eyebrow: has(doc.gallery?.eyebrow) ? doc.gallery.eyebrow : base.gallery.eyebrow,
+    heading: has(doc.gallery?.heading) ? doc.gallery.heading : base.gallery.heading,
+    videos: videos.length ? videos : base.gallery.videos,
+  };
   out.hero.slides = await mapSlides(base.hero.slides, doc.hero?.slides);
   out.intro.image = await responsive(base.intro.image, doc.intro?.image, "feature", {
     desktop: { w: 1400, h: 1750, q: 70 },

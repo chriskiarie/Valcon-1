@@ -11,7 +11,7 @@
     "primary": "VALCON",
     "secondary": "AIR"
   },
-  "tagline": "Aviation, based at Wilson Airport, Nairobi.",
+  "tagline": "Feel the difference.",
   "base": "Wilson Airport, Nairobi, Kenya",
   "description": "A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson Airport, Nairobi.",
   "metaTitle": "Valcon Air (demo)",
@@ -39,10 +39,10 @@
     "whatsappAircraft": "Hello Valcon Air, I’d like to enquire about the {aircraft}.",
     "contactUnconfirmed": "Direct contact details are being confirmed for this concept preview."
   },
-  "phone": "",
-  "phoneTel": "",
+  "phone": "020 2118217",
+  "phoneTel": "+254202118217",
   "whatsapp": "",
-  "email": "",
+  "email": "info@valconair.co.ke",
   "socials": [],
   "credits": [
     {
@@ -89,5 +89,12 @@
     "alt": "",
     "width": 414,
     "height": 360
-  }
+  },
+  "address": "Skyward Building, 4th Floor",
+  "hours": [
+    {
+      "days": "Monday to Friday",
+      "time": "8 am to 5 pm"
+    }
+  ]
 }

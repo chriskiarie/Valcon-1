@@ -419,11 +419,11 @@ function drawSprite(
   ctx.globalAlpha = 1;
 }
 
-function isVisible(selector: string) {
+function isVisible(selector: string, enterAt = 1) {
   const element = document.querySelector<HTMLElement>(selector);
   if (!element) return false;
   const rect = element.getBoundingClientRect();
-  return rect.bottom > 0 && rect.top < window.innerHeight;
+  return rect.bottom > 0 && rect.top < window.innerHeight * enterAt;
 }
 
 export function FlybySystem() {
@@ -562,7 +562,8 @@ export function FlybySystem() {
 
     function triggerVisible(kind: TriggerKind) {
       if (kind === "fleet") return isVisible('[data-flyby-trigger="fleet"]');
-      return isVisible('[data-flyby-trigger="final"]');
+      // The closing block must be well into view, so the flyby never crosses the contact band above it.
+      return isVisible('[data-flyby-trigger="final"]', 0.55);
     }
 
     function headerBottom() {

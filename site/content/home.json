@@ -73,6 +73,15 @@
   "gallery": {
     "eyebrow": "In motion",
     "heading": "Valcon Air, up close",
-    "videos": []
+    "videos": [
+      {
+        "src": "/videos/arrival-landing.mp4",
+        "caption": "A Valcon Air CRJ200 on final approach to Wilson Airport."
+      },
+      {
+        "src": "/videos/arrival-salute.mp4",
+        "caption": "5Y-VAL taxiing at Wilson Airport under a water salute."
+      }
+    ]
   }
 }

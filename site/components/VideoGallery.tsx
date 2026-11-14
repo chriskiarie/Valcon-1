@@ -5,7 +5,9 @@ import { Container } from "@/components/Container";
 import type { Home } from "@/lib/types";
 
 /** A row of upright looping clips. No controls: they play quietly while on screen. */
-export function VideoGallery({ copy }: { copy: Home["gallery"] }) {
+export function VideoGallery({ copy: full }: { copy: Home["gallery"] }) {
+  // The first two clips live in the intro band; the rest run here.
+  const copy = { ...full, videos: full.videos.slice(2) };
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

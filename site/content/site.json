@@ -30,8 +30,8 @@
     }
   ],
   "notices": {
-    "conceptPill": "Concept preview. Copy and images are illustrative.",
-    "footerNote": "Demo draft. Content is placeholder.",
+    "conceptPill": "",
+    "footerNote": "",
     "illustrativeImages": "Illustrative images. Client aircraft photography to follow."
   },
   "messages": {

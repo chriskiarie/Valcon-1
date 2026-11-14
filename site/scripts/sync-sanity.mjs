@@ -166,6 +166,25 @@ async function fetchDocs() {
 }
 
 // ---------- 3. per-document mappers (each failure falls back for that document only) ----------
+async function syncLogo(image, name, fallbackAlt) {
+  const ref = parseRef(image);
+  const isSvg = ref.ext === "svg";
+  const stem = `${name}-${ref.id.slice(0, 8)}`;
+  const file = `${stem}.${isSvg ? "svg" : "png"}`;
+  try {
+    const params = isSvg ? "" : "?w=640&fm=png";
+    await download(`${CDN_HOST}/images/${PROJECT}/${DATASET}/${ref.id}-${ref.width}x${ref.height}.${ref.ext}${params}`, file);
+    imageStats.downloaded++;
+    const width = isSvg ? ref.width : Math.min(ref.width, 640);
+    const height = isSvg ? ref.height : Math.round((ref.height * width) / ref.width);
+    return { src: `${IMG_URL}/${file}`, alt: image.alt || fallbackAlt, width, height };
+  } catch (err) {
+    imageStats.failed++;
+    warn(`${name} failed, keeping previous: ${err.message}`);
+    return null;
+  }
+}
+
 async function mapSite(base, doc) {
   const out = merge(base, {
     name: doc.name,
@@ -177,10 +196,17 @@ async function mapSite(base, doc) {
     messages: doc.messages,
   });
   // Contact details, notices and socials are authoritative: clearing a field removes it.
-  out.phone = doc.phone?.trim() ?? "";
-  out.phoneTel = (doc.phoneTel?.trim() || out.phone.replace(/[^\d+]/g, "")) ?? "";
+  // Phone, email, address and hours fall back to the committed company details when left empty.
+  const dialable = (value) => {
+    const digits = value.replace(/[^\d+]/g, "");
+    return digits.startsWith("0") ? `+254${digits.slice(1)}` : digits;
+  };
+  out.phone = has(doc.phone) ? doc.phone.trim() : (base.phone ?? "");
+  out.phoneTel = has(doc.phoneTel) ? doc.phoneTel.trim() : has(doc.phone) ? dialable(doc.phone) : (base.phoneTel ?? "");
+  out.address = has(doc.address) ? doc.address.trim() : (base.address ?? "");
+  out.hours = Array.isArray(doc.hours) && doc.hours.length ? stripKeys(doc.hours) : (base.hours ?? []);
   out.whatsapp = (doc.whatsapp ?? "").replace(/\D/g, "");
-  out.email = doc.email?.trim() ?? "";
+  out.email = has(doc.email) ? doc.email.trim() : (base.email ?? "");
   out.socials = stripKeys(doc.socials ?? []);
   out.notices = {
     conceptPill: doc.notices?.conceptPill ?? "",
@@ -196,24 +222,14 @@ async function mapSite(base, doc) {
   if (doc.nav?.length) out.nav = stripKeys(doc.nav);
   if (Array.isArray(doc.credits)) out.credits = stripKeys(doc.credits);
 
-  const ref = parseRef(doc.logo);
-  if (ref) {
-    const isSvg = ref.ext === "svg";
-    const stem = `logo-${ref.id.slice(0, 8)}`;
-    const file = `${stem}.${isSvg ? "svg" : "png"}`;
-    try {
-      const params = isSvg ? "" : "?w=640&fm=png";
-      await download(`${CDN_HOST}/images/${PROJECT}/${DATASET}/${ref.id}-${ref.width}x${ref.height}.${ref.ext}${params}`, file);
-      imageStats.downloaded++;
-      const width = isSvg ? ref.width : Math.min(ref.width, 640);
-      const height = isSvg ? ref.height : Math.round((ref.height * width) / ref.width);
-      out.logo = { src: `${IMG_URL}/${file}`, alt: doc.logo.alt || out.name, width, height };
-    } catch (err) {
-      imageStats.failed++;
-      warn(`logo failed, keeping previous logo: ${err.message}`);
+  // Logos: an uploaded logo replaces the committed default; with nothing uploaded the default stays.
+  for (const [field, name] of [["logo", "logo"], ["logoCompact", "logo-compact"], ["logoIcon", "logo-icon"]]) {
+    if (parseRef(doc[field])) {
+      const synced = await syncLogo(doc[field], name, out.name);
+      if (synced) out[field] = synced;
+    } else {
+      out[field] = base[field] ?? null;
     }
-  } else {
-    out.logo = null; // no logo uploaded: text wordmark
   }
   return out;
 }
@@ -228,19 +244,41 @@ async function responsive(base, cms, name, sizes) {
   return out;
 }
 
+// Banner photos. With none in the CMS the committed photos stay. A slide without its own phone photo
+// uses the wide photo, cropped around its focal point.
+async function mapSlides(base, cms) {
+  const out = [];
+  for (const [i, slide] of (Array.isArray(cms) ? cms : []).entries()) {
+    if (!slide?.desktop) continue;
+    const alt = has(slide.alt) ? slide.alt : (base[i]?.alt ?? "");
+    const desktop = await fetchImage(slide.desktop, `hero-${i + 1}-desktop`, { w: 1920, h: 1080, q: 65, formats: ["avif", "webp", "jpg"] });
+    const mobile = await fetchImage(slide.mobile ?? slide.desktop, `hero-${i + 1}-mobile`, { w: 900, h: 1400, q: 65, formats: ["avif", "webp", "jpg"] });
+    if (desktop && mobile) out.push({ desktop, mobile, alt });
+  }
+  return out.length ? out : base;
+}
+
 async function mapHome(base, doc) {
   const out = merge(base, {
-    hero: { ...doc.hero, image: undefined },
+    hero: { ...doc.hero, image: undefined, slides: undefined },
     intro: { ...doc.intro, image: undefined },
     fleet: doc.fleet,
     arrival: doc.arrival,
     services: doc.services,
+    visit: doc.visit,
     closing: doc.closing,
   });
-  out.hero.image = await responsive(base.hero.image, doc.hero?.image, "hero", {
-    desktop: { w: 1920, h: 1080, q: 65 },
-    mobile: { w: 900, h: 1400, q: 65 },
+  // Gallery videos are uploaded files served straight from the Sanity CDN.
+  const videos = (Array.isArray(doc.gallery?.videos) ? doc.gallery.videos : []).flatMap((item) => {
+    const m = typeof item?.video?.asset?._ref === "string" && item.video.asset._ref.match(/^file-([a-f0-9]+)-([a-z0-9]+)$/i);
+    return m ? [{ src: `${CDN_HOST}/files/${PROJECT}/${DATASET}/${m[1]}.${m[2]}`, caption: item.caption ?? "" }] : [];
   });
+  out.gallery = {
+    eyebrow: has(doc.gallery?.eyebrow) ? doc.gallery.eyebrow : base.gallery.eyebrow,
+    heading: has(doc.gallery?.heading) ? doc.gallery.heading : base.gallery.heading,
+    videos: videos.length ? videos : base.gallery.videos,
+  };
+  out.hero.slides = await mapSlides(base.hero.slides, doc.hero?.slides);
   out.intro.image = await responsive(base.intro.image, doc.intro?.image, "feature", {
     desktop: { w: 1400, h: 1750, q: 70 },
     mobile: { w: 900, h: 1125, q: 70 },

@@ -175,9 +175,12 @@
 }
 
 .on-dark .eyebrow,
-.hero .eyebrow,
 .mobile-menu .eyebrow {
   color: var(--color-on-dark-muted);
+}
+
+.hero .eyebrow {
+  color: var(--color-brand);
 }
 
 .display {
@@ -311,8 +314,7 @@
 .hero :focus-visible,
 .mobile-menu :focus-visible,
 .closing :focus-visible,
-.arrival :focus-visible,
-.site-header--over-hero:not(.site-header--solid) :focus-visible {
+.arrival :focus-visible {
   outline-color: var(--color-on-dark);
 }
 
@@ -338,17 +340,71 @@
     color var(--dur-fast) var(--ease-out);
 }
 
+/* Liquid-glass bar: transparent over the hero, then a floating translucent capsule once you scroll */
 .site-header--solid {
-  border-bottom: 1px solid var(--color-line);
-  background: var(--color-header-solid);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+  background: transparent;
+}
+
+.site-header__inner {
+  position: relative;
+  isolation: isolate;
+}
+
+.site-header__inner::before {
+  content: "";
+  position: absolute;
+  inset: 0.65rem -1.25rem;
+  z-index: -1;
+  border: 1px solid rgb(255 255 255 / 0.7);
+  border-radius: 999px;
+  background:
+    linear-gradient(115deg, rgb(255 255 255 / 0.78), rgb(255 255 255 / 0.5) 55%, rgb(244 238 252 / 0.62));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.95),
+    inset 0 -1px 0 rgb(63 0 130 / 0.07),
+    0 14px 34px -14px rgb(63 0 130 / 0.32);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  opacity: 0;
+  transform: translateY(-10px) scale(0.97, 0.88);
+  transition:
+    opacity 480ms var(--ease-out),
+    transform 560ms var(--ease-out);
+  pointer-events: none;
+}
+
+.site-header--solid .site-header__inner::before {
+  opacity: 1;
+  transform: none;
+}
+
+.wordmark__lockup {
+  transform-origin: left center;
+  transition: transform 560ms var(--ease-out);
+}
+
+.site-header--solid .wordmark__lockup {
+  transform: scale(0.8);
+}
+
+@media (max-width: 767px) {
+  .site-header__inner::before {
+    inset: 0.5rem -0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__inner::before,
+  .wordmark__lockup {
+    transition: none;
+  }
 }
 
 .site-header--over-hero:not(.site-header--solid) {
   border-bottom-color: transparent;
   background: transparent;
-  color: var(--color-on-dark);
+  color: var(--color-brand);
 }
 
 .site-header__inner {
@@ -374,7 +430,7 @@
 }
 
 .site-header--over-hero:not(.site-header--solid) .wordmark {
-  color: var(--color-on-dark);
+  color: var(--color-brand);
 }
 
 /* Wordmark treatment: "VALCON" in brand violet, "AIR" in brand orange-red */
@@ -390,9 +446,47 @@
 .wordmark__image {
   display: block;
   width: auto;
-  height: 2.25rem;
-  max-width: 12rem;
   object-fit: contain;
+}
+
+/* Emblem plus short, wide name in the top menu; the stacked logo, larger, in the footer */
+.wordmark__lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.wordmark__image--icon {
+  height: 4.3rem;
+}
+
+.wordmark__image--compact {
+  height: 2.3rem;
+  max-width: 19rem;
+}
+
+@media (max-width: 767px) {
+  .wordmark__lockup {
+    gap: 0.6rem;
+  }
+
+  .wordmark__image--icon {
+    height: 3.2rem;
+  }
+
+  .wordmark__image--compact {
+    height: 1.55rem;
+  }
+}
+
+.wordmark__image--full {
+  height: 6.5rem;
+  max-width: 14rem;
+}
+
+/* The mobile menu is dark purple: show the logo as a white silhouette there */
+.mobile-menu .wordmark__image {
+  filter: brightness(0) invert(1);
 }
 
 .site-nav {
@@ -408,7 +502,7 @@
   align-items: center;
   min-height: var(--tap-min);
   color: inherit;
-  font-size: var(--text-sm);
+  font-size: 1.0625rem;
   font-weight: 600;
   text-decoration: none;
 }
@@ -439,8 +533,8 @@
 
 .site-header__quote {
   min-height: var(--tap-min);
-  padding-inline: var(--space-4);
-  font-size: var(--text-sm);
+  padding-inline: var(--space-5);
+  font-size: 1.0625rem;
 }
 
 .menu-toggle {
@@ -657,8 +751,8 @@
   overflow: hidden;
   padding-top: calc(var(--safe-top) + var(--header-h) + var(--space-8));
   padding-bottom: calc(var(--safe-bottom) + var(--space-16));
-  background: var(--color-brand);
-  color: var(--color-on-dark);
+  background: var(--brand-purple-100);
+  color: var(--color-ink);
 }
 
 .hero__media,
@@ -674,6 +768,150 @@
   object-position: center;
 }
 
+/* Banner slideshow: the new photo fades in above the old one, so no purple shows through mid-fade. */
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.hero__slide[data-state="idle"] {
+  z-index: 0;
+  opacity: 0;
+}
+
+.hero__slide[data-state="leaving"] {
+  z-index: 1;
+  opacity: 1;
+}
+
+.hero__slide[data-state="active"] {
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__slide[data-state="active"] img,
+  .hero__slide[data-state="leaving"] img {
+    animation: hero-drift 11s cubic-bezier(0.2, 0.6, 0.3, 1) both;
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.07);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero__controls {
+  position: absolute;
+  right: var(--space-6);
+  bottom: calc(var(--safe-bottom) + var(--space-6));
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: #fff;
+}
+
+.hero__dots {
+  display: flex;
+}
+
+.hero__dot,
+.hero__pause {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hero__dot-line {
+  position: relative;
+  display: block;
+  width: 1.75rem;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 1px;
+  background: rgb(255 255 255 / 0.4);
+}
+
+.hero__dot-fill {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: hero-progress var(--hero-hold, 7000ms) linear forwards;
+}
+
+.hero__controls[data-playing="false"] .hero__dot-fill {
+  animation-play-state: paused;
+}
+
+@keyframes hero-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hero__pause {
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.14);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.hero__pause:hover {
+  background: rgb(255 255 255 / 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__dot-fill {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
+/* On phones the controls sit in the sky beside the small label, in brand colour, clear of the buttons */
+@media (max-width: 767px) {
+  .hero__controls {
+    top: calc(var(--safe-top) + var(--header-h) + var(--space-2) + 2.9rem);
+    right: var(--space-2);
+    bottom: auto;
+    color: var(--color-brand);
+  }
+
+  .hero__dot,
+  .hero__pause {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .hero__dot-line {
+    width: 1.25rem;
+    background: rgb(63 0 130 / 0.25);
+  }
+
+  .hero__dot-fill {
+    background: var(--color-brand);
+  }
+
+  .hero__pause {
+    background: rgb(63 0 130 / 0.1);
+  }
+}
+
 .hero__overlay,
 .hero__scrim {
   position: absolute;
@@ -681,12 +919,14 @@
   pointer-events: none;
 }
 
+/* The banner photos are bright. A soft pale wash behind the headline keeps it readable on any photo,
+   and a faint dark foot keeps the scroll cue and slideshow controls readable. */
 .hero__overlay {
-  background: linear-gradient(to top, var(--color-overlay-bottom), var(--color-overlay-top));
+  background: linear-gradient(to top, rgb(24 12 40 / 0.4), transparent 26%);
 }
 
 .hero__scrim {
-  background: linear-gradient(90deg, var(--color-overlay-side), transparent 62%);
+  background: linear-gradient(90deg, rgb(252 252 254 / 0.78), rgb(252 252 254 / 0.4) 34%, transparent 62%);
 }
 
 .hero__inner {
@@ -704,6 +944,7 @@
 
 .hero__title {
   max-width: 11ch;
+  color: var(--color-brand);
   font-family: var(--font-display), Georgia, serif;
   font-size: var(--display-xl);
   font-weight: 400;
@@ -712,10 +953,20 @@
 }
 
 .hero__support {
-  max-width: 33ch;
-  color: var(--color-on-dark-muted);
+  max-width: 31ch;
+  color: var(--color-ink);
+  text-shadow: 0 0 14px rgb(252 252 254 / 0.9), 0 0 3px rgb(252 252 254 / 0.8);
   font-size: var(--text-lg);
   line-height: 1.45;
+}
+
+/* The second button sits on the photo, so give it a pale backing */
+.hero .btn--outline {
+  border-color: rgb(63 0 130 / 0.35);
+  background: rgb(255 255 255 / 0.72);
+  color: var(--color-brand);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .hero__actions {
@@ -758,11 +1009,15 @@
 @media (min-width: 768px) {
   .hero {
     align-items: center;
-    padding-bottom: var(--space-16);
+    padding-bottom: calc(var(--space-16) + 25vh);
   }
 
   .hero__scrim {
-    background: linear-gradient(90deg, var(--color-overlay-side), transparent 60%);
+    background: linear-gradient(90deg, rgb(252 252 254 / 0.84), rgb(252 252 254 / 0.5) 36%, transparent 62%);
+  }
+
+  .hero__title {
+    font-size: clamp(2.8rem, 4.2vw + 0.4rem, 4.4rem);
   }
 
   .scroll-cue {
@@ -771,12 +1026,88 @@
 }
 
 @media (max-width: 767px) {
+  /* Headline in the sky at the top, buttons at the foot, the aircraft between them */
   .hero {
-    padding-bottom: calc(var(--safe-bottom) + var(--actionbar-h) + var(--space-16) + var(--space-4));
+    align-items: stretch;
+    padding-top: calc(var(--safe-top) + var(--header-h) + var(--space-4));
+    padding-bottom: calc(var(--safe-bottom) + var(--actionbar-h) + 4.75rem);
   }
 
   .hero__scrim {
-    background: linear-gradient(to top, var(--color-overlay-side), transparent 70%);
+    background: linear-gradient(to bottom, rgb(252 252 254 / 0.72), rgb(252 252 254 / 0.3) 38%, transparent 55%);
+  }
+
+  .hero__inner {
+    display: flex;
+  }
+
+  .hero__copy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 12vw, 3.4rem);
+  }
+
+  .hero__support {
+    display: none;
+  }
+
+  .hero__actions {
+    margin-top: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1100px) and (orientation: portrait) {
+  /* Portrait tablets use the tall photos: headline above the aircraft, buttons below it */
+  .hero {
+    align-items: stretch;
+    padding-top: calc(var(--header-h) + var(--space-8));
+    padding-bottom: calc(var(--safe-bottom) + 6.5rem);
+  }
+
+  .hero__scrim {
+    background: linear-gradient(to bottom, rgb(252 252 254 / 0.72), rgb(252 252 254 / 0.3) 38%, transparent 55%);
+  }
+
+  .hero__inner {
+    display: flex;
+  }
+
+  .hero__copy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__title {
+    font-size: clamp(3rem, 8vw, 4.4rem);
+  }
+
+  .hero__support {
+    display: none;
+  }
+
+  .hero__actions {
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero__actions {
+    flex-wrap: nowrap;
+    gap: var(--space-2);
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 0;
+    padding-inline: var(--space-3);
+    font-size: 0.9rem;
+    white-space: nowrap;
   }
 }
 
@@ -2212,4 +2543,295 @@ body.modal-open .site-main {
 
 .quote-panel {
   scroll-margin-top: calc(var(--header-h, 4rem) + var(--space-4));
+}
+
+/* Cursor glow: a faint two-colour light that follows the mouse on desktop */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 45;
+  width: 17rem;
+  height: 17rem;
+  margin: -8.5rem 0 0 -8.5rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(236 58 0 / 0.07) 0%,
+    rgb(120 40 170 / 0.075) 20%,
+    rgb(63 0 130 / 0.05) 38%,
+    rgb(63 0 130 / 0.02) 56%,
+    rgb(63 0 130 / 0.006) 72%,
+    transparent 86%
+  );
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(6px);
+  transition: opacity 900ms ease;
+  will-change: transform;
+}
+
+.cursor-glow[data-on="true"] {
+  opacity: 1;
+}
+
+/* Over dark purple surfaces the glow turns white and lavender so it still reads */
+.cursor-glow[data-tone="dark"] {
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.16) 0%,
+    rgb(203 199 227 / 0.11) 22%,
+    rgb(236 58 0 / 0.045) 44%,
+    rgb(236 58 0 / 0.015) 62%,
+    transparent 84%
+  );
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* Tablets: keep the larger header from crowding */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .wordmark__image--icon {
+    height: 3.2rem;
+  }
+
+  .wordmark__image--compact {
+    height: 1.55rem;
+  }
+
+  .site-nav,
+  .site-header__actions {
+    gap: var(--space-4);
+  }
+
+  .site-nav__link,
+  .site-header__quote {
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+}
+
+/* Contact page details */
+.contact-details {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-line);
+}
+
+.contact-details h3 {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-base);
+}
+
+.contact-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.contact-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.contact-item a,
+.contact-item strong {
+  min-width: 5.5rem;
+  color: var(--color-brand);
+  font-weight: 600;
+}
+
+/* Visit and call band: a plane flies a fixed straight path and reveals the details */
+.contact-band {
+  --fly-time: 2.6s;
+  --fly-ease: cubic-bezier(0.55, 0.05, 0.25, 1);
+}
+
+.contact-band__head {
+  max-width: 40rem;
+}
+
+.contact-band__title {
+  margin-bottom: var(--space-4);
+  color: var(--color-brand);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--display-l);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.contact-band__line-copy {
+  max-width: 36ch;
+  color: var(--color-ink-muted);
+  font-size: var(--text-lg);
+}
+
+.contact-band__path {
+  position: relative;
+  height: 2.5rem;
+  margin-block: var(--space-8);
+}
+
+.contact-band__baseline,
+.contact-band__trail {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 2px;
+  margin-top: -1px;
+}
+
+.contact-band__baseline {
+  background: repeating-linear-gradient(to right, var(--brand-purple-300) 0 6px, transparent 6px 14px);
+}
+
+.contact-band__trail {
+  display: none;
+}
+
+.contact-band__grid {
+  display: grid;
+  gap: var(--space-8) var(--space-6);
+  margin: 0;
+}
+
+.contact-band__item dt {
+  margin-bottom: var(--space-2);
+  color: var(--brand-orange);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.contact-band__item dd {
+  margin: 0;
+  color: var(--color-brand);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.contact-band__item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-band__item a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.contact-band__hours {
+  display: block;
+}
+
+.contact-band__hours + .contact-band__hours {
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .contact-band__grid {
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .contact-band:not(.is-flying) .contact-band__head {
+    opacity: 0;
+  }
+
+  .js .contact-band .contact-band__item:not(.is-revealed) {
+    opacity: 0;
+  }
+
+  .js .contact-band.is-flying .contact-band__head {
+    animation: band-pop 700ms var(--ease-out) both;
+  }
+
+  .js .contact-band .contact-band__item.is-revealed {
+    animation: band-pop 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-band__trail {
+    transform: scaleX(1) !important;
+  }
+}
+
+@keyframes band-pop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Video gallery: upright looping clips, clean borders, no controls */
+.video-gallery__head {
+  margin-bottom: var(--space-8);
+}
+
+.video-gallery__title {
+  color: var(--color-brand);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--display-l);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.video-gallery__track {
+  display: flex;
+  gap: var(--space-4);
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding-bottom: var(--space-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.video-gallery__track::-webkit-scrollbar {
+  display: none;
+}
+
+.video-gallery__item {
+  flex: 0 0 auto;
+  width: clamp(11rem, 62vw, 16rem);
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 9 / 16;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--brand-purple-100);
+  box-shadow: 0 18px 40px -24px var(--color-shadow-6);
+  scroll-snap-align: center;
+}
+
+.video-gallery__item video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .video-gallery__item {
+    width: clamp(12rem, 17vw, 17rem);
+  }
 }

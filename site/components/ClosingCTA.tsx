@@ -9,7 +9,7 @@ export function ClosingCTA() {
   const email = hasEmail(site);
 
   return (
-    <div className="closing" data-flyby-trigger="final" data-reveal="below">
+    <div className="closing" data-reveal="below">
       <span className="eyebrow">{closing.eyebrow}</span>
       <h2 className="closing__title" data-flyby-avoid>{closing.title}</h2>
       <p className="closing__support" data-flyby-avoid>

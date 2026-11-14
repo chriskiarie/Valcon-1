@@ -16,7 +16,7 @@
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="1"/>
     </linearGradient>
     <linearGradient id="fuselageGradDark" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#45206A" stop-opacity="0.92"/>
+      <stop offset="0%" stop-color="#3F0082" stop-opacity="0.92"/>
       <stop offset="100%" stop-color="#30164A" stop-opacity="0.92"/>
     </linearGradient>
     <!-- Window line gradient -->
@@ -34,7 +34,7 @@
   <path
     d="M20 30 Q 40 30 60 50 Q 80 70 100 70 Q 120 70 140 50 Q 160 30 180 30"
     fill="url(#fuselageGradDark)"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.5"
   />
   <!-- Fuselage top highlight (light mode only) -->
@@ -59,7 +59,7 @@
     cy="38"
     rx="12"
     ry="8"
-    fill="#45206A"
+    fill="#3F0082"
     opacity="0.15"
   />
   <!-- ========== WINDOW LINE ========== -->
@@ -85,14 +85,14 @@
   <path
     d="M55 45 Q 40 48 35 55 Q 30 60 32 68"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="1.5"
     stroke-linejoin="round"
   />
   <path
     d="M145 45 Q 160 48 165 55 Q 170 60 172 68"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="1.5"
     stroke-linejoin="round"
   />
@@ -111,14 +111,14 @@
   <path
     d="M35 55 Q 28 62 22 70 Q 16 75 18 78"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.8"
     stroke-linejoin="round"
   />
   <path
     d="M165 55 Q 172 62 178 70 Q 184 75 182 78"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.8"
     stroke-linejoin="round"
   />
@@ -126,7 +126,7 @@
   <path
     d="M55 58 Q 45 62 40 70"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.5"
     stroke-dasharray="3 3"
     opacity="0.18"
@@ -134,7 +134,7 @@
   <path
     d="M145 58 Q 155 62 160 70"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.5"
     stroke-dasharray="3 3"
     opacity="0.18"
@@ -144,13 +144,13 @@
   <path
     d="M78 52 Q 88 55 95 58 Q 102 62 108 62"
     fill="url(#fuselageGradDark)"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.5"
   />
   <path
     d="M112 52 Q 122 55 129 58 Q 136 62 142 62"
     fill="url(#fuselageGradDark)"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.5"
   />
   <!-- Engine intake highlights -->
@@ -184,7 +184,7 @@
     cx="30"
     cy="50"
     r="1.5"
-    fill="#E2472F"
+    fill="#EC3A00"
     opacity="0.9"
   />
   <circle
@@ -198,7 +198,7 @@
   <path
     d="M130 55 Q 145 52 155 58 Q 170 65 175 70"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="1"
     stroke-linejoin="round"
   />
@@ -206,7 +206,7 @@
   <path
     d="M170 55 Q 185 45 195 55 Q 205 65 200 75"
     fill="none"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="1"
     stroke-linejoin="round"
   />
@@ -225,7 +225,7 @@
     y1="68"
     x2="28"
     y2="78"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.3"
     opacity="0.12"
   />
@@ -234,7 +234,7 @@
     y1="68"
     x2="178"
     y2="78"
-    stroke="#45206A"
+    stroke="#3F0082"
     stroke-width="0.3"
     opacity="0.12"
   />

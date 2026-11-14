@@ -1,12 +1,17 @@
 {
   "name": "Valcon Air",
   "legalName": "Valcon Air Solutions Limited",
-  "logo": null,
+  "logo": {
+    "src": "/images/brand/valcon-logo.png",
+    "alt": "Valcon Air. Feel the difference.",
+    "width": 640,
+    "height": 369
+  },
   "wordmark": {
     "primary": "VALCON",
     "secondary": "AIR"
   },
-  "tagline": "Aviation, based at Wilson Airport, Nairobi.",
+  "tagline": "Feel the difference.",
   "base": "Wilson Airport, Nairobi, Kenya",
   "description": "A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson Airport, Nairobi.",
   "metaTitle": "Valcon Air (demo)",
@@ -34,20 +39,12 @@
     "whatsappAircraft": "Hello Valcon Air, I’d like to enquire about the {aircraft}.",
     "contactUnconfirmed": "Direct contact details are being confirmed for this concept preview."
   },
-  "phone": "",
-  "phoneTel": "",
+  "phone": "020 2118217",
+  "phoneTel": "+254202118217",
   "whatsapp": "",
-  "email": "",
+  "email": "info@valconair.co.ke",
   "socials": [],
   "credits": [
-    {
-      "title": "Munich Airport plane handling at sunset",
-      "author": "Richard Bartz",
-      "source": "https://commons.wikimedia.org/wiki/File:Munich_Airport_plane_handling_at_sunset.jpg",
-      "licence": "CC BY-SA 2.5",
-      "usedFor": "Hero photograph",
-      "note": "Cropped and resized for this demo."
-    },
     {
       "title": "Above the Clouds - A Glimpse of Heaven",
       "author": "Joma433",
@@ -79,6 +76,25 @@
       "licence": "CC BY-SA 4.0",
       "usedFor": "Fleet card (illustrative)",
       "note": "Cropped and resized for this demo."
+    }
+  ],
+  "logoCompact": {
+    "src": "/images/brand/valcon-wordmark.png",
+    "alt": "Valcon Air",
+    "width": 640,
+    "height": 91
+  },
+  "logoIcon": {
+    "src": "/images/brand/valcon-icon.png",
+    "alt": "",
+    "width": 414,
+    "height": 360
+  },
+  "address": "Skyward Building, 4th Floor",
+  "hours": [
+    {
+      "days": "Monday to Friday",
+      "time": "8 am to 5 pm"
     }
   ]
 }

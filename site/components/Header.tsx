@@ -84,7 +84,7 @@ export function Header({
           <div className="site-header__actions">
             <Button
               href="/contact/#quote"
-              variant={solid ? "solid" : "on-dark"}
+              variant="solid"
               className="site-header__quote"
             >
               Request a quote

@@ -51,11 +51,17 @@ export type ResponsiveImage = {
   alt: string;
 };
 
+export type LogoImage = { src: string; alt: string; width: number; height: number };
+
 export type Site = {
   name: string;
   legalName: string;
   /** null means the text wordmark is shown instead of a logo image. */
-  logo: { src: string; alt: string; width: number; height: number } | null;
+  logo: LogoImage | null;
+  /** Optional wide, short logo for the top menu. Falls back to the full logo. */
+  logoCompact?: LogoImage | null;
+  /** Optional emblem on its own, shown beside the compact logo in the top menu. */
+  logoIcon?: LogoImage | null;
   wordmark: { primary: string; secondary: string };
   tagline: string;
   base: string;
@@ -74,6 +80,10 @@ export type Site = {
     whatsappAircraft: string;
     contactUnconfirmed: string;
   };
+  /** Street or building line, shown on the contact page, footer and home page. */
+  address: string;
+  /** Opening hours, one row per day range. */
+  hours: { days: string; time: string }[];
   phone: string;
   phoneTel: string;
   whatsapp: string;
@@ -90,7 +100,8 @@ export type Home = {
     eyebrow: string;
     title: string;
     support: string;
-    image: ResponsiveImage;
+    /** One or more banner photos. Two or more crossfade. */
+    slides: ResponsiveImage[];
     primaryCta: string;
     secondaryCta: string;
   };
@@ -113,6 +124,20 @@ export type Home = {
     buttonLabel: string;
   };
   services: { eyebrow: string; heading: string; imageButtonLabel: string };
+  visit: {
+    eyebrow: string;
+    title: string;
+    line: string;
+    addressLabel: string;
+    phoneLabel: string;
+    emailLabel: string;
+    hoursLabel: string;
+  };
+  gallery: {
+    eyebrow: string;
+    heading: string;
+    videos: { src: string; caption: string }[];
+  };
   closing: {
     eyebrow: string;
     title: string;

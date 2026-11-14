@@ -3,11 +3,23 @@
     "eyebrow": "Wilson Airport, Nairobi",
     "title": "Aviation, with a sense of place.",
     "support": "A concept preview for Valcon Air Solutions Limited, an aviation operator based at Wilson Airport, Nairobi.",
-    "image": {
-      "desktop": "/images/hero/hero-desktop",
-      "mobile": "/images/hero/hero-mobile",
-      "alt": "An aircraft being handled on an airport apron at dusk."
-    },
+    "slides": [
+      {
+        "desktop": "/images/hero/hero-1-desktop",
+        "mobile": "/images/hero/hero-1-mobile",
+        "alt": "Valcon Air's Bombardier CRJ200 taxiing towards the camera."
+      },
+      {
+        "desktop": "/images/hero/hero-2-desktop",
+        "mobile": "/images/hero/hero-2-mobile",
+        "alt": "Valcon Air's Bombardier CRJ200, 5Y-VAL, at Wilson Airport."
+      },
+      {
+        "desktop": "/images/hero/hero-3-desktop",
+        "mobile": "/images/hero/hero-3-mobile",
+        "alt": "The rear engine and tail of Valcon Air's Bombardier CRJ200, registration 5Y-VAL."
+      }
+    ],
     "primaryCta": "Request a quote",
     "secondaryCta": "View the fleet"
   },
@@ -48,5 +60,19 @@
     "title": "Request a quote",
     "support": "Tell us where you are going and the shape of the trip. We will take it from there.",
     "primaryCta": "Start an enquiry"
+  },
+  "visit": {
+    "eyebrow": "Visit and call",
+    "title": "Find us at Wilson Airport.",
+    "line": "Call, email or come by during office hours. We take it from there.",
+    "addressLabel": "Visit",
+    "phoneLabel": "Call",
+    "emailLabel": "Email",
+    "hoursLabel": "Office hours"
+  },
+  "gallery": {
+    "eyebrow": "In motion",
+    "heading": "Valcon Air, up close",
+    "videos": []
   }
 }

@@ -1,29 +1,13 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { getHome } from "@/lib/content";
 
 export function Hero() {
   const { hero } = getHome();
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero__media">
-        <picture>
-          <source media="(min-width: 768px)" type="image/avif" srcSet={`${hero.image.desktop}.avif`} />
-          <source media="(min-width: 768px)" type="image/webp" srcSet={`${hero.image.desktop}.webp`} />
-          <source media="(min-width: 768px)" type="image/jpeg" srcSet={`${hero.image.desktop}.jpg`} />
-          <source type="image/avif" srcSet={`${hero.image.mobile}.avif`} />
-          <source type="image/webp" srcSet={`${hero.image.mobile}.webp`} />
-          <img
-            className="hero__img"
-            src={`${hero.image.mobile}.jpg`}
-            alt={hero.image.alt}
-            width={900}
-            height={1400}
-            fetchPriority="high"
-            decoding="async"
-          />
-        </picture>
-      </div>
+      <HeroSlideshow slides={hero.slides} />
       <div className="hero__overlay" aria-hidden="true" />
       <div className="hero__scrim" aria-hidden="true" />
 
@@ -35,10 +19,10 @@ export function Hero() {
           </h1>
           <p className="hero__support">{hero.support}</p>
           <div className="hero__actions">
-            <Button href="/contact/#quote" variant="on-dark">
+            <Button href="/contact/#quote" variant="solid">
               {hero.primaryCta}
             </Button>
-            <Button href="/fleet/" variant="on-dark-outline">
+            <Button href="/fleet/" variant="outline">
               {hero.secondaryCta}
             </Button>
           </div>

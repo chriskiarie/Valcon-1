@@ -21,7 +21,7 @@ const DESKTOP_EMIT_STEP = 7;
 const MOBILE_EMIT_STEP = 10;
 
 type Direction = "ltr" | "rtl";
-type TriggerKind = "fleet" | "departure";
+type TriggerKind = "fleet" | "departure" | "reveal";
 type CardState = { left: number; top: number; width: number };
 
 type PathPoint = { x: number; y: number; climb: number; s: number };
@@ -419,13 +419,6 @@ function drawSprite(
   ctx.globalAlpha = 1;
 }
 
-function isVisible(selector: string) {
-  const element = document.querySelector<HTMLElement>(selector);
-  if (!element) return false;
-  const rect = element.getBoundingClientRect();
-  return rect.bottom > 0 && rect.top < window.innerHeight;
-}
-
 export function FlybySystem() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -540,6 +533,7 @@ export function FlybySystem() {
     }
 
     function resetAll(applyCooldown = true) {
+      if (flight?.kind === "reveal") finishReveal();
       if (flight) {
         flight.finished = true;
         flight.tween?.kill();
@@ -560,14 +554,59 @@ export function FlybySystem() {
       );
     }
 
-    function triggerVisible(kind: TriggerKind) {
-      if (kind === "fleet") return isVisible('[data-flyby-trigger="fleet"]');
-      return isVisible('[data-flyby-trigger="final"]');
+    function triggerVisible() {
+      const y = revealLineY();
+      return y !== null && y > headerBottom() + 80 && y < window.innerHeight - 80;
     }
 
     function headerBottom() {
       const header = document.querySelector<HTMLElement>(".site-header");
       return header ? header.getBoundingClientRect().bottom : 0;
+    }
+
+    function bandEl() {
+      return document.querySelector<HTMLElement>('[data-flyby-trigger="reveal"]');
+    }
+
+    function revealLine() {
+      return document.querySelector<HTMLElement>("[data-flyby-line]");
+    }
+
+    function revealLineY() {
+      const line = revealLine();
+      if (!line) return null;
+      const rect = line.getBoundingClientRect();
+      return rect.top + rect.height / 2;
+    }
+
+    function setTrail(band: HTMLElement, fraction: number) {
+      const trail = band.querySelector<HTMLElement>("[data-flyby-trail]");
+      if (trail) trail.style.transform = `scaleX(${clamp(fraction, 0, 1)})`;
+    }
+
+    // Reveals each contact detail as the plane's nose passes its place along the line.
+    function updateReveal(noseX: number) {
+      const band = bandEl();
+      const line = revealLine();
+      if (!band || !line) return;
+      const rect = line.getBoundingClientRect();
+      setTrail(band, (noseX - rect.left) / Math.max(1, rect.width));
+      const items = Array.from(band.querySelectorAll<HTMLElement>("[data-reveal-item]"));
+      const lefts = items.map((item) => item.getBoundingClientRect().left);
+      const stacked = Math.max(...lefts) - Math.min(...lefts) < 24;
+      items.forEach((item, index) => {
+        // Side by side: each detail appears as the plane's nose reaches it. Stacked (phones): in order along the pass.
+        const at = stacked ? rect.left + (rect.width * (index + 0.4)) / items.length : lefts[index] + 24;
+        if (noseX >= at) item.classList.add("is-revealed");
+      });
+    }
+
+    function finishReveal() {
+      const band = bandEl();
+      if (!band) return;
+      band.querySelectorAll("[data-reveal-item]").forEach((item) => item.classList.add("is-revealed"));
+      setTrail(band, 1);
+      band.dataset.flyby = "done";
     }
 
     function makeFlight(kind: TriggerKind): Flight | null {
@@ -592,6 +631,33 @@ export function FlybySystem() {
 
       let start: Point;
       let end: Point;
+
+      if (kind === "reveal") {
+        // A straight, level pass along the contact band's line.
+        const lineY = revealLineY();
+        if (lineY === null || lineY < headerBottom() + planeH / 2 || lineY > vh - planeH / 2) return null;
+        const straight = resample([
+          { x: -planeW / 2 - 40, y: lineY },
+          { x: vw + planeW / 2 + 40, y: lineY },
+        ]);
+        return {
+          kind,
+          direction: "ltr",
+          path: straight,
+          length: straight[straight.length - 1].s,
+          planeW,
+          planeH,
+          budget,
+          emitStep,
+          isMobile,
+          bankAmp: rand(0.4, 0.9),
+          bankPhase: rand(0, Math.PI * 2),
+          progress: { s: 0 },
+          lastEmitS: 0,
+          tween: null,
+          finished: false,
+        };
+      }
 
       if (kind === "departure") {
         // Enter from off-screen left, low, and climb away to the right.
@@ -698,6 +764,7 @@ export function FlybySystem() {
 
     function endFlight(now: number) {
       if (!flight || flight.finished) return;
+      if (flight.kind === "reveal") finishReveal();
       flight.finished = true;
       flight.tween?.kill();
       flight = null;
@@ -712,7 +779,10 @@ export function FlybySystem() {
       if (performance.now() < cooldownUntil) return;
 
       const next = makeFlight(kind);
-      if (!next) return;
+      if (!next) {
+        consumed.delete(kind);
+        return;
+      }
 
       flight = next;
       setCard(null);
@@ -724,9 +794,14 @@ export function FlybySystem() {
       planeEl.dataset.active = "true";
       planeEl.dataset.direction = next.direction;
 
+      if (next.kind === "reveal") {
+        const band = bandEl();
+        if (band) band.dataset.flyby = "active";
+      }
+
       next.tween = gsap.to(next.progress, {
         s: next.length,
-        duration: (next.isMobile ? 7 : 9) * rand(0.85, 1.15),
+        duration: next.kind === "reveal" ? (next.isMobile ? 5.5 : 6.5) : (next.isMobile ? 7 : 9) * rand(0.85, 1.15),
         ease: "none",
         onComplete: () => {
           endFlight(performance.now());
@@ -736,6 +811,7 @@ export function FlybySystem() {
 
     function requestFlight(kind: TriggerKind) {
       if (consumed.has(kind)) return;
+      if (kind === "reveal" && bandEl()?.dataset.flyby === "done") return;
       consumed.add(kind);
       if (isModalOpen()) return;
 
@@ -745,7 +821,7 @@ export function FlybySystem() {
         return;
       }
 
-      if (!triggerVisible(kind)) return;
+      if (!triggerVisible()) return;
       startFlight(kind);
     }
 
@@ -760,7 +836,7 @@ export function FlybySystem() {
 
       const now = performance.now();
       for (const kind of Array.from(pending)) {
-        if (!triggerVisible(kind)) {
+        if (!triggerVisible()) {
           pending.delete(kind);
           continue;
         }
@@ -869,7 +945,9 @@ export function FlybySystem() {
           resetAll(true);
         } else {
           const s = Math.min(flight.progress.s, flight.length);
-          const point = pointAt(flight.path, s);
+          const lineY = flight.kind === "reveal" ? revealLineY() : null;
+          const point = { ...pointAt(flight.path, s) };
+          if (lineY !== null) point.y = lineY;
           const progress = flight.length > 0 ? s / flight.length : 1;
           const bank =
             Math.sin(progress * Math.PI * 2 + flight.bankPhase) * flight.bankAmp;
@@ -881,9 +959,12 @@ export function FlybySystem() {
             flight.direction === "rtl" ? -1 : 1
           })`;
 
+          if (flight.kind === "reveal") updateReveal(point.x + flight.planeW * 0.45);
+
           while (s - flight.lastEmitS >= flight.emitStep) {
             flight.lastEmitS += flight.emitStep;
-            const emitPoint = pointAt(flight.path, flight.lastEmitS);
+            const emitPoint = { ...pointAt(flight.path, flight.lastEmitS) };
+            if (lineY !== null) emitPoint.y = lineY;
             const emitProgress =
               flight.length > 0 ? flight.lastEmitS / flight.length : 1;
             const emitBank =
@@ -940,33 +1021,21 @@ export function FlybySystem() {
       resetAll(true);
     }
 
-    const fleetTrigger = document.querySelector('[data-flyby-trigger="fleet"]');
-    const finalTrigger = document.querySelector('[data-flyby-trigger="final"]');
+    const revealTrigger = document.querySelector("[data-flyby-line]");
 
-    const fleetObserver = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          requestFlight("fleet");
-          fleetObserver.unobserve(entry.target);
+          requestFlight("reveal");
+          revealObserver.unobserve(entry.target);
         }
       },
-      { threshold: 0.3 },
+      // Fires once the line sits in the middle of the screen, so the plane never crosses the header or the fold.
+      { rootMargin: "-18% 0px -22% 0px", threshold: 0 },
     );
 
-    const finalObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          requestFlight("departure");
-          finalObserver.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.25 },
-    );
-
-    if (fleetTrigger) fleetObserver.observe(fleetTrigger);
-    if (finalTrigger) finalObserver.observe(finalTrigger);
+    if (revealTrigger) revealObserver.observe(revealTrigger);
 
     planeEl.addEventListener("click", onPlaneClick);
     window.addEventListener("resize", onResize, { passive: true });
@@ -989,8 +1058,7 @@ export function FlybySystem() {
         flight.tween?.kill();
         flight = null;
       }
-      fleetObserver.disconnect();
-      finalObserver.disconnect();
+      revealObserver.disconnect();
       planeEl.removeEventListener("click", onPlaneClick);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("orientationchange", onResize);

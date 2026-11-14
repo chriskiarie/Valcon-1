@@ -18,10 +18,26 @@ export const siteSettings = defineType({
     defineField({ name: "legalName", title: "Legal company name", type: "string", group: "brand", validation: (r) => r.required() }),
     defineField({
       name: "logo",
-      title: "Logo",
+      title: "Logo (full)",
       type: "image",
       group: "brand",
-      description: "Upload a PNG or SVG with a transparent background. Leave empty to show the text wordmark.",
+      description: "The full logo, shown large in the footer. Upload a PNG or SVG with a transparent background.",
+      fields: [defineField({ name: "alt", title: "Alt text", type: "string", initialValue: "Valcon Air" })],
+    }),
+    defineField({
+      name: "logoIcon",
+      title: "Logo icon (the emblem on its own)",
+      type: "image",
+      group: "brand",
+      description: "The round emblem without the name. Shown at the top left, beside the wide logo. Transparent PNG or SVG. Leave empty to show only the wide logo.",
+      fields: [defineField({ name: "alt", title: "Alt text", type: "string", description: "Leave empty. The name beside it already says Valcon Air." })],
+    }),
+    defineField({
+      name: "logoCompact",
+      title: "Logo for the top menu (wide and short)",
+      type: "image",
+      group: "brand",
+      description: "A wide, short version of the logo for the top menu, for example the name without the tagline. Leave empty to use the full logo there.",
       fields: [defineField({ name: "alt", title: "Alt text", type: "string", initialValue: "Valcon Air" })],
     }),
     defineField({ name: "wordmarkPrimary", title: "Text wordmark, first word", type: "string", group: "brand", description: "Shown only when no logo is uploaded." }),
@@ -38,6 +54,24 @@ export const siteSettings = defineType({
       ...text("whatsapp", "WhatsApp number", "Digits only with country code, no plus and no spaces. For example: 254700000000."),
       group: "contact",
       validation: (r) => r.regex(/^\d{8,15}$/, { name: "whatsapp" }).error("Digits only, with country code, no plus or spaces."),
+    },
+    { ...text("address", "Building and floor", "For example: Skyward Building, 4th Floor. Shown with the base address above."), group: "contact" },
+    {
+      name: "hours",
+      title: "Opening hours",
+      type: "array",
+      group: "contact",
+      description: "One row per day range, for example Monday to Friday, 8 am to 5 pm.",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "days", title: "Days", type: "string", validation: (r) => r.required() }),
+            defineField({ name: "time", title: "Hours", type: "string", validation: (r) => r.required() }),
+          ],
+          preview: { select: { title: "days", subtitle: "time" } },
+        },
+      ],
     },
     {
       ...text("email", "Email address"),

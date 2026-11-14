@@ -22,14 +22,20 @@ export function CursorGlow() {
     let frame = 0;
     let started = false;
 
-    const draw = () => {
-      x += (targetX - x) * 0.14;
-      y += (targetY - y) * 0.14;
+    let last = 0;
+    const draw = (now: number) => {
+      // Frame-rate independent easing: the glow drifts after the pointer instead of snapping to it.
+      const dt = Math.min(now - (last || now), 48);
+      last = now;
+      const k = 1 - Math.exp(-dt / 140);
+      x += (targetX - x) * k;
+      y += (targetY - y) * k;
       glow.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
-      if (Math.abs(targetX - x) > 0.4 || Math.abs(targetY - y) > 0.4) {
+      if (Math.abs(targetX - x) > 0.3 || Math.abs(targetY - y) > 0.3) {
         frame = window.requestAnimationFrame(draw);
       } else {
         frame = 0;
+        last = 0;
       }
     };
 

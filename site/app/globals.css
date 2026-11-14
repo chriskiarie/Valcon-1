@@ -2551,21 +2551,23 @@ body.modal-open .site-main {
   top: 0;
   left: 0;
   z-index: 45;
-  width: 15rem;
-  height: 15rem;
-  margin: -7.5rem 0 0 -7.5rem;
+  width: 17rem;
+  height: 17rem;
+  margin: -8.5rem 0 0 -8.5rem;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgb(236 58 0 / 0.09) 0%,
-    rgb(63 0 130 / 0.1) 26%,
-    rgb(63 0 130 / 0.04) 48%,
-    transparent 68%
+    rgb(236 58 0 / 0.07) 0%,
+    rgb(120 40 170 / 0.075) 20%,
+    rgb(63 0 130 / 0.05) 38%,
+    rgb(63 0 130 / 0.02) 56%,
+    rgb(63 0 130 / 0.006) 72%,
+    transparent 86%
   );
   opacity: 0;
   pointer-events: none;
-  transition:
-    opacity 500ms var(--ease-out);
+  filter: blur(6px);
+  transition: opacity 900ms ease;
   will-change: transform;
 }
 
@@ -2577,10 +2579,11 @@ body.modal-open .site-main {
 .cursor-glow[data-tone="dark"] {
   background: radial-gradient(
     circle,
-    rgb(255 255 255 / 0.2) 0%,
-    rgb(203 199 227 / 0.14) 26%,
-    rgb(236 58 0 / 0.06) 48%,
-    transparent 68%
+    rgb(255 255 255 / 0.16) 0%,
+    rgb(203 199 227 / 0.11) 22%,
+    rgb(236 58 0 / 0.045) 44%,
+    rgb(236 58 0 / 0.015) 62%,
+    transparent 84%
   );
 }
 
@@ -2689,9 +2692,7 @@ body.modal-open .site-main {
 }
 
 .contact-band__trail {
-  background: linear-gradient(to right, transparent, var(--brand-orange) 30%);
-  transform: scaleX(0);
-  transform-origin: left center;
+  display: none;
 }
 
 .contact-band__grid {
@@ -2756,7 +2757,7 @@ body.modal-open .site-main {
   }
 
   .js .contact-band .contact-band__item.is-revealed {
-    animation: band-pop 800ms var(--ease-out) both;
+    animation: band-pop 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 

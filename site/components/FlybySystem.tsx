@@ -592,10 +592,12 @@ export function FlybySystem() {
       const rect = line.getBoundingClientRect();
       setTrail(band, (noseX - rect.left) / Math.max(1, rect.width));
       const items = Array.from(band.querySelectorAll<HTMLElement>("[data-reveal-item]"));
+      const lefts = items.map((item) => item.getBoundingClientRect().left);
+      const stacked = Math.max(...lefts) - Math.min(...lefts) < 24;
       items.forEach((item, index) => {
-        if (noseX >= rect.left + (rect.width * index) / items.length) {
-          item.classList.add("is-revealed");
-        }
+        // Side by side: each detail appears as the plane's nose reaches it. Stacked (phones): in order along the pass.
+        const at = stacked ? rect.left + (rect.width * (index + 0.4)) / items.length : lefts[index] + 24;
+        if (noseX >= at) item.classList.add("is-revealed");
       });
     }
 

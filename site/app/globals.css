@@ -933,13 +933,16 @@
   position: relative;
   z-index: 2;
   width: 100%;
+  /* The hero runs to the viewport edge so the copy sits in the left sky,
+     not at the centred container edge. */
+  max-width: none;
 }
 
 .hero__copy {
   display: grid;
   justify-items: start;
   gap: var(--space-4);
-  max-width: 44rem;
+  max-width: 34rem;
 }
 
 .hero__title {
@@ -1120,13 +1123,20 @@
   }
 
   .hero__title {
-    max-width: 30ch;
+    /* Sized so "from takeoff to touch down." stays on one line inside the
+       left-hand column, clear of the aircraft. */
+    max-width: 100%;
+    font-size: clamp(2.5rem, 2.9vw, 3.5rem);
     font-weight: 500;
     text-wrap: balance;
   }
 
+  .hero__copy {
+    max-width: min(38rem, 42vw);
+  }
+
   .hero__support {
-    max-width: 34ch;
+    max-width: 30ch;
     font-weight: 500;
     text-wrap: pretty;
   }

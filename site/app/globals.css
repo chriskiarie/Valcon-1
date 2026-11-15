@@ -1500,35 +1500,27 @@
   aspect-ratio: 9 / 16;
   overflow: hidden;
   background: transparent;
-  /* Long, eased feathering so the footage melts into the page: no frame, no border */
+  /* A slim, subtle feather: just enough that the clip edge is not visible */
   --fade-x: linear-gradient(
     to right,
     transparent 0%,
-    rgb(0 0 0 / 0.04) 4%,
-    rgb(0 0 0 / 0.16) 9%,
-    rgb(0 0 0 / 0.38) 15%,
-    rgb(0 0 0 / 0.66) 22%,
-    rgb(0 0 0 / 0.88) 29%,
-    #000 36%,
-    #000 64%,
-    rgb(0 0 0 / 0.88) 71%,
-    rgb(0 0 0 / 0.66) 78%,
-    rgb(0 0 0 / 0.38) 85%,
-    rgb(0 0 0 / 0.16) 91%,
-    rgb(0 0 0 / 0.04) 96%,
+    rgb(0 0 0 / 0.35) 3%,
+    rgb(0 0 0 / 0.8) 7%,
+    #000 11%,
+    #000 89%,
+    rgb(0 0 0 / 0.8) 93%,
+    rgb(0 0 0 / 0.35) 97%,
     transparent 100%
   );
   --fade-y: linear-gradient(
     to bottom,
     transparent 0%,
-    rgb(0 0 0 / 0.1) 5%,
-    rgb(0 0 0 / 0.38) 11%,
-    rgb(0 0 0 / 0.75) 18%,
-    #000 26%,
-    #000 74%,
-    rgb(0 0 0 / 0.75) 82%,
-    rgb(0 0 0 / 0.38) 89%,
-    rgb(0 0 0 / 0.1) 95%,
+    rgb(0 0 0 / 0.35) 2%,
+    rgb(0 0 0 / 0.8) 4.5%,
+    #000 7%,
+    #000 93%,
+    rgb(0 0 0 / 0.8) 95.5%,
+    rgb(0 0 0 / 0.35) 98%,
     transparent 100%
   );
   -webkit-mask-image: var(--fade-x), var(--fade-y);

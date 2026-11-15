@@ -119,9 +119,18 @@
     ],
     "closing": "Feel the difference.",
     "values": [
-      { "title": "Considered", "text": "Every flight is planned around you." },
-      { "title": "Reliable", "text": "Maintained, insured and properly crewed." },
-      { "title": "Local", "text": "Nairobi roots, East African reach." }
+      {
+        "title": "Considered",
+        "text": "Every flight is planned around you."
+      },
+      {
+        "title": "Reliable",
+        "text": "Maintained, insured and properly crewed."
+      },
+      {
+        "title": "Local",
+        "text": "Nairobi roots, East African reach."
+      }
     ]
   },
   "closing": {
@@ -129,6 +138,10 @@
     "title": "Request a quote",
     "support": "Tell us where you need to go and when. Our team will respond with a clear, tailored quote.",
     "primaryCta": "Start an enquiry"
+  },
+  "socials": {
+    "title": "Follow our flights",
+    "line": "News, aircraft updates and moments from Wilson Airport."
   },
   "visit": {
     "eyebrow": "Visit and call",

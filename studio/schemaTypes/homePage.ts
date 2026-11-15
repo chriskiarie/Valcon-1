@@ -143,6 +143,10 @@ export const homePage = defineType({
       text("support", "Supporting line", undefined, 3),
       text("primaryCta", "Main button label"),
     ]),
+    group("socials", "Social media band", [
+      text("title", "Line beside the icons"),
+      text("line", "Small paragraph beneath", undefined, 3),
+    ]),
   ],
   preview: { prepare: () => ({ title: "Home page" }) },
 });

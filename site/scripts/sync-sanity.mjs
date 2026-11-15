@@ -273,6 +273,7 @@ async function mapHome(base, doc) {
       : undefined,
     visit: doc.visit,
     closing: doc.closing,
+    socials: doc.socials,
   });
   // Gallery videos are uploaded files served straight from the Sanity CDN.
   const videos = (Array.isArray(doc.gallery?.videos) ? doc.gallery.videos : []).flatMap((item) => {

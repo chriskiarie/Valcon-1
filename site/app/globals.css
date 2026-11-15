@@ -3512,147 +3512,149 @@ body.modal-open .site-main {
 }
 
 
-/* Socials card
-   Adapted from a Uiverse socials card by vinodjangid07 and recoloured to the
-   Valcon palette: deep purple ground, violet in the gradient, orange on hover.
-   The reference fans nested panels out of one corner on hover; that shape only
-   fits about three links, so the icons sit in glass tiles that all stay
-   reachable while keeping the same wash, rim and lift. */
-.socials-card {
-  position: relative;
-  width: min(17rem, 70vw);
-  aspect-ratio: 1;
-  padding: clamp(1.1rem, 6%, 1.6rem);
-  border: 2px solid var(--color-on-dark-rim);
-  border-radius: clamp(1.4rem, 4vw, 2.1rem);
-  overflow: hidden;
-  background: var(--brand-purple);
-  box-shadow: 0 18px 44px rgb(28 12 40 / 0.22);
-  transition: transform var(--dur-shade) var(--ease-out),
-    box-shadow var(--dur-shade) var(--ease-out);
-}
 
-.socials-card__wash {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 88% 6%, rgb(236 58 0 / 0.62), transparent 58%),
-    linear-gradient(43deg, var(--brand-purple-700) 0%, var(--brand-purple) 45%, var(--brand-violet) 100%);
-}
-
-.socials-card-wrap {
-  margin-top: var(--space-8);
-}
-
-.socials-card__body {
-  position: relative;
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-4);
-}
-
-.socials-card__label {
+/* Socials band
+   Sits under the closing card as its own element. The glass tiles are adapted
+   from a Uiverse socials card by vinodjangid07, recoloured to the Valcon
+   palette, with a dashed route line behind them echoing the site's flight path.
+   The band renders nothing until at least one account has a link. */
+.socials-band {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  margin: 0;
-  color: var(--color-on-dark);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  margin-top: var(--space-6);
+  padding: clamp(1.1rem, 3vw, 1.75rem) clamp(1.15rem, 3.5vw, 2.25rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.socials-band__title {
+  margin: 0 0 0.25rem;
+  color: var(--color-brand);
+  font-family: var(--font-display), var(--font-fallback-display);
+  font-size: clamp(1.1rem, 1.3vw, 1.35rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
   line-height: 1.2;
-  text-transform: uppercase;
 }
 
-.socials-card__label::before {
+.socials-band__line {
+  max-width: 38ch;
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.socials-band__links {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* The dashed route sits behind the tiles; the tiles mask it as it passes. */
+.socials-band__links::before {
   content: "";
-  width: 1.5rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  left: 0.25rem;
+  border-top: 1px dashed var(--brand-purple-300);
 }
 
-.socials-card__links {
+.socials-band__tile {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-}
-
-.socials-card__tile {
-  display: grid;
-  aspect-ratio: 1;
+  width: 3rem;
+  height: 3rem;
   place-items: center;
-  border: 1px solid var(--color-on-dark-line-strong);
-  border-top-color: var(--color-on-dark-border);
-  border-radius: 1rem;
-  background: rgb(255 255 255 / 0.16);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--brand-purple-200);
+  border-radius: 50%;
+  background: var(--color-bg);
   text-decoration: none;
-  transition: transform 0.35s var(--ease-out), background-color 0.35s var(--ease-out),
-    border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+  transition: transform 0.3s var(--ease-out), background-color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
 }
 
-.socials-card__icon {
+.socials-band__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(1.05rem, 34%, 1.45rem);
-  height: clamp(1.05rem, 34%, 1.45rem);
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
-.socials-card__icon svg {
+.socials-band__icon svg {
   width: 100%;
   height: 100%;
-  fill: rgb(255 255 255 / 0.92);
-  transition: fill 0.35s var(--ease-out), filter 0.35s var(--ease-out);
+  fill: var(--brand-purple);
+  transition: fill 0.3s var(--ease-out), filter 0.3s var(--ease-out);
 }
 
-.socials-card__initial {
-  color: var(--color-on-dark);
-  font-size: 0.62em;
+.socials-band__initial {
+  color: var(--brand-purple);
+  font-size: 0.6em;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.socials-card:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 24px 56px rgb(28 12 40 / 0.3);
-}
-
-.socials-card__tile:hover,
-.socials-card__tile:focus-visible {
+.socials-band__tile:hover,
+.socials-band__tile:focus-visible {
   transform: translateY(-3px);
-  border-color: rgb(255 255 255 / 0.75);
+  border-color: var(--brand-orange);
   background: var(--brand-orange);
-  box-shadow: 0 10px 22px rgb(236 58 0 / 0.35);
+  box-shadow: 0 10px 22px rgb(236 58 0 / 0.28);
 }
 
-.socials-card__tile:hover .socials-card__icon svg,
-.socials-card__tile:focus-visible .socials-card__icon svg {
+.socials-band__tile:hover .socials-band__icon svg,
+.socials-band__tile:focus-visible .socials-band__icon svg {
   fill: #fff;
-  filter: drop-shadow(0 0 5px rgb(255 255 255 / 0.85));
+  filter: drop-shadow(0 0 4px rgb(255 255 255 / 0.7));
 }
 
-.socials-card__tile:focus-visible {
-  outline: 3px solid var(--color-on-dark);
+.socials-band__tile:hover .socials-band__initial,
+.socials-band__tile:focus-visible .socials-band__initial {
+  color: #fff;
+}
+
+.socials-band__tile:focus-visible {
+  outline: 3px solid var(--brand-orange);
   outline-offset: 3px;
 }
 
+@media (max-width: 1039px) {
+  .socials-band {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Six 48px tiles no longer fit across a phone, so pair them three and three. */
+@media (max-width: 480px) {
+  .socials-band__links {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 3rem);
+  }
+
+  .socials-band__links::before {
+    content: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .socials-card,
-  .socials-card__label,
-  .socials-card__tile,
-  .socials-card__icon svg {
+  .socials-band__tile,
+  .socials-band__icon svg {
     transition-duration: 0.01ms;
   }
 
-  .socials-card:hover,
-  .socials-card__tile:hover,
-  .socials-card__tile:focus-visible {
+  .socials-band__tile:hover,
+  .socials-band__tile:focus-visible {
     transform: none;
   }
 }

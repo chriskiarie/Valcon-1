@@ -10,7 +10,7 @@ import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
 import { IntroFeature } from "@/components/IntroFeature";
 import { ServicesSection } from "@/components/ServicesSection";
-import { SocialsCard } from "@/components/SocialsCard";
+import { SocialsBand } from "@/components/SocialsBand";
 import { VideoGallery } from "@/components/VideoGallery";
 import { getHome, getServices, getSite } from "@/lib/content";
 
@@ -35,7 +35,7 @@ export default function Home() {
         <div className="final-screen__main">
           <Container>
             <ClosingCTA />
-            <SocialsCard />
+            <SocialsBand />
           </Container>
         </div>
         <Footer compact />

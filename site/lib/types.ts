@@ -201,6 +201,11 @@ export type Home = {
     support: string;
     primaryCta: string;
   };
+  socials: {
+    /** Line beside the social icons. An empty string hides the band's copy. */
+    title: string;
+    line: string;
+  };
 };
 
 export type Pages = {

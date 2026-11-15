@@ -1,8 +1,8 @@
 {
   "hero": {
     "eyebrow": "Wilson Airport, Nairobi",
-    "title": "Feel the difference.",
-    "support": "Charter, ACMI and specialized operations from Wilson Airport.",
+    "title": "Wrapped in comfort, from takeoff to touch down.",
+    "support": "Private charter, aircraft leasing and specialised missions, delivered with precision and care.",
     "slides": [
       {
         "desktop": "/images/hero/hero-1-desktop",
@@ -26,7 +26,7 @@
   "intro": {
     "eyebrow": "The operator",
     "statement": "Based at Wilson Airport. Flying the CRJ200 LR.",
-    "support": "Valcon Air Solutions Limited is an aviation operator in Nairobi. Our first aircraft, 5Y-VAL, seats up to 50 and is available for charter, ACMI and specialized operations.",
+    "support": "Valcon Air Solutions Limited is an aviation operator in Nairobi. Our first aircraft, 5Y-VAL, seats up to 50 and is available for charter, ACMI and specialised operations.",
     "image": {
       "desktop": "/images/features/parallax-desktop",
       "mobile": "/images/features/parallax-mobile",
@@ -77,7 +77,7 @@
   "closing": {
     "eyebrow": "Start a conversation",
     "title": "Request a quote",
-    "support": "Tell us where you are going and the shape of the trip. Call 020 2118217 or email info@valconair.co.ke, Monday to Friday, 8 am to 5 pm.",
+    "support": "Tell us where you need to go and when. Our team will respond with a clear, tailored quote.",
     "primaryCta": "Start an enquiry"
   },
   "visit": {

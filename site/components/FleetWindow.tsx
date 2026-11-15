@@ -39,18 +39,18 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
 
   const closeViewer = useCallback(() => {
     const viewer = viewerRef.current;
+    const track = trackRef.current;
     const rect = frameRef.current?.getBoundingClientRect();
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!viewer || !rect || calm) {
       setOpen(false);
       return;
     }
+    viewer.classList.add("is-closing");
     const to = `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 1.5rem)`;
-    const anim = viewer.animate([{ clipPath: "inset(0px round 0rem)" }, { clipPath: to }], {
-      duration: 520,
-      easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-      fill: "forwards",
-    });
+    const timing = { duration: 760, easing: "cubic-bezier(0.65, 0, 0.2, 1)", fill: "forwards" as const };
+    track?.animate([{ transform: "scale(1)" }, { transform: "scale(1.08)" }], timing);
+    const anim = viewer.animate([{ clipPath: "inset(0px round 0rem)" }, { clipPath: to }], { ...timing, delay: 120 });
     anim.onfinish = () => setOpen(false);
   }, []);
 
@@ -73,10 +73,10 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (viewer && rect && !calm) {
       const from = `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 1.5rem)`;
-      viewer.animate([{ clipPath: from }, { clipPath: "inset(0px round 0rem)" }], {
-        duration: 620,
-        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-      });
+      const timing = { duration: 900, easing: "cubic-bezier(0.32, 0.72, 0, 1)" };
+      viewer.animate([{ clipPath: from }, { clipPath: "inset(0px round 0rem)" }], timing);
+      // The photo settles from slightly zoomed, so the opening feels like the window widening.
+      trackRef.current?.animate([{ transform: "scale(1.14)" }, { transform: "scale(1)" }], { ...timing, duration: 1100 });
     }
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";

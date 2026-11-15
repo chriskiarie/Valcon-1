@@ -3510,3 +3510,149 @@ body.modal-open .site-main {
     align-items: start;
   }
 }
+
+
+/* Socials card
+   Adapted from a Uiverse socials card by vinodjangid07 and recoloured to the
+   Valcon palette: deep purple ground, violet in the gradient, orange on hover.
+   The reference fans nested panels out of one corner on hover; that shape only
+   fits about three links, so the icons sit in glass tiles that all stay
+   reachable while keeping the same wash, rim and lift. */
+.socials-card {
+  position: relative;
+  width: min(17rem, 70vw);
+  aspect-ratio: 1;
+  padding: clamp(1.1rem, 6%, 1.6rem);
+  border: 2px solid var(--color-on-dark-rim);
+  border-radius: clamp(1.4rem, 4vw, 2.1rem);
+  overflow: hidden;
+  background: var(--brand-purple);
+  box-shadow: 0 18px 44px rgb(28 12 40 / 0.22);
+  transition: transform var(--dur-shade) var(--ease-out),
+    box-shadow var(--dur-shade) var(--ease-out);
+}
+
+.socials-card__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 88% 6%, rgb(236 58 0 / 0.62), transparent 58%),
+    linear-gradient(43deg, var(--brand-purple-700) 0%, var(--brand-purple) 45%, var(--brand-violet) 100%);
+}
+
+.socials-card-wrap {
+  margin-top: var(--space-8);
+}
+
+.socials-card__body {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.socials-card__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-on-dark);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.socials-card__label::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.socials-card__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.socials-card__tile {
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid var(--color-on-dark-line-strong);
+  border-top-color: var(--color-on-dark-border);
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  text-decoration: none;
+  transition: transform 0.35s var(--ease-out), background-color 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+
+.socials-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(1.05rem, 34%, 1.45rem);
+  height: clamp(1.05rem, 34%, 1.45rem);
+}
+
+.socials-card__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: rgb(255 255 255 / 0.92);
+  transition: fill 0.35s var(--ease-out), filter 0.35s var(--ease-out);
+}
+
+.socials-card__initial {
+  color: var(--color-on-dark);
+  font-size: 0.62em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.socials-card:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 24px 56px rgb(28 12 40 / 0.3);
+}
+
+.socials-card__tile:hover,
+.socials-card__tile:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgb(255 255 255 / 0.75);
+  background: var(--brand-orange);
+  box-shadow: 0 10px 22px rgb(236 58 0 / 0.35);
+}
+
+.socials-card__tile:hover .socials-card__icon svg,
+.socials-card__tile:focus-visible .socials-card__icon svg {
+  fill: #fff;
+  filter: drop-shadow(0 0 5px rgb(255 255 255 / 0.85));
+}
+
+.socials-card__tile:focus-visible {
+  outline: 3px solid var(--color-on-dark);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .socials-card,
+  .socials-card__label,
+  .socials-card__tile,
+  .socials-card__icon svg {
+    transition-duration: 0.01ms;
+  }
+
+  .socials-card:hover,
+  .socials-card__tile:hover,
+  .socials-card__tile:focus-visible {
+    transform: none;
+  }
+}

@@ -36,6 +36,57 @@ export const linkList = (name: string, title: string, labelHint: string) =>
     ],
   });
 
+/**
+ * Social accounts. The platform picks the icon, so the editor never types a
+ * label, and a platform with no link simply does not appear on the site.
+ */
+export const socialList = (name: string, title: string) =>
+  defineField({
+    name,
+    title,
+    type: "array",
+    of: [
+      {
+        type: "object",
+        fields: [
+          defineField({
+            name: "platform",
+            title: "Platform",
+            type: "string",
+            options: {
+              layout: "dropdown",
+              list: [
+                { title: "Instagram", value: "instagram" },
+                { title: "Facebook", value: "facebook" },
+                { title: "LinkedIn", value: "linkedin" },
+                { title: "X", value: "x" },
+                { title: "TikTok", value: "tiktok" },
+                { title: "YouTube", value: "youtube" },
+              ],
+            },
+            validation: (r) => r.required(),
+          }),
+          defineField({
+            name: "href",
+            title: "Link",
+            type: "url",
+            validation: (r) => r.required(),
+          }),
+        ],
+        preview: {
+          select: { title: "platform", subtitle: "href" },
+          prepare: ({ title, subtitle }) => ({
+            title:
+              typeof title === "string"
+                ? title.charAt(0).toUpperCase() + title.slice(1)
+                : "Social link",
+            subtitle,
+          }),
+        },
+      },
+    ],
+  });
+
 export const responsiveImage = (name: string, title: string, withCaption = false) =>
   defineField({
     name,

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSite } from "@/lib/content";
 import { hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
+import { SOCIAL_LABELS } from "@/lib/socials";
 import { Wordmark } from "@/components/Wordmark";
 
 export function Footer({ compact = false }: { compact?: boolean }) {
@@ -49,7 +50,9 @@ export function Footer({ compact = false }: { compact?: boolean }) {
             ))}
             {site.socials.map((social) => (
               <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer">
-                {social.label}
+                {social.platform
+                  ? SOCIAL_LABELS[social.platform]
+                  : social.label}
               </a>
             ))}
           </div>

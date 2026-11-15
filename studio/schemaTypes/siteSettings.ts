@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { linkList, photo, text } from "./fields";
+import { linkList, photo, socialList, text } from "./fields";
 
 export const siteSettings = defineType({
   name: "siteSettings",
@@ -79,7 +79,7 @@ export const siteSettings = defineType({
       validation: (r) => r.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, { name: "email" }).error("Enter a valid email address."),
     },
     {
-      ...linkList("socials", "Social media links", "For example: Instagram."),
+      ...socialList("socials", "Social media links"),
       group: "contact",
     },
     { ...linkList("nav", "Menu items", "Words shown in the menu."), group: "navigation" },

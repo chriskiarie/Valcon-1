@@ -53,6 +53,21 @@ export type ResponsiveImage = {
   alt: string;
 };
 
+export type SocialPlatform =
+  | "instagram"
+  | "facebook"
+  | "linkedin"
+  | "x"
+  | "tiktok"
+  | "youtube";
+
+export type Social = {
+  /** Free-text label, used only when no platform is picked (older content). */
+  label?: string;
+  href: string;
+  platform?: SocialPlatform;
+};
+
 export type LogoImage = { src: string; alt: string; width: number; height: number };
 
 export type Site = {
@@ -90,10 +105,7 @@ export type Site = {
   phoneTel: string;
   whatsapp: string;
   email: string;
-  socials: {
-    label: string;
-    href: string;
-  }[];
+  socials: Social[];
   credits: Credit[];
 };
 

@@ -43,7 +43,16 @@
   "phoneTel": "+254202118217",
   "whatsapp": "",
   "email": "info@valconair.co.ke",
-  "socials": [],
+  "socials": [
+    {
+      "platform": "instagram",
+      "href": "https://www.instagram.com/valconair/"
+    },
+    {
+      "platform": "tiktok",
+      "href": "https://www.tiktok.com/search?q=valcon.air&t=1794754565373"
+    }
+  ],
   "credits": [
     {
       "title": "Above the Clouds - A Glimpse of Heaven",

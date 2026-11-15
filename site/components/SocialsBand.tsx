@@ -49,26 +49,23 @@ export function SocialsBand() {
   if (!socials.length) return null;
 
   return (
-    <section
-      className="socials-band"
-      aria-label="Social media"
-      data-reveal="below"
-      data-flyby-avoid
-    >
-      {copy.title || copy.line ? (
-        <div className="socials-band__copy">
-          {copy.title ? (
-            <p className="socials-band__title">{copy.title}</p>
-          ) : null}
-          {copy.line ? <p className="socials-band__line">{copy.line}</p> : null}
-        </div>
-      ) : null}
+    <div className="socials-band-wrap" data-reveal="below">
+      <section className="socials-band" aria-label="Social media" data-flyby-avoid>
+        {copy.title || copy.line ? (
+          <div className="socials-band__copy">
+            {copy.title ? (
+              <p className="socials-band__title">{copy.title}</p>
+            ) : null}
+            {copy.line ? <p className="socials-band__line">{copy.line}</p> : null}
+          </div>
+        ) : null}
 
-      <nav className="socials-band__links" aria-label="Social accounts">
-        {socials.map((social) => (
-          <SocialTile key={social.href} social={social} />
-        ))}
-      </nav>
-    </section>
+        <nav className="socials-band__links" aria-label="Social accounts">
+          {socials.map((social) => (
+            <SocialTile key={social.href} social={social} />
+          ))}
+        </nav>
+      </section>
+    </div>
   );
 }

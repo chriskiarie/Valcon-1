@@ -207,7 +207,11 @@ async function mapSite(base, doc) {
   out.hours = Array.isArray(doc.hours) && doc.hours.length ? stripKeys(doc.hours) : (base.hours ?? []);
   out.whatsapp = (doc.whatsapp ?? "").replace(/\D/g, "");
   out.email = has(doc.email) ? doc.email.trim() : (base.email ?? "");
-  out.socials = stripKeys(doc.socials ?? []);
+  // Socials: a saved list wins, including an empty one (clearing removes them).
+  // A field that was never filled in falls back to the links committed in code.
+  out.socials = Array.isArray(doc.socials)
+    ? stripKeys(doc.socials)
+    : (base.socials ?? []);
   out.notices = {
     conceptPill: doc.notices?.conceptPill ?? "",
     footerNote: doc.notices?.footerNote ?? "",

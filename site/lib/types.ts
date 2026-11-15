@@ -111,7 +111,21 @@ export type Home = {
     support: string;
     image: ResponsiveImage & { caption: string };
   };
-  fleet: { heading: string; pageHeading: string; linkLabel: string };
+  fleet: {
+    heading: string;
+    pageHeading: string;
+    linkLabel: string;
+    window?: {
+      image: string;
+      alt: string;
+      lead: string;
+      caption: string;
+      openLabel: string;
+      galleryLabel: string;
+      galleryHref: string;
+      more: { image: string; alt: string }[];
+    };
+  };
   arrival: {
     eyebrow: string;
     aircraftSlug: string;

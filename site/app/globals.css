@@ -1579,6 +1579,232 @@
   }
 }
 
+
+/* Fleet window: the photo stays still while the page scrolls past the frame */
+.fleet-pane__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.fleet-pane__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--display-l);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+.fleet-pane__lead {
+  color: var(--color-ink-muted);
+}
+
+.fleet-pane__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: clamp(19rem, 52vh, 44rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-brand);
+  cursor: pointer;
+  overflow: hidden;
+  /* Clip, never transform: a transform would turn the fixed photo into a scrolling one */
+  clip-path: inset(0 round var(--radius-card));
+}
+
+.fleet-pane__pane {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.fleet-pane__pane picture {
+  display: contents;
+}
+
+.fleet-pane__img {
+  position: fixed;
+  top: 34%;
+  left: 50%;
+  /* Same width as the frame, so the photo lines up with its window */
+  width: min(100vw - 2 * var(--gutter), var(--container-max) - 2 * var(--gutter));
+  height: 120vh;
+  max-width: none;
+  object-fit: cover;
+  object-position: 85% 62%;
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 900px) {
+  .fleet-pane__frame {
+    height: clamp(21rem, 66vh, 44rem);
+  }
+
+  .fleet-pane__img {
+    top: 50%;
+    height: 100vh;
+    object-position: 72% 62%;
+  }
+}
+
+.fleet-pane__hint {
+  position: absolute;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 2;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.82);
+  backdrop-filter: blur(10px);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: transform 300ms var(--ease-out);
+}
+
+.fleet-pane__frame:hover .fleet-pane__hint {
+  transform: translateY(-2px);
+}
+
+.fleet-pane__frame:focus-visible {
+  outline: 3px solid var(--brand-orange);
+  outline-offset: 4px;
+}
+
+.fleet-pane__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-5);
+}
+
+.fleet-pane__caption {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.fleet-pane__link {
+  color: var(--color-ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid var(--brand-orange);
+  padding-bottom: 0.15rem;
+}
+
+.fleet-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #0c0418;
+  color: #fff;
+  outline: 0;
+}
+
+.fleet-viewer__track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.fleet-viewer__track::-webkit-scrollbar {
+  display: none;
+}
+
+.fleet-viewer__slide {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  display: block;
+}
+
+.fleet-viewer__slide picture {
+  display: contents;
+}
+
+.fleet-viewer__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.fleet-viewer__bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: linear-gradient(to bottom, rgb(12 4 24 / 0.7), transparent);
+  pointer-events: none;
+}
+
+.fleet-viewer__bar > * {
+  pointer-events: auto;
+}
+
+.fleet-viewer__count {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  opacity: 0.8;
+}
+
+.fleet-viewer__caption {
+  flex: 1;
+  font-size: var(--text-sm);
+  opacity: 0.9;
+}
+
+.fleet-viewer__close,
+.fleet-viewer__nav {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.fleet-viewer__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.fleet-viewer__nav--prev {
+  left: var(--space-4);
+}
+
+.fleet-viewer__nav--next {
+  right: var(--space-4);
+}
+
+@media (max-width: 767px) {
+  .fleet-viewer__nav {
+    display: none;
+  }
+
+  .fleet-viewer__slide img {
+    object-fit: cover;
+    object-position: 88% 60%;
+  }
+}
+
 /* Fleet cards */
 .fleet-heading-row {
   display: flex;

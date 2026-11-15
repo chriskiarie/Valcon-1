@@ -37,7 +37,26 @@
   "fleet": {
     "heading": "The fleet",
     "pageHeading": "Aircraft",
-    "linkLabel": "View the fleet"
+    "linkLabel": "View the fleet",
+    "window": {
+      "image": "/images/fleet/5y-val-salute",
+      "alt": "5Y-VAL, a Bombardier CRJ200, taxiing at Wilson Airport under a water-cannon salute.",
+      "lead": "One aircraft, flown with care.",
+      "caption": "5Y-VAL · Bombardier CRJ200 LR · up to 50 seats",
+      "openLabel": "View the aircraft",
+      "galleryLabel": "See the jet gallery",
+      "galleryHref": "/fleet",
+      "more": [
+        {
+          "image": "/images/hero/hero-2-desktop",
+          "alt": "5Y-VAL in side profile on the runway at Wilson Airport."
+        },
+        {
+          "image": "/images/hero/hero-1-desktop",
+          "alt": "5Y-VAL taxiing head-on towards the camera."
+        }
+      ]
+    }
   },
   "arrival": {
     "eyebrow": "New arrival",

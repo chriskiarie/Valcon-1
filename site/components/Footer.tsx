@@ -65,19 +65,6 @@ export function Footer({ compact = false }: { compact?: boolean }) {
             </span>
             {site.notices.footerNote ? <span>{site.notices.footerNote}</span> : null}
           </div>
-          <p className="footer__credits">
-            Images:{" "}
-            {site.credits.map((credit, index) => (
-              <span key={credit.source}>
-                {index > 0 ? "; " : ""}
-                <a href={credit.source} target="_blank" rel="noopener noreferrer">
-                  {credit.title}
-                </a>{" "}
-                by {credit.author} ({credit.licence}; {credit.usedFor.toLowerCase()}
-                {credit.note ? `, ${credit.note.toLowerCase()}` : ""})
-              </span>
-            ))}
-          </p>
         </div>
       </div>
     </footer>

@@ -24,8 +24,8 @@ export function IntroFeature() {
 
   if (left && right) {
     return (
-      <section className="section intro intro--film" aria-labelledby="intro-title" data-glow="dark">
-        <Container>
+      <section className="section intro intro--film" aria-labelledby="intro-title">
+        <div className="intro__wide">
           <div className="intro__film">
             <div className="intro__clip intro__clip--left" data-reveal="below">
               <LoopVideo src={left.src} caption={left.caption} />
@@ -35,7 +35,7 @@ export function IntroFeature() {
               <LoopVideo src={right.src} caption={right.caption} />
             </div>
           </div>
-        </Container>
+        </div>
       </section>
     );
   }

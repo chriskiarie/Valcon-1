@@ -1,0 +1,44 @@
+[
+  {
+    "id": "wilson",
+    "name": "Nairobi",
+    "country": "Kenya",
+    "text": "Our home base. Every Valcon flight starts at Wilson Airport, minutes from the city centre and the gateway to Kenya's parks and conservancies.",
+    "image": ""
+  },
+  {
+    "id": "mombasa",
+    "name": "Mombasa",
+    "country": "Kenya",
+    "text": "Kenya's port city on the Indian Ocean, with Old Town, Fort Jesus and the beaches of the north and south coast close by.",
+    "image": ""
+  },
+  {
+    "id": "nanyuki",
+    "name": "Nanyuki",
+    "country": "Kenya",
+    "text": "A highland town on the equator at the foot of Mount Kenya, and the usual way in to the Laikipia conservancies.",
+    "image": ""
+  },
+  {
+    "id": "kisumu",
+    "name": "Kisumu",
+    "country": "Kenya",
+    "text": "The lakeside city on the Winam Gulf of Lake Victoria, serving western Kenya and the wider lake region.",
+    "image": ""
+  },
+  {
+    "id": "malindi",
+    "name": "Malindi",
+    "country": "Kenya",
+    "text": "A relaxed coastal town known for its long beaches, marine park and fishing, a short hop up the coast from Mombasa.",
+    "image": ""
+  },
+  {
+    "id": "lodwar",
+    "name": "Lodwar",
+    "country": "Kenya",
+    "text": "The main town of Turkana County in the north-west, and the base for trips to Lake Turkana.",
+    "image": ""
+  }
+]

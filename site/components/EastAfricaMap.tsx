@@ -1,5 +1,6 @@
 import { Container } from "@/components/Container";
-import { MapReveal } from "@/components/MapReveal";
+import { MapShowcase, type City } from "@/components/MapShowcase";
+import cities from "@/content/cities.json";
 import map from "@/content/eastafrica-map.json";
 
 type Pt = [number, number];
@@ -8,6 +9,7 @@ type Pt = [number, number];
 const ROUTES: { id: keyof typeof map.points; label: string; side: 1 | -1; left?: boolean }[] = [
   { id: "mombasa", label: "Mombasa", side: -1 },
   { id: "kisumu", label: "Kisumu", side: 1 },
+  { id: "nanyuki", label: "Nanyuki", side: -1 },
   { id: "lodwar", label: "Lodwar", side: 1 },
   { id: "malindi", label: "Malindi", side: 1 },
   { id: "entebbe", label: "Entebbe", side: -1, left: true },
@@ -46,7 +48,7 @@ export function EastAfricaMap() {
           From Wilson, across East Africa.
         </h2>
 
-        <MapReveal className="eamap__stage">
+        <MapShowcase cities={cities as City[]}>
           <svg
             className="eamap__svg"
             viewBox={`0 0 ${map.width} ${map.height}`}
@@ -65,7 +67,7 @@ export function EastAfricaMap() {
                 const d = arc(hub, to, route.side);
                 const delay = `${(index * 0.28).toFixed(2)}s`;
                 return (
-                  <g key={route.id} style={{ ["--d" as string]: delay }}>
+                  <g key={route.id} className={`eamap__stop eamap__stop--${route.id}`} style={{ ["--d" as string]: delay }}>
                     <path d={d} className="eamap__route" pathLength={1} />
                     <path
                       d="M-7 -4.5 L8 0 L-7 4.5 L-4 0 Z"
@@ -86,7 +88,7 @@ export function EastAfricaMap() {
               })}
             </g>
 
-            <g className="eamap__hub">
+            <g className="eamap__hub eamap__stop--wilson">
               <circle cx={hub[0]} cy={hub[1]} r={9} className="eamap__pulse" />
               <circle cx={hub[0]} cy={hub[1]} r={7} className="eamap__core" />
               <text x={hub[0] - 12} y={hub[1] + 26} textAnchor="end" className="eamap__label eamap__label--hub">
@@ -94,7 +96,7 @@ export function EastAfricaMap() {
               </text>
             </g>
           </svg>
-        </MapReveal>
+        </MapShowcase>
       </Container>
     </section>
   );

@@ -6,6 +6,7 @@ import { FleetWindow } from "@/components/FleetWindow";
 import { FlybySystem } from "@/components/FlybySystem";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { EastAfricaMap } from "@/components/EastAfricaMap";
 import { HowItWorks } from "@/components/HowItWorks";
 import { IntroFeature } from "@/components/IntroFeature";
 import { ServicesSection } from "@/components/ServicesSection";
@@ -27,6 +28,7 @@ export default function Home() {
       <VideoGallery copy={home.gallery} />
       <ServicesSection services={services} copy={home.services} />
       <HowItWorks />
+      <EastAfricaMap />
       <About />
       <ContactBand site={site} copy={home.visit} />
       <div className="final-screen">

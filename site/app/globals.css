@@ -3447,7 +3447,10 @@ body.modal-open .site-main {
   display: block;
   width: 100%;
   height: auto;
-  overflow: visible;
+  overflow: hidden;
+  border-radius: var(--radius-lg, 1.25rem);
+  background: rgb(255 255 255 / 0.55);
+  box-shadow: inset 0 0 0 1px rgb(75 22 130 / 0.1);
 }
 
 .how__svg [pathLength] {
@@ -3657,6 +3660,155 @@ body.modal-open .site-main {
 
   .how__svg [pathLength] {
     stroke-width: 2.6;
+  }
+}
+
+/* ---------- East Africa map ---------- */
+.eamap__stage {
+  position: relative;
+  max-width: 46rem;
+  margin: var(--space-8) auto 0;
+}
+
+.eamap__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.eamap__land path {
+  fill: rgb(75 22 130 / 0.05);
+  stroke: rgb(75 22 130 / 0.22);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.eamap__land path.is-hi {
+  fill: rgb(75 22 130 / 0.13);
+  stroke: rgb(75 22 130 / 0.5);
+  stroke-width: 1.4;
+}
+
+.eamap__route {
+  fill: none;
+  stroke: var(--brand-orange-500);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 0.02 0.03;
+  opacity: 0.8;
+}
+
+.eamap__plane {
+  fill: var(--color-brand);
+  offset-rotate: auto;
+  offset-distance: 0%;
+  opacity: 0;
+}
+
+.eamap__dot {
+  fill: var(--color-brand);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.eamap__label {
+  fill: var(--color-brand);
+  font-size: 19px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: rgb(255 255 255 / 0.85);
+  stroke-width: 4px;
+}
+
+.eamap__label--hub {
+  fill: var(--brand-orange-700);
+  font-size: 21px;
+}
+
+.eamap__core {
+  fill: var(--brand-orange-500);
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.eamap__pulse {
+  fill: none;
+  stroke: var(--brand-orange-500);
+  stroke-width: 2;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .eamap__route {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .js .eamap__dot,
+  .js .eamap__label:not(.eamap__label--hub) {
+    opacity: 0;
+  }
+
+  .js .eamap__stage.is-live .eamap__route {
+    animation: eamap-draw 1.6s ease-out var(--d, 0s) forwards;
+  }
+
+  .js .eamap__stage.is-live .eamap__dot,
+  .js .eamap__stage.is-live .eamap__label:not(.eamap__label--hub) {
+    animation: eamap-pop 0.5s ease-out calc(var(--d, 0s) + 1.2s) forwards;
+  }
+
+  .js .eamap__stage.is-live .eamap__plane {
+    animation: eamap-fly 5.5s cubic-bezier(0.4, 0, 0.3, 1) calc(var(--d, 0s) + 1.2s) infinite;
+  }
+
+  .js .eamap__stage.is-live .eamap__pulse {
+    animation: eamap-pulse 2.6s ease-out infinite;
+  }
+}
+
+@keyframes eamap-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes eamap-pop {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes eamap-fly {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  55% {
+    offset-distance: 100%;
+    opacity: 1;
+  }
+  62%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes eamap-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
   }
 }
 

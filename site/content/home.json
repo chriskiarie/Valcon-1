@@ -1,7 +1,7 @@
 {
   "hero": {
     "eyebrow": "Wilson Airport, Nairobi",
-    "title": "Wrapped in comfort, from takeoff to touch down.",
+    "title": "Wrapped in comfort,\nfrom takeoff to touch down.",
     "support": "Private charter, aircraft leasing and specialised missions, delivered with precision and care.",
     "slides": [
       {
@@ -25,7 +25,7 @@
   },
   "intro": {
     "eyebrow": "Based at Wilson Airport, Nairobi",
-    "statement": "Flying should feel considered, not complicated.",
+    "statement": "Flying should feel considered,\nnot complicated.",
     "support": "Valcon Air Solutions Limited operates from Wilson Airport, the gateway to East Africa's skies. Our Bombardier CRJ200 LR, 5Y-VAL, is ready for charter, ACMI and specialised missions.",
     "image": {
       "desktop": "/images/features/parallax-desktop",
@@ -41,7 +41,7 @@
     "window": {
       "image": "/images/fleet/5y-val-salute",
       "alt": "5Y-VAL, a Bombardier CRJ200, taxiing at Wilson Airport under a water-cannon salute.",
-      "lead": "One aircraft, flown with care.",
+      "lead": "One aircraft,\nflown with care.",
       "caption": "5Y-VAL · Bombardier CRJ200 LR · up to 50 seats",
       "openLabel": "View the aircraft",
       "galleryLabel": "See the jet gallery",
@@ -79,7 +79,7 @@
   "howItWorks": {
     "show": true,
     "eyebrow": "How it works",
-    "heading": "From first message to touchdown, we take it from there.",
+    "heading": "From first message to touchdown,\nwe take it from there.",
     "intro": "You act at the start and at confirmation. We handle the rest.",
     "steps": [
       {
@@ -112,7 +112,7 @@
   "about": {
     "show": false,
     "eyebrow": "About us",
-    "heading": "A sense of place, in the air.",
+    "heading": "A sense of place,\nin the air.",
     "story": [
       "Valcon Air Solutions Limited is an aviation operator based at Wilson Airport, Nairobi. We started with a simple idea: flying should feel considered, not complicated.",
       "Our first aircraft, a Bombardier CRJ200 LR registered 5Y-VAL, has arrived and is ready to work. Whether you need a charter for your team, extra capacity for your airline, or a specialised mission in a remote place, we plan it with you and fly it with care."

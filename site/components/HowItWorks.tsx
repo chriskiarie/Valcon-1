@@ -1,4 +1,5 @@
 import { Container } from "@/components/Container";
+import { Lines } from "@/components/Lines";
 import { getHome } from "@/lib/content";
 
 /** The six stages from first message to touchdown. Hidden when switched off in the CMS. */
@@ -14,7 +15,7 @@ export function HowItWorks() {
           {howItWorks.eyebrow}
         </span>
         <h2 id="how-title" className="section-title how__title" data-reveal="left">
-          {howItWorks.heading}
+          <Lines text={howItWorks.heading} />
         </h2>
         <p className="how__intro" data-reveal="below">
           {howItWorks.intro}

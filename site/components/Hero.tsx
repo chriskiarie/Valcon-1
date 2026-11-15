@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { HeroSlideshow } from "@/components/HeroSlideshow";
+import { Lines } from "@/components/Lines";
 import { getHome } from "@/lib/content";
 
 export function Hero() {
@@ -15,7 +16,7 @@ export function Hero() {
         <div className="hero__copy" data-flyby-avoid>
           <span className="eyebrow">{hero.eyebrow}</span>
           <h1 id="hero-title" className="hero__title">
-            {hero.title}
+            <Lines text={hero.title} />
           </h1>
           <p className="hero__support">{hero.support}</p>
           <div className="hero__actions">

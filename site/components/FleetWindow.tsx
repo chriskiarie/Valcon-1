@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Container } from "@/components/Container";
+import { Lines } from "@/components/Lines";
 import type { Home } from "@/lib/types";
 
 type FleetCopy = Home["fleet"];
@@ -118,7 +119,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
           <h2 id="fleet-pane-title" className="fleet-pane__title">
             {copy.heading}
           </h2>
-          <p className="fleet-pane__lead">{win.lead}</p>
+          <p className="fleet-pane__lead"><Lines text={win.lead} /></p>
         </div>
         <button
           ref={frameRef}

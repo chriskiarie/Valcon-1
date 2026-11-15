@@ -943,7 +943,7 @@
 }
 
 .hero__title {
-  max-width: 11ch;
+  max-width: 30ch;
   color: var(--color-brand);
   font-family: var(--font-display), Georgia, serif;
   font-size: var(--display-xl);
@@ -1120,7 +1120,7 @@
   }
 
   .hero__title {
-    max-width: 15ch;
+    max-width: 30ch;
     font-weight: 500;
     text-wrap: balance;
   }
@@ -1394,7 +1394,7 @@
 }
 
 .intro__statement {
-  max-width: 16ch;
+  max-width: 32ch;
   font-family: var(--font-display), Georgia, serif;
   font-size: var(--display-l);
   font-weight: 400;
@@ -3362,7 +3362,7 @@ body.modal-open .site-main {
 /* ---------- How it works ---------- */
 
 .how__title {
-  max-width: 18ch;
+  max-width: 34ch;
 }
 
 .how__intro {

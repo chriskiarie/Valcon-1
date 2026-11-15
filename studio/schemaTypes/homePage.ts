@@ -83,7 +83,7 @@ export const homePage = defineType({
         initialValue: false,
       }),
       text("eyebrow", "Small label"),
-      text("heading", "Heading"),
+      text("heading", "Heading", "Press Enter to force a line break.", 2),
       defineField({
         name: "story",
         title: "Story",

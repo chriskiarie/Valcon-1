@@ -1,4 +1,5 @@
 import { Container } from "@/components/Container";
+import { Lines } from "@/components/Lines";
 import { getHome } from "@/lib/content";
 
 /** The company story and values. Stays hidden until the client approves the wording. */
@@ -16,7 +17,7 @@ export function About() {
               {about.eyebrow}
             </span>
             <h2 id="about-title" className="section-title" data-reveal="left">
-              {about.heading}
+              <Lines text={about.heading} />
             </h2>
             <div className="about__story">
               {about.story.map((paragraph) => (

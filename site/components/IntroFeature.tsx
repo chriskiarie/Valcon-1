@@ -1,4 +1,5 @@
 import { Container } from "@/components/Container";
+import { Lines } from "@/components/Lines";
 import { LoopVideo } from "@/components/LoopVideo";
 import { ParallaxPanel } from "@/components/ParallaxPanel";
 import { getHome } from "@/lib/content";
@@ -14,7 +15,7 @@ export function IntroFeature() {
         {intro.eyebrow}
       </span>
       <h2 id="intro-title" className="intro__statement" data-reveal="left">
-        {intro.statement}
+        <Lines text={intro.statement} />
       </h2>
       <p className="intro__support" data-reveal="below">
         {intro.support}

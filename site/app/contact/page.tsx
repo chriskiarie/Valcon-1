@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
-import { getPages, getSite } from "@/lib/content";
+import { getPages, getServices, getSite } from "@/lib/content";
 import { hasDirectContact, hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 import { ContactForm } from "@/components/ContactForm";
 
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   const site = getSite();
+  const services = getServices();
   const { contact } = getPages();
 
   return (
@@ -38,7 +39,7 @@ export default function ContactPage() {
               {contact.panelTitle}
             </h2>
 
-            <ContactForm site={site} />
+            <ContactForm site={site} services={services} />
 
             {hasDirectContact(site) ? (
               <div className="contact-details" data-reveal="below">

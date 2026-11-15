@@ -1,23 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "./Button";
-import type { Site } from "@/lib/types";
+import type { Service, Site } from "@/lib/types";
 import { hasEmail, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 
-export function ContactForm({ site }: { site: Site }) {
+export function ContactForm({ site, services }: { site: Site; services: Service[] }) {
   const [form, setForm] = useState({
     from: "",
     dates: "",
     passengers: "",
     notes: "",
   });
+  const serviceRef = useRef<HTMLSelectElement>(null);
+
+  // A services card links here as /contact/?service=<slug>. Set the dropdown once, without
+  // making it a controlled field, so the first render still matches the server output.
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("service");
+    const select = serviceRef.current;
+    if (!slug || !select) return;
+    if (!services.some((item) => item.slug === slug)) return;
+    select.value = slug;
+  }, [services]);
 
   function buildMessage() {
     const { from, dates, passengers, notes } = form;
+    const service = serviceRef.current?.value ?? "";
+    const serviceTitle = services.find((item) => item.slug === service)?.title;
     return [
       "Hello,",
       "I am interested in your aviation services.",
+      serviceTitle ? `Service: ${serviceTitle}` : "",
       from ? `From: ${from}` : "",
       dates ? `Dates: ${dates}` : "",
       passengers ? `Passengers: ${passengers}` : "",
@@ -43,6 +57,25 @@ export function ContactForm({ site }: { site: Site }) {
   return (
     <div className="enquiry-form" data-reveal="below">
       <h3>Compose your enquiry</h3>
+
+      <div className="form-row">
+        <label className="form-label" htmlFor="enquiry-service">
+          Service
+        </label>
+        <select
+          ref={serviceRef}
+          id="enquiry-service"
+          className="form-input"
+          defaultValue=""
+        >
+          <option value="">Not sure yet</option>
+          {services.map((service) => (
+            <option key={service.slug} value={service.slug}>
+              {service.title}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="form-row">
         <label className="form-label">From (your email or name)</label>

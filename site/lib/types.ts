@@ -31,6 +31,8 @@ export type Service = {
   summary: string;
   isPlaceholder: boolean;
   image: string;
+  /** Who the service suits, shown as a "Best for" line. Optional. */
+  bestFor?: string;
 };
 
 export type Credit = {
@@ -137,7 +139,36 @@ export type Home = {
     routeTo: string;
     buttonLabel: string;
   };
-  services: { eyebrow: string; heading: string; imageButtonLabel: string };
+  services: {
+    eyebrow: string;
+    heading: string;
+    imageButtonLabel: string;
+    /** Label above each card's "best for" line. */
+    bestForLabel: string;
+    /** Label on the link that opens the quote form for that service. */
+    quoteLabel: string;
+  };
+  howItWorks: {
+    /** Set to false to hide the whole section. */
+    show: boolean;
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    /** One entry per stage. */
+    steps: { title: string; text: string }[];
+    /** Small note on how ACMI differs. An empty string hides it. */
+    acmiNote: string;
+  };
+  about: {
+    /** The story is a draft until the client approves it, so it ships hidden. */
+    show: boolean;
+    eyebrow: string;
+    heading: string;
+    /** One entry per paragraph. */
+    story: string[];
+    closing: string;
+    values: { title: string; text: string }[];
+  };
   visit: {
     eyebrow: string;
     title: string;

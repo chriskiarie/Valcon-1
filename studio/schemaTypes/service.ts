@@ -15,6 +15,7 @@ export const service = defineType({
       validation: (r) => r.required(),
     }),
     text("summary", "Description", "One or two sentences.", 4),
+    text("bestFor", "Best for", "Who this service suits, shown as a short line under the description.", 3),
     photo("image", "Photo", "Wide photo, 1200 x 800 or larger."),
     defineField({ name: "isPlaceholder", title: "Draft wording (to be confirmed)", type: "boolean", initialValue: false }),
     defineField({ name: "order", title: "Position in the list", type: "number", initialValue: 10, validation: (r) => r.required().integer().min(1) }),

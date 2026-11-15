@@ -265,6 +265,12 @@ async function mapHome(base, doc) {
     fleet: doc.fleet,
     arrival: doc.arrival,
     services: doc.services,
+    howItWorks: doc.howItWorks
+      ? { ...doc.howItWorks, steps: stripKeys(doc.howItWorks.steps ?? []) }
+      : undefined,
+    about: doc.about
+      ? { ...doc.about, values: stripKeys(doc.about.values ?? []) }
+      : undefined,
     visit: doc.visit,
     closing: doc.closing,
   });
@@ -344,7 +350,14 @@ async function mapServices(baseList, docs) {
       const stem = await fetchImage(doc.image, `service-${slug}`, { w: 1200, h: 800, formats: ["jpg"], q: 78 });
       if (stem) image = `${stem}.jpg`;
     }
-    out.push({ slug, title: doc.title, summary: doc.summary ?? "", isPlaceholder: doc.isPlaceholder ?? false, image });
+    out.push({
+      slug,
+      title: doc.title,
+      summary: doc.summary ?? "",
+      isPlaceholder: doc.isPlaceholder ?? false,
+      image,
+      bestFor: has(doc.bestFor) ? doc.bestFor : (base?.bestFor ?? ""),
+    });
   }
   return out.length ? out : baseList;
 }

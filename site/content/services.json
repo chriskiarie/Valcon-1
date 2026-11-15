@@ -4,20 +4,23 @@
     "title": "Charter Flights",
     "summary": "Travel on your own schedule, to the places you choose. Our charter service gives you a dedicated aircraft for your group, your cargo or your journey, with no queues and no fixed timetables. Whether it is a business trip, a family journey or an urgent departure, we plan every detail so you can arrive relaxed and on time.",
     "isPlaceholder": false,
-    "image": "/images/services/service-charter.jpg"
+    "image": "/images/services/service-charter.jpg",
+    "bestFor": "Companies, groups and individuals who want a flight that fits their plans."
   },
   {
     "slug": "acmi",
     "title": "ACMI (Wet Lease)",
     "summary": "Need extra flying capacity without owning more aircraft? ACMI stands for Aircraft, Crew, Maintenance and Insurance. We provide the complete package: the aircraft, trained pilots and cabin crew, full technical upkeep and insurance cover. You simply run your routes and schedule. It is a clean, reliable way for airlines and organisations to grow, cover busy seasons or replace aircraft temporarily.",
     "isPlaceholder": false,
-    "image": "/images/services/service-acmi.jpg"
+    "image": "/images/services/service-acmi.jpg",
+    "bestFor": "Airlines and cargo carriers who need extra capacity for a season, a route or a contract."
   },
   {
     "slug": "specialized-operations",
     "title": "Specialised Operations",
     "summary": "Some missions need more than a standard flight. Our specialised operations are planned around your exact requirements, from urgent cargo and humanitarian relief to medical transport and remote-area flying. Each mission is handled by an experienced team with careful planning, so even the most demanding task is carried out safely and smoothly.",
     "isPlaceholder": false,
-    "image": "/images/services/service-specialized.jpg"
+    "image": "/images/services/service-specialized.jpg",
+    "bestFor": "Aid agencies, energy companies, governments and survey teams."
   }
 ]

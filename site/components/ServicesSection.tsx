@@ -81,6 +81,12 @@ export function ServicesSection({
               </div>
               <h3 className="service-card__title">{service.title}</h3>
               <p className="service-card__summary">{service.summary}</p>
+              {service.bestFor ? (
+                <p className="service-card__best">
+                  <span className="service-card__best-label">{copy.bestForLabel}</span>
+                  {service.bestFor}
+                </p>
+              ) : null}
               <button
                 className="service-zoom-btn"
                 onClick={() => {
@@ -95,6 +101,10 @@ export function ServicesSection({
                 <span className="service-zoom-label">{copy.imageButtonLabel}</span>
                 <span className="service-zoom-icon">↗</span>
               </button>
+              <a className="service-card__quote" href={`/contact/?service=${service.slug}#quote`}>
+                {copy.quoteLabel}
+                <span aria-hidden="true">→</span>
+              </a>
             </article>
           ))}
         </div>

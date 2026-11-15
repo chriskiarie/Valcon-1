@@ -1,4 +1,5 @@
 import { ArrivalBand } from "@/components/ArrivalBand";
+import { About } from "@/components/About";
 import { ClosingCTA } from "@/components/ClosingCTA";
 import { ContactBand } from "@/components/ContactBand";
 import { Container } from "@/components/Container";
@@ -6,6 +7,7 @@ import { FleetWindow } from "@/components/FleetWindow";
 import { FlybySystem } from "@/components/FlybySystem";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { HowItWorks } from "@/components/HowItWorks";
 import { IntroFeature } from "@/components/IntroFeature";
 import { ServicesSection } from "@/components/ServicesSection";
 import { VideoGallery } from "@/components/VideoGallery";
@@ -25,6 +27,8 @@ export default function Home() {
       <ArrivalBand copy={home.arrival} />
       <VideoGallery copy={home.gallery} />
       <ServicesSection services={services} copy={home.services} />
+      <HowItWorks />
+      <About />
       <ContactBand site={site} copy={home.visit} />
       <div className="final-screen">
         <div className="final-screen__main">

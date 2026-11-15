@@ -43,6 +43,70 @@ export const homePage = defineType({
       text("eyebrow", "Small label"),
       text("heading", "Heading"),
       text("imageButtonLabel", "Image button label"),
+      text("bestForLabel", "Label above each card's \"best for\" line"),
+      text("quoteLabel", "Link label on each card"),
+    ]),
+    group("howItWorks", "How it works", [
+      defineField({
+        name: "show",
+        title: "Show this section",
+        type: "boolean",
+        initialValue: true,
+      }),
+      text("eyebrow", "Small label"),
+      text("heading", "Heading", undefined, 2),
+      text("intro", "Line beneath the heading", undefined, 3),
+      defineField({
+        name: "steps",
+        title: "Stages",
+        type: "array",
+        description: "One entry per stage, in order. Six reads best.",
+        of: [
+          {
+            type: "object",
+            fields: [
+              defineField({ name: "title", title: "Stage name", type: "string", validation: (r) => r.required() }),
+              defineField({ name: "text", title: "What happens", type: "text", rows: 3 }),
+            ],
+            preview: { select: { title: "title", subtitle: "text" } },
+          },
+        ],
+      }),
+      text("acmiNote", "Note about ACMI", "Shown as small text. Leave empty to hide it.", 3),
+    ]),
+    group("about", "About us", [
+      defineField({
+        name: "show",
+        title: "Show this section",
+        type: "boolean",
+        description: "Keep this off until the client approves the wording.",
+        initialValue: false,
+      }),
+      text("eyebrow", "Small label"),
+      text("heading", "Heading"),
+      defineField({
+        name: "story",
+        title: "Story",
+        type: "array",
+        description: "One entry per paragraph.",
+        of: [{ type: "text", rows: 4 }],
+      }),
+      text("closing", "Closing line"),
+      defineField({
+        name: "values",
+        title: "Values",
+        type: "array",
+        of: [
+          {
+            type: "object",
+            fields: [
+              defineField({ name: "title", title: "Value", type: "string", validation: (r) => r.required() }),
+              defineField({ name: "text", title: "Line beneath", type: "string" }),
+            ],
+            preview: { select: { title: "title", subtitle: "text" } },
+          },
+        ],
+      }),
     ]),
     group("gallery", "Video gallery", [
       text("eyebrow", "Small label"),

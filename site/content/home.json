@@ -24,9 +24,9 @@
     "secondaryCta": "View the fleet"
   },
   "intro": {
-    "eyebrow": "The operator",
-    "statement": "Based at Wilson Airport. Flying the CRJ200 LR.",
-    "support": "Valcon Air Solutions Limited is an aviation operator in Nairobi. Our first aircraft, 5Y-VAL, seats up to 50 and is available for charter, ACMI and specialised operations.",
+    "eyebrow": "Based at Wilson Airport, Nairobi",
+    "statement": "Flying should feel considered, not complicated.",
+    "support": "Valcon Air Solutions Limited operates from Wilson Airport, the gateway to East Africa's skies. Our Bombardier CRJ200 LR, 5Y-VAL, is ready for charter, ACMI and specialised missions.",
     "image": {
       "desktop": "/images/features/parallax-desktop",
       "mobile": "/images/features/parallax-mobile",
@@ -72,7 +72,57 @@
   "services": {
     "eyebrow": "What we do",
     "heading": "Services",
-    "imageButtonLabel": "Open image"
+    "imageButtonLabel": "Open image",
+    "bestForLabel": "Best for",
+    "quoteLabel": "Request a quote"
+  },
+  "howItWorks": {
+    "show": true,
+    "eyebrow": "How it works",
+    "heading": "From first message to touchdown, we take it from there.",
+    "intro": "You act at the start and at confirmation. We handle the rest.",
+    "steps": [
+      {
+        "title": "Enquire",
+        "text": "Tell us the date, route, number of passengers, bags and any special needs."
+      },
+      {
+        "title": "Plan and quote",
+        "text": "We check the aircraft, crew, airports and permits, then send you a clear quote."
+      },
+      {
+        "title": "Confirm",
+        "text": "Approve the quote, sign and pay the deposit."
+      },
+      {
+        "title": "Prepare",
+        "text": "We arrange permits, airport handling, catering and the crew briefing."
+      },
+      {
+        "title": "Fly",
+        "text": "Welcome on board. We depart on time."
+      },
+      {
+        "title": "Follow up",
+        "text": "Arrival handling, transfers, invoice and feedback."
+      }
+    ],
+    "acmiNote": "ACMI works differently. We agree the terms, hand over the aircraft, and you operate the flights under your own schedule."
+  },
+  "about": {
+    "show": false,
+    "eyebrow": "About us",
+    "heading": "A sense of place, in the air.",
+    "story": [
+      "Valcon Air Solutions Limited is an aviation operator based at Wilson Airport, Nairobi. We started with a simple idea: flying should feel considered, not complicated.",
+      "Our first aircraft, a Bombardier CRJ200 LR registered 5Y-VAL, has arrived and is ready to work. Whether you need a charter for your team, extra capacity for your airline, or a specialised mission in a remote place, we plan it with you and fly it with care."
+    ],
+    "closing": "Feel the difference.",
+    "values": [
+      { "title": "Considered", "text": "Every flight is planned around you." },
+      { "title": "Reliable", "text": "Maintained, insured and properly crewed." },
+      { "title": "Local", "text": "Nairobi roots, East African reach." }
+    ]
   },
   "closing": {
     "eyebrow": "Start a conversation",
@@ -82,7 +132,7 @@
   },
   "visit": {
     "eyebrow": "Visit and call",
-    "title": "Find us at Wilson Airport.",
+    "title": "Visit or call us.",
     "line": "Call, email or come by during office hours. We take it from there.",
     "addressLabel": "Visit",
     "phoneLabel": "Call",

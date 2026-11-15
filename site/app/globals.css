@@ -1111,6 +1111,38 @@
   }
 }
 
+/* Desktop and landscape: keep the whole copy block in the sky, above the wing line */
+@media (min-width: 1101px), (min-width: 768px) and (orientation: landscape) {
+  .hero {
+    align-items: flex-start;
+    padding-top: calc(var(--safe-top) + var(--header-h) + clamp(1.5rem, 5vh, 4rem));
+    padding-bottom: var(--space-16);
+  }
+
+  .hero__title {
+    max-width: 15ch;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .hero__support {
+    max-width: 34ch;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  .hero__scrim {
+    background:
+      radial-gradient(ellipse 55% 70% at 18% 42%, rgb(252 252 254 / 0.85), transparent 70%),
+      linear-gradient(90deg, rgb(252 252 254 / 0.6), transparent 55%);
+  }
+
+  .hero .btn--outline {
+    border-color: rgb(63 0 130 / 0.5);
+    background: rgb(255 255 255 / 0.85);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .hero__copy > * {
     animation: hero-in var(--dur-reveal) var(--ease-out) both;

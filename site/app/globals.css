@@ -3547,13 +3547,7 @@ body.modal-open .site-main {
   }
 }
 
-@media (max-width: 899px) {
-  .how__copy {
-    order: -1;
-  }
-}
-
-@media (min-width: 900px) {
+@media (min-width: 0px) {
   .how__line {
     left: 50%;
     margin-left: -1px;
@@ -3562,7 +3556,7 @@ body.modal-open .site-main {
   .how__step {
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: var(--space-12, 5rem);
+    gap: clamp(0.9rem, 4vw, 5rem);
     padding-left: 0;
   }
 
@@ -3628,6 +3622,42 @@ body.modal-open .site-main {
   color: var(--color-ink-muted);
   font-size: var(--text-sm);
   line-height: 1.6;
+}
+
+@media (max-width: 899px) {
+  .how__steps {
+    gap: 2.25rem;
+    margin-top: var(--space-8);
+  }
+
+  .how__node {
+    width: 1rem;
+    height: 1rem;
+    margin: -0.5rem 0 0 -0.5rem;
+  }
+
+  .how__art {
+    width: min(100%, 8.5rem);
+  }
+
+  .how__num {
+    margin-bottom: 0.25rem;
+    font-size: 0.65rem;
+  }
+
+  .how__step-title {
+    margin-bottom: 0.25rem;
+    font-size: 1.3rem;
+  }
+
+  .how__step-text {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .how__svg [pathLength] {
+    stroke-width: 2.6;
+  }
 }
 
 /* ---------- About ---------- */

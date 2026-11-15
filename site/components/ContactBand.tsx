@@ -42,9 +42,15 @@ export function ContactBand({ site, copy }: { site: Site; copy: Home["visit"] })
       label: copy.addressLabel,
       content: (
         <>
-          {site.address}
-          <br />
-          {site.base}
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address}, ${site.base}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {site.address}
+            <br />
+            {site.base}
+          </a>
         </>
       ),
     });
@@ -65,6 +71,25 @@ export function ContactBand({ site, copy }: { site: Site; copy: Home["visit"] })
               {row.days}
               <br />
               {row.time}
+            </span>
+          ))}
+        </>
+      ),
+    });
+  }
+  const socials = (site.socials ?? []).filter((social) => social.href?.trim());
+  if (socials.length > 0) {
+    items.push({
+      label: "Follow",
+      content: (
+        <>
+          {socials.map((social) => (
+            <span key={social.href} className="contact-band__hours">
+              <a href={social.href} target="_blank" rel="noopener noreferrer">
+                {social.platform
+                  ? social.platform.charAt(0).toUpperCase() + social.platform.slice(1)
+                  : social.label || "Social"}
+              </a>
             </span>
           ))}
         </>

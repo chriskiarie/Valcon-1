@@ -1671,11 +1671,11 @@
 
 .fleet-pane__img {
   position: fixed;
-  top: 34%;
+  top: var(--fix-top-m, 34%);
   left: 50%;
   /* Same width as the frame, so the photo lines up with its window */
   width: min(100vw - 2 * var(--gutter), var(--container-max) - 2 * var(--gutter));
-  height: 120vh;
+  height: var(--fix-h-m, 120vh);
   max-width: none;
   object-fit: cover;
   object-position: var(--focus-m, 85% 62%);
@@ -1688,8 +1688,8 @@
   }
 
   .fleet-pane__img {
-    top: 50%;
-    height: 100vh;
+    top: var(--fix-top-d, 50%);
+    height: var(--fix-h-d, 100vh);
     object-position: var(--focus-d, 72% 62%);
   }
 }
@@ -4691,4 +4691,166 @@ body.modal-open .site-main {
   display: grid;
   gap: 0.2rem;
   min-width: 0;
+}
+
+
+/* ---------- Contact page: the whole quote request on one screen (desktop) ---------- */
+@media (min-width: 960px) {
+  .page:has(.interior-hero--compact) {
+    padding-top: calc(var(--header-h-desktop, 6rem) + 0.75rem);
+  }
+
+  .interior-hero--compact {
+    padding-block: 0;
+  }
+
+  .qf__field--notes textarea {
+    min-height: 2.6rem;
+  }
+
+  .interior-hero__row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .interior-hero--compact .interior-hero__title {
+    margin-bottom: 0;
+    font-size: clamp(2.6rem, 5.5vh, 3.6rem);
+  }
+
+  .interior-hero--compact .eyebrow {
+    margin-bottom: var(--space-2);
+  }
+
+  .interior-hero--compact .interior-hero__lede {
+    max-width: 34rem;
+    margin: 0;
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  .quote-section {
+    padding-block: var(--space-5, 1.25rem) var(--space-8);
+  }
+
+  .quote-panel {
+    gap: var(--space-2);
+    padding: clamp(1.1rem, 2.4vh, 1.75rem) clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .quote-panel .eyebrow {
+    margin-bottom: 0;
+  }
+
+  .quote-panel__title {
+    font-size: clamp(1.5rem, 3.4vh, 2rem);
+  }
+
+  .quote-panel > p {
+    font-size: var(--text-sm);
+  }
+
+  .qf {
+    gap: var(--space-3);
+    margin-top: 0;
+  }
+
+  .qf__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .qf__field {
+    gap: 0.25rem;
+  }
+
+  .qf__field--notes {
+    grid-column: auto;
+  }
+
+  .qf__field input,
+  .qf__field select,
+  .qf__field textarea {
+    min-height: 2.6rem;
+    padding-block: 0.5rem;
+  }
+
+  .qf__field textarea {
+    min-height: 4rem;
+  }
+
+  .qf__note {
+    display: none;
+  }
+
+  .qf__status {
+    min-height: 0;
+  }
+
+  .qf__status:empty {
+    display: none;
+  }
+
+  .quote-aside {
+    padding: clamp(1.1rem, 2.4vh, 1.75rem);
+  }
+
+  .quote-aside__list {
+    gap: var(--space-3);
+  }
+
+  .quote-aside__list li {
+    padding-top: var(--space-3);
+  }
+}
+
+/* ---------- Homepage closing screen: quote, socials and footer in one view (desktop) ---------- */
+@media (min-width: 900px) and (min-height: 640px) {
+  .final-screen {
+    padding-top: var(--space-6);
+  }
+
+  .final-screen__main {
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-4);
+    padding-block: var(--space-3);
+  }
+
+  .closing {
+    padding: clamp(1.25rem, 4vh, 2.75rem) clamp(1.5rem, 4vw, 3.25rem);
+  }
+
+  .closing__title {
+    margin-bottom: var(--space-2);
+    font-size: clamp(2.4rem, 7vh, 4rem);
+  }
+
+  .closing__support {
+    margin-bottom: var(--space-4);
+  }
+}
+
+@media (min-width: 900px) and (min-height: 640px) {
+  .site-footer--compact .footer__brand p {
+    display: none;
+  }
+
+  .site-footer--compact .footer__top {
+    padding-block: var(--space-3);
+  }
+
+  .final-screen .socials-band {
+    padding-block: var(--space-3);
+  }
+
+  .final-screen .socials-band-wrap {
+    margin-top: var(--space-4);
+  }
+
+  .final-screen .socials-band__line {
+    max-width: none;
+  }
 }

@@ -176,12 +176,12 @@ export function ContactForm({ site, services }: { site: Site; services: Service[
             onChange={set("passengers")}
           />
         </div>
-        <div className="qf__field qf__field--full">
-          <label htmlFor="qf-notes">Anything else we should know</label>
+        <div className="qf__field qf__field--full qf__field--notes">
+          <label htmlFor="qf-notes">Notes</label>
           <textarea
             id="qf-notes"
             name="notes"
-            rows={4}
+            rows={1}
             placeholder="Luggage, return flight, special requests..."
             value={form.notes}
             onChange={set("notes")}

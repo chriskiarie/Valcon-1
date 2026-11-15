@@ -46,6 +46,14 @@ export type Credit = {
 
 export type NavItem = { href: string; label: string };
 
+/** Where a photo sits inside the fixed fleet window. top and height are CSS lengths. */
+export type Focus = {
+  desktop: string;
+  mobile: string;
+  top?: { desktop: string; mobile: string };
+  height?: { desktop: string; mobile: string };
+};
+
 /** A bare asset path (no extension) with avif, webp and jpg variants beside it. */
 export type ResponsiveImage = {
   desktop: string;
@@ -131,7 +139,7 @@ export type Home = {
     linkLabel: string;
     window?: {
       image: string;
-      focus?: { desktop: string; mobile: string };
+      focus?: Focus;
       alt: string;
       lead: string;
       caption: string;

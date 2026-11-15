@@ -5,13 +5,20 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Container } from "@/components/Container";
 import { Lines } from "@/components/Lines";
-import type { Home } from "@/lib/types";
+import type { Focus, Home } from "@/lib/types";
 
 type FleetCopy = Home["fleet"];
-type Shot = { image: string; alt: string; focus?: { desktop: string; mobile: string } };
+type Shot = { image: string; alt: string; focus?: Focus };
 
 function Picture({ image, alt, className, focus }: { image: string; alt: string; className?: string; focus?: Shot["focus"] }) {
-  const style = focus ? ({ "--focus-d": focus.desktop, "--focus-m": focus.mobile } as React.CSSProperties) : undefined;
+  const style = focus
+    ? ({
+        "--focus-d": focus.desktop,
+        "--focus-m": focus.mobile,
+        ...(focus.top ? { "--fix-top-d": focus.top.desktop, "--fix-top-m": focus.top.mobile } : {}),
+        ...(focus.height ? { "--fix-h-d": focus.height.desktop, "--fix-h-m": focus.height.mobile } : {}),
+      } as React.CSSProperties)
+    : undefined;
   return (
     <picture>
       <source type="image/avif" srcSet={`${image}.avif`} />
@@ -53,9 +60,18 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
     }
     viewer.classList.add("is-closing");
     const to = `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 1.5rem)`;
-    const timing = { duration: 760, easing: "cubic-bezier(0.65, 0, 0.2, 1)", fill: "forwards" as const };
-    track?.animate([{ transform: "scale(1)" }, { transform: "scale(1.08)" }], timing);
-    const anim = viewer.animate([{ clipPath: "inset(0px round 0rem)" }, { clipPath: to }], { ...timing, delay: 120 });
+    const timing = { duration: 900, easing: "cubic-bezier(0.6, 0, 0.2, 1)", fill: "forwards" as const };
+    track?.animate([{ transform: "scale(1)" }, { transform: "scale(1.06)" }], timing);
+    // The photo melts into the window's own photo over the last stretch, so a change of crop never jumps.
+    viewer.animate(
+      [
+        { opacity: 1, offset: 0 },
+        { opacity: 1, offset: 0.5 },
+        { opacity: 0, offset: 1 },
+      ],
+      { ...timing, easing: "linear", delay: 100 },
+    );
+    const anim = viewer.animate([{ clipPath: "inset(0px round 0rem)" }, { clipPath: to }], { ...timing, delay: 100 });
     anim.onfinish = () => setOpen(false);
   }, [index]);
 
@@ -78,10 +94,18 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (viewer && rect && !calm) {
       const from = `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 1.5rem)`;
-      const timing = { duration: 900, easing: "cubic-bezier(0.32, 0.72, 0, 1)" };
+      const timing = { duration: 1000, easing: "cubic-bezier(0.32, 0.72, 0, 1)" };
       viewer.animate([{ clipPath: from }, { clipPath: "inset(0px round 0rem)" }], timing);
+      viewer.animate(
+        [
+          { opacity: 0, offset: 0 },
+          { opacity: 1, offset: 0.3 },
+          { opacity: 1, offset: 1 },
+        ],
+        { ...timing, easing: "linear" },
+      );
       // The photo settles from slightly zoomed, so the opening feels like the window widening.
-      trackRef.current?.animate([{ transform: "scale(1.14)" }, { transform: "scale(1)" }], { ...timing, duration: 1100 });
+      trackRef.current?.animate([{ transform: "scale(1.14)" }, { transform: "scale(1)" }], { ...timing, duration: 1200 });
     }
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";

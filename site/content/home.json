@@ -51,8 +51,16 @@
           "image": "/images/hero/hero-2-desktop",
           "alt": "5Y-VAL in side profile on the runway at Wilson Airport.",
           "focus": {
-            "desktop": "50% 70%",
-            "mobile": "46% 70%"
+            "desktop": "58% 70%",
+            "mobile": "72% 70%",
+            "top": {
+              "desktop": "42%",
+              "mobile": "34%"
+            },
+            "height": {
+              "desktop": "112vh",
+              "mobile": "120vh"
+            }
           }
         },
         {

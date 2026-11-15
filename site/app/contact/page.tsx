@@ -17,21 +17,25 @@ export default function ContactPage() {
 
   return (
     <div className="page">
-      <section className="interior-hero" aria-labelledby="contact-title">
+      <section className="interior-hero interior-hero--compact" aria-labelledby="contact-title">
         <Container>
-          <span className="eyebrow" data-reveal="left">
-            {site.base}
-          </span>
-          <h1 id="contact-title" className="interior-hero__title" data-reveal="left">
-            {contact.title}
-          </h1>
-          <p className="interior-hero__lede" data-reveal="below">
-            {contact.lede}
-          </p>
+          <div className="interior-hero__row">
+            <div>
+              <span className="eyebrow" data-reveal="left">
+                {site.base}
+              </span>
+              <h1 id="contact-title" className="interior-hero__title" data-reveal="left">
+                {contact.title}
+              </h1>
+            </div>
+            <p className="interior-hero__lede" data-reveal="below">
+              {contact.lede}
+            </p>
+          </div>
         </Container>
       </section>
 
-      <section className="section" aria-labelledby="enquiry-title" id="enquiry">
+      <section className="section quote-section" aria-labelledby="enquiry-title" id="enquiry">
         <Container>
           <div className="quote-layout">
             <div className="quote-panel" id="quote" data-reveal="below">

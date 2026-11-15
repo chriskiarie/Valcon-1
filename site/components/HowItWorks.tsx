@@ -1,4 +1,6 @@
 import { Container } from "@/components/Container";
+import { HOW_ART } from "@/components/HowArt";
+import { HowTimeline } from "@/components/HowTimeline";
 import { Lines } from "@/components/Lines";
 import { getHome } from "@/lib/content";
 
@@ -21,15 +23,13 @@ export function HowItWorks() {
           {howItWorks.intro}
         </p>
 
-        <ol className="how__steps">
-          {howItWorks.steps.map((step, index) => (
-            <li key={step.title} className="how__step" data-reveal="below">
-              <span className="how__num">{String(index + 1).padStart(2, "0")}</span>
-              <h3 className="how__step-title">{step.title}</h3>
-              <p className="how__step-text">{step.text}</p>
-            </li>
-          ))}
-        </ol>
+        <HowTimeline
+          steps={howItWorks.steps}
+          art={howItWorks.steps.map((step, index) => {
+            const Art = HOW_ART[index % HOW_ART.length];
+            return <Art key={step.title} />;
+          })}
+        />
 
         {howItWorks.acmiNote ? <p className="how__note">{howItWorks.acmiNote}</p> : null}
       </Container>

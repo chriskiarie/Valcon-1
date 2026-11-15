@@ -3384,16 +3384,215 @@ body.modal-open .site-main {
 }
 
 .how__steps {
+  --fill: 0px;
+  position: relative;
   display: grid;
-  gap: var(--space-6);
-  margin: var(--space-8) 0 0;
+  gap: var(--space-10, 4rem);
+  margin: var(--space-10, 4rem) 0 0;
   padding: 0;
   list-style: none;
 }
 
+/* The line that fills as you scroll */
+.how__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.65rem;
+  width: 2px;
+  background: var(--color-line);
+}
+
+.how__line-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--fill);
+  background: linear-gradient(to bottom, var(--brand-purple-600, #3f0082), var(--brand-orange-500));
+  box-shadow: 0 0 12px rgb(236 58 0 / 0.35);
+}
+
 .how__step {
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--color-line);
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  padding-left: var(--space-8);
+}
+
+.how__node {
+  position: absolute;
+  top: 0.4rem;
+  left: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 2px solid var(--color-line);
+  border-radius: 50%;
+  background: var(--color-surface, #fff);
+  transition: border-color 400ms ease, background 400ms ease, box-shadow 400ms ease;
+}
+
+.how__step.is-active .how__node {
+  border-color: var(--brand-orange-500);
+  background: var(--brand-orange-500);
+  box-shadow: 0 0 0 6px rgb(236 58 0 / 0.14);
+}
+
+.how__art {
+  max-width: 15rem;
+  color: var(--color-brand);
+}
+
+.how__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.how__svg [pathLength] {
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.how__svg [data-accent-line] {
+  stroke: var(--brand-orange-500);
+}
+
+.how__svg [data-accent] {
+  fill: var(--brand-orange-500);
+}
+
+.how__svg-label {
+  fill: var(--color-ink-muted);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.how__flyer {
+  fill: var(--brand-orange-500);
+  offset-path: path("M34 104 C58 14 142 14 166 104");
+  offset-rotate: auto;
+  offset-distance: 0%;
+  opacity: 0;
+}
+
+.how__copy {
+  max-width: 30rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .how__svg [data-draw] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .js .how__svg [data-draw][stroke-dasharray] {
+    stroke-dasharray: 0.025 0.03;
+  }
+
+  .js .how__step.is-active .how__svg [data-draw] {
+    stroke-dashoffset: 0;
+  }
+
+  .js .how__svg [data-accent] {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0);
+    transition: transform 600ms var(--ease-out) 300ms;
+  }
+
+  .js .how__step.is-active .how__svg [data-accent] {
+    transform: scale(1);
+  }
+
+  .js .how__copy {
+    opacity: 0.35;
+    transform: translateY(0.75rem);
+    transition: opacity 700ms ease, transform 700ms var(--ease-out);
+  }
+
+  .js .how__step.is-active .how__copy {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .how__step.is-active .how__flyer {
+    animation: how-fly 3.4s cubic-bezier(0.45, 0, 0.25, 1) 0.5s both;
+  }
+}
+
+@keyframes how-fly {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how__flyer {
+    opacity: 1;
+    offset-distance: 50%;
+  }
+}
+
+@media (max-width: 899px) {
+  .how__copy {
+    order: -1;
+  }
+}
+
+@media (min-width: 900px) {
+  .how__line {
+    left: 50%;
+    margin-left: -1px;
+  }
+
+  .how__step {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-12, 5rem);
+    padding-left: 0;
+  }
+
+  .how__node {
+    top: 50%;
+    left: 50%;
+    margin: -0.7rem 0 0 -0.7rem;
+  }
+
+  /* Pictures and words alternate sides down the line */
+  .how__art {
+    justify-self: end;
+    width: min(100%, 18rem);
+    max-width: none;
+  }
+
+  .how__copy {
+    justify-self: start;
+  }
+
+  .how__step:nth-child(odd) .how__art {
+    order: 2;
+    justify-self: start;
+  }
+
+  .how__step:nth-child(odd) .how__copy {
+    order: 1;
+    justify-self: end;
+    text-align: right;
+  }
 }
 
 .how__num {
@@ -3409,7 +3608,7 @@ body.modal-open .site-main {
   margin-bottom: var(--space-2);
   color: var(--color-brand);
   font-family: var(--font-display), var(--font-fallback-display);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl, 2rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -3417,7 +3616,7 @@ body.modal-open .site-main {
 
 .how__step-text {
   color: var(--color-ink-muted);
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
   line-height: 1.55;
 }
 
@@ -3429,19 +3628,6 @@ body.modal-open .site-main {
   color: var(--color-ink-muted);
   font-size: var(--text-sm);
   line-height: 1.6;
-}
-
-@media (min-width: 640px) {
-  .how__steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-8) var(--space-6);
-  }
-}
-
-@media (min-width: 1024px) {
-  .how__steps {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 /* ---------- About ---------- */

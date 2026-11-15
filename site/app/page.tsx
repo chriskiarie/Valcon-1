@@ -1,4 +1,3 @@
-import { ArrivalBand } from "@/components/ArrivalBand";
 import { About } from "@/components/About";
 import { ClosingCTA } from "@/components/ClosingCTA";
 import { ContactBand } from "@/components/ContactBand";
@@ -25,7 +24,6 @@ export default function Home() {
       <FlybySystem />
       <IntroFeature />
       <FleetWindow copy={home.fleet} />
-      <ArrivalBand copy={home.arrival} />
       <VideoGallery copy={home.gallery} />
       <ServicesSection services={services} copy={home.services} />
       <HowItWorks />

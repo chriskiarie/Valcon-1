@@ -49,13 +49,25 @@
       "more": [
         {
           "image": "/images/hero/hero-2-desktop",
-          "alt": "5Y-VAL in side profile on the runway at Wilson Airport."
+          "alt": "5Y-VAL in side profile on the runway at Wilson Airport.",
+          "focus": {
+            "desktop": "50% 70%",
+            "mobile": "46% 70%"
+          }
         },
         {
           "image": "/images/hero/hero-1-desktop",
-          "alt": "5Y-VAL taxiing head-on towards the camera."
+          "alt": "5Y-VAL taxiing head-on towards the camera.",
+          "focus": {
+            "desktop": "50% 60%",
+            "mobile": "50% 60%"
+          }
         }
-      ]
+      ],
+      "focus": {
+        "desktop": "72% 62%",
+        "mobile": "85% 62%"
+      }
     }
   },
   "arrival": {

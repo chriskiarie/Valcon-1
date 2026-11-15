@@ -5,13 +5,23 @@ import { Button } from "./Button";
 import type { Service, Site } from "@/lib/types";
 import { hasEmail, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 
+type Fields = {
+  name: string;
+  email: string;
+  phone: string;
+  from: string;
+  to: string;
+  date: string;
+  passengers: string;
+  notes: string;
+};
+
+const EMPTY: Fields = { name: "", email: "", phone: "", from: "", to: "", date: "", passengers: "", notes: "" };
+
 export function ContactForm({ site, services }: { site: Site; services: Service[] }) {
-  const [form, setForm] = useState({
-    from: "",
-    dates: "",
-    passengers: "",
-    notes: "",
-  });
+  const [form, setForm] = useState<Fields>(EMPTY);
+  const [error, setError] = useState("");
+  const [sent, setSent] = useState<"" | "email" | "copied">("");
   const serviceRef = useRef<HTMLSelectElement>(null);
 
   // A services card links here as /contact/?service=<slug>. Set the dropdown once, without
@@ -24,124 +34,187 @@ export function ContactForm({ site, services }: { site: Site; services: Service[
     select.value = slug;
   }, [services]);
 
+  const set = (key: keyof Fields) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((current) => ({ ...current, [key]: event.target.value }));
+    setError("");
+  };
+
   function buildMessage() {
-    const { from, dates, passengers, notes } = form;
     const service = serviceRef.current?.value ?? "";
     const serviceTitle = services.find((item) => item.slug === service)?.title;
+    const route = [form.from.trim(), form.to.trim()].filter(Boolean).join(" to ");
     return [
-      "Hello,",
-      "I am interested in your aviation services.",
+      "Hello Valcon Air,",
+      "",
+      "I would like a quote.",
+      "",
       serviceTitle ? `Service: ${serviceTitle}` : "",
-      from ? `From: ${from}` : "",
-      dates ? `Dates: ${dates}` : "",
-      passengers ? `Passengers: ${passengers}` : "",
-      notes ? `Notes: ${notes}` : "",
+      route ? `Route: ${route}` : "",
+      form.date ? `Date: ${form.date}` : "",
+      form.passengers ? `Passengers: ${form.passengers}` : "",
+      form.notes.trim() ? `Notes: ${form.notes.trim()}` : "",
+      "",
+      `Name: ${form.name.trim()}`,
+      form.email.trim() ? `Email: ${form.email.trim()}` : "",
+      form.phone.trim() ? `Phone: ${form.phone.trim()}` : "",
     ]
-      .filter((line) => line.length > 0)
+      .filter((line, index, all) => !(line === "" && (index === 0 || all[index - 1] === "")))
       .join("\n");
+  }
+
+  function validate(): boolean {
+    if (!form.name.trim()) {
+      setError("Please add your name.");
+      return false;
+    }
+    const email = form.email.trim();
+    const phone = form.phone.trim();
+    if (!email && !phone) {
+      setError("Add an email address or a phone number so we can reply.");
+      return false;
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("That email address does not look right.");
+      return false;
+    }
+    return true;
   }
 
   const canWhatsapp = hasWhatsapp(site);
   const canEmail = hasEmail(site);
 
-  const handleWhatsApp = () => {
-    if (!canWhatsapp) return;
-    window.open(whatsappHref(site, buildMessage()), "_blank", "noopener,noreferrer");
-  };
+  function onSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    if (!validate()) return;
+    if (canEmail) {
+      window.location.href = mailtoHref(site, `Quote request - ${form.name.trim()}`, buildMessage());
+      setSent("email");
+    }
+  }
 
-  const handleMailto = () => {
-    if (!canEmail) return;
-    window.location.href = mailtoHref(site, `Enquiry - ${site.name}`, buildMessage());
-  };
+  function onWhatsApp() {
+    if (!validate()) return;
+    window.open(whatsappHref(site, buildMessage()), "_blank", "noopener,noreferrer");
+  }
+
+  async function onCopy() {
+    if (!validate()) return;
+    try {
+      await navigator.clipboard.writeText(buildMessage());
+      setSent("copied");
+    } catch {
+      setError("Could not copy. Please email or call us instead.");
+    }
+  }
 
   return (
-    <div className="enquiry-form" data-reveal="below">
-      <h3>Compose your enquiry</h3>
-
-      <div className="form-row">
-        <label className="form-label" htmlFor="enquiry-service">
-          Service
-        </label>
-        <select
-          ref={serviceRef}
-          id="enquiry-service"
-          className="form-input"
-          defaultValue=""
-        >
-          <option value="">Not sure yet</option>
-          {services.map((service) => (
-            <option key={service.slug} value={service.slug}>
-              {service.title}
-            </option>
-          ))}
-        </select>
+    <form className="qf" onSubmit={onSubmit} noValidate>
+      <div className="qf__grid">
+        <div className="qf__field">
+          <label htmlFor="qf-name">Your name</label>
+          <input id="qf-name" name="name" autoComplete="name" required value={form.name} onChange={set("name")} />
+        </div>
+        <div className="qf__field">
+          <label htmlFor="qf-email">Email</label>
+          <input
+            id="qf-email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={set("email")}
+          />
+        </div>
+        <div className="qf__field">
+          <label htmlFor="qf-phone">Phone or WhatsApp</label>
+          <input
+            id="qf-phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            placeholder="+254 ..."
+            value={form.phone}
+            onChange={set("phone")}
+          />
+        </div>
+        <div className="qf__field">
+          <label htmlFor="qf-service">Service</label>
+          <select ref={serviceRef} id="qf-service" name="service" defaultValue="">
+            <option value="">Not sure yet</option>
+            {services.map((service) => (
+              <option key={service.slug} value={service.slug}>
+                {service.title}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="qf__field">
+          <label htmlFor="qf-from">Flying from</label>
+          <input id="qf-from" name="from" placeholder="e.g. Wilson Airport" value={form.from} onChange={set("from")} />
+        </div>
+        <div className="qf__field">
+          <label htmlFor="qf-to">Flying to</label>
+          <input id="qf-to" name="to" placeholder="e.g. Mombasa" value={form.to} onChange={set("to")} />
+        </div>
+        <div className="qf__field">
+          <label htmlFor="qf-date">Travel date</label>
+          <input id="qf-date" name="date" type="date" value={form.date} onChange={set("date")} />
+        </div>
+        <div className="qf__field">
+          <label htmlFor="qf-pax">Passengers</label>
+          <input
+            id="qf-pax"
+            name="passengers"
+            type="number"
+            min="1"
+            max="50"
+            inputMode="numeric"
+            value={form.passengers}
+            onChange={set("passengers")}
+          />
+        </div>
+        <div className="qf__field qf__field--full">
+          <label htmlFor="qf-notes">Anything else we should know</label>
+          <textarea
+            id="qf-notes"
+            name="notes"
+            rows={4}
+            placeholder="Luggage, return flight, special requests..."
+            value={form.notes}
+            onChange={set("notes")}
+          />
+        </div>
       </div>
 
-      <div className="form-row">
-        <label className="form-label">From (your email or name)</label>
-        <input
-          type="email"
-          placeholder="you@example.com"
-          className="form-input"
-          value={form.from}
-          onChange={(e) =>
-            setForm({ ...form, from: e.target.value })
-          }
-        />
-      </div>
+      <p className="qf__status" role="status" aria-live="polite" data-state={error ? "error" : sent ? "ok" : ""}>
+        {error ||
+          (sent === "email"
+            ? `Your email app should have opened with the quote request ready to send. If nothing opened, write to ${site.email} or tap Copy.`
+            : sent === "copied"
+              ? "Copied. Paste it into an email or message to us."
+              : "")}
+      </p>
 
-      <div className="form-row">
-        <label className="form-label">Dates of travel</label>
-        <input
-          type="date"
-          className="form-input"
-          value={form.dates}
-          onChange={(e) => setForm({ ...form, dates: e.target.value })}
-        />
-      </div>
-
-      <div className="form-row">
-        <label className="form-label">Number of passengers</label>
-        <input
-          type="number"
-          min="1"
-          className="form-input"
-          value={form.passengers}
-          onChange={(e) =>
-            setForm({ ...form, passengers: e.target.value })
-          }
-        />
-      </div>
-
-      <div className="form-row">
-        <label className="form-label">Notes or special requests</label>
-        <textarea
-          className="form-input"
-          rows={3}
-          placeholder="e.g. Sightseeing circuit, photography, etc."
-          value={form.notes}
-          onChange={(e) => setForm({ ...form, notes: e.target.value })}
-        ></textarea>
-      </div>
-
-      <div className="form-actions">
+      <div className="qf__actions">
+        {canEmail ? (
+          <Button type="submit" variant="solid">
+            Send quote request
+          </Button>
+        ) : null}
         {canWhatsapp ? (
-          <Button variant="solid" onClick={handleWhatsApp} ariaLabel="Open WhatsApp">
+          <Button variant="outline" onClick={onWhatsApp} ariaLabel="Send on WhatsApp">
             WhatsApp
           </Button>
         ) : null}
-        {canEmail ? (
-          <Button variant={canWhatsapp ? "outline" : "solid"} onClick={handleMailto} ariaLabel="Send email">
-            Email
-          </Button>
-        ) : null}
-        {!canWhatsapp && !canEmail ? (
-          <p className="form-unavailable">{site.messages.contactUnconfirmed}</p>
-        ) : null}
-        <Button variant="outline" href="/fleet/" className="ml-auto">
-          View fleet
-        </Button>
+        <button type="button" className="qf__copy" onClick={onCopy}>
+          Copy enquiry
+        </button>
+        {!canWhatsapp && !canEmail ? <p className="form-unavailable">{site.messages.contactUnconfirmed}</p> : null}
       </div>
-    </div>
+      <p className="qf__note">This opens your email app with everything filled in. We reply during office hours.</p>
+    </form>
   );
 }

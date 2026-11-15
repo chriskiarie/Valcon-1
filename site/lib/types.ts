@@ -131,13 +131,14 @@ export type Home = {
     linkLabel: string;
     window?: {
       image: string;
+      focus?: { desktop: string; mobile: string };
       alt: string;
       lead: string;
       caption: string;
       openLabel: string;
       galleryLabel: string;
       galleryHref: string;
-      more: { image: string; alt: string }[];
+      more: { image: string; alt: string; focus?: { desktop: string; mobile: string } }[];
     };
   };
   arrival: {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { getPages, getServices, getSite } from "@/lib/content";
-import { hasDirectContact, hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
+import { hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = {
@@ -33,61 +33,61 @@ export default function ContactPage() {
 
       <section className="section" aria-labelledby="enquiry-title" id="enquiry">
         <Container>
-          <div className="quote-panel" id="quote" data-reveal="below">
-            <span className="eyebrow">{contact.panelEyebrow}</span>
-            <h2 id="enquiry-title" className="quote-panel__title">
-              {contact.panelTitle}
-            </h2>
+          <div className="quote-layout">
+            <div className="quote-panel" id="quote" data-reveal="below">
+              <span className="eyebrow">{contact.panelEyebrow}</span>
+              <h2 id="enquiry-title" className="quote-panel__title">
+                Request a quote
+              </h2>
+              <p>Tell us where you need to go and when. Our team will respond with a clear, tailored quote.</p>
+              <ContactForm site={site} services={services} />
+            </div>
 
-            <ContactForm site={site} services={services} />
-
-            {hasDirectContact(site) ? (
-              <div className="contact-details" data-reveal="below">
-                <h3>Contact details</h3>
-                <div className="contact-list">
-                  {hasWhatsapp(site) ? (
-                    <div className="contact-item">
-                      <a
-                        href={whatsappHref(site, site.messages.whatsappGeneral)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        WhatsApp
-                      </a>
-                      <span>{site.whatsapp}</span>
-                    </div>
-                  ) : null}
-                  {hasPhone(site) ? (
-                    <div className="contact-item">
-                      <a href={`tel:${site.phoneTel}`}>Phone</a>
-                      <span>{site.phone}</span>
-                    </div>
-                  ) : null}
-                  {hasEmail(site) ? (
-                    <div className="contact-item">
-                      <a href={mailtoHref(site)}>Email</a>
-                      <span>{site.email}</span>
-                    </div>
-                  ) : null}
-                  {site.address.trim() ? (
-                    <div className="contact-item">
-                      <strong>Visit</strong>
-                      <span>
-                        {site.address}, {site.base}
-                      </span>
-                    </div>
-                  ) : null}
-                  {site.hours.map((row) => (
-                    <div key={row.days} className="contact-item">
-                      <strong>Hours</strong>
-                      <span>
-                        {row.days}, {row.time}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : null}
+            <aside className="quote-aside" aria-label="Contact details" data-reveal="below">
+              <h3 className="quote-aside__title">Prefer to talk?</h3>
+              <ul className="quote-aside__list">
+                {hasPhone(site) ? (
+                  <li>
+                    <span>Call</span>
+                    <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
+                  </li>
+                ) : null}
+                {hasWhatsapp(site) ? (
+                  <li>
+                    <span>WhatsApp</span>
+                    <a href={whatsappHref(site, site.messages.whatsappGeneral)} target="_blank" rel="noopener noreferrer">
+                      {site.whatsapp}
+                    </a>
+                  </li>
+                ) : null}
+                {hasEmail(site) ? (
+                  <li>
+                    <span>Email</span>
+                    <a href={mailtoHref(site)}>{site.email}</a>
+                  </li>
+                ) : null}
+                {site.address.trim() ? (
+                  <li>
+                    <span>Visit</span>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address}, ${site.base}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {site.address}, {site.base}
+                    </a>
+                  </li>
+                ) : null}
+                {site.hours.map((row) => (
+                  <li key={row.days}>
+                    <span>Hours</span>
+                    <p>
+                      {row.days}, {row.time}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </aside>
           </div>
         </Container>
       </section>

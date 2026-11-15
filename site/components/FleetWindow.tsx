@@ -8,14 +8,15 @@ import { Lines } from "@/components/Lines";
 import type { Home } from "@/lib/types";
 
 type FleetCopy = Home["fleet"];
-type Shot = { image: string; alt: string };
+type Shot = { image: string; alt: string; focus?: { desktop: string; mobile: string } };
 
-function Picture({ image, alt, className }: { image: string; alt: string; className?: string }) {
+function Picture({ image, alt, className, focus }: { image: string; alt: string; className?: string; focus?: Shot["focus"] }) {
+  const style = focus ? ({ "--focus-d": focus.desktop, "--focus-m": focus.mobile } as React.CSSProperties) : undefined;
   return (
     <picture>
       <source type="image/avif" srcSet={`${image}.avif`} />
       <source type="image/webp" srcSet={`${image}.webp`} />
-      <img className={className} src={`${image}.jpg`} alt={alt} decoding="async" />
+      <img className={className} style={style} src={`${image}.jpg`} alt={alt} decoding="async" />
     </picture>
   );
 }
@@ -31,7 +32,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
   const [shown, setShown] = useState(0);
   const originRect = useRef<DOMRect | null>(null);
 
-  const shots: Shot[] = win ? [{ image: win.image, alt: win.alt }, ...win.more] : [];
+  const shots: Shot[] = win ? [{ image: win.image, alt: win.alt, focus: win.focus }, ...win.more] : [];
 
   const openViewer = useCallback(() => {
     if (frameRef.current) originRect.current = frameRef.current.getBoundingClientRect();
@@ -142,7 +143,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
           aria-label={`${win.openLabel}: ${current.alt}`}
         >
           <span className="fleet-pane__pane">
-            <Picture key={current.image} image={current.image} alt="" className="fleet-pane__img" />
+            <Picture key={current.image} image={current.image} alt="" className="fleet-pane__img" focus={current.focus} />
           </span>
           <span className="fleet-pane__hint">{win.openLabel}</span>
         </button>
@@ -168,7 +169,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
               <div ref={trackRef} className="fleet-viewer__track">
                 {shots.map((shot, i) => (
                   <div key={shot.image} className="fleet-viewer__slide" aria-hidden={i !== index}>
-                    <Picture image={shot.image} alt={shot.alt} />
+                    <Picture image={shot.image} alt={shot.alt} focus={shot.focus} />
                   </div>
                 ))}
               </div>

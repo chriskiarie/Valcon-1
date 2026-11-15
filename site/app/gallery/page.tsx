@@ -27,8 +27,6 @@ export default function GalleryPage() {
       </section>
 
       <section className="gal-wrap" aria-label="Photos of 5Y-VAL">
-        <span className="gal-wrap__glow gal-wrap__glow--a" aria-hidden="true" />
-        <span className="gal-wrap__glow gal-wrap__glow--b" aria-hidden="true" />
         <Container>
           <GalleryGrid items={gallery as GalleryItem[]} />
         </Container>

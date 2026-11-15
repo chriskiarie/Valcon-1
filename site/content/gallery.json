@@ -1,0 +1,38 @@
+[
+  {
+    "image": "/images/fleet/5y-val-salute",
+    "ext": "jpg",
+    "alt": "5Y-VAL taxiing at Wilson Airport under a water-cannon salute.",
+    "caption": "Water-cannon salute",
+    "size": "hero"
+  },
+  {
+    "image": "/images/features/parallax-desktop",
+    "ext": "webp",
+    "alt": "Wing and clouds from a window seat at altitude.",
+    "caption": "Above the clouds",
+    "size": "tall"
+  },
+  {
+    "image": "/images/hero/hero-3-desktop",
+    "ext": "jpg",
+    "alt": "Close view of the CRJ200's tail-mounted engine.",
+    "caption": "Engine detail",
+    "size": ""
+  },
+  {
+    "image": "/images/hero/hero-1-desktop",
+    "ext": "jpg",
+    "alt": "5Y-VAL taxiing head-on towards the camera.",
+    "caption": "Head on",
+    "size": ""
+  },
+  {
+    "image": "/images/hero/hero-2-desktop",
+    "ext": "jpg",
+    "alt": "5Y-VAL in side profile on the runway at Wilson Airport.",
+    "caption": "Side profile, Wilson Airport",
+    "size": "wide",
+    "focus": "25% 78%"
+  }
+]

@@ -28,17 +28,20 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
+  const [shown, setShown] = useState(0);
   const originRect = useRef<DOMRect | null>(null);
 
   const shots: Shot[] = win ? [{ image: win.image, alt: win.alt }, ...win.more] : [];
 
   const openViewer = useCallback(() => {
     if (frameRef.current) originRect.current = frameRef.current.getBoundingClientRect();
-    setIndex(0);
+    setIndex(shown);
     setOpen(true);
-  }, []);
+  }, [shown]);
 
   const closeViewer = useCallback(() => {
+    // The window keeps whichever photo you ended on.
+    setShown(index);
     const viewer = viewerRef.current;
     const track = trackRef.current;
     const rect = frameRef.current?.getBoundingClientRect();
@@ -53,7 +56,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
     track?.animate([{ transform: "scale(1)" }, { transform: "scale(1.08)" }], timing);
     const anim = viewer.animate([{ clipPath: "inset(0px round 0rem)" }, { clipPath: to }], { ...timing, delay: 120 });
     anim.onfinish = () => setOpen(false);
-  }, []);
+  }, [index]);
 
   const go = useCallback(
     (next: number) => {
@@ -110,7 +113,17 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
     return () => track.removeEventListener("scroll", onScroll);
   }, [open]);
 
+  // Opening on a later photo: start the carousel there.
+  useEffect(() => {
+    if (!open) return;
+    const track = trackRef.current;
+    if (track) track.scrollLeft = index * track.clientWidth;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
   if (!win) return null;
+
+  const current = shots[shown] ?? shots[0];
 
   return (
     <section className="section fleet-pane" aria-labelledby="fleet-pane-title">
@@ -126,10 +139,10 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
           type="button"
           className="fleet-pane__frame"
           onClick={openViewer}
-          aria-label={`${win.openLabel}: ${win.alt}`}
+          aria-label={`${win.openLabel}: ${current.alt}`}
         >
           <span className="fleet-pane__pane">
-            <Picture image={win.image} alt="" className="fleet-pane__img" />
+            <Picture key={current.image} image={current.image} alt="" className="fleet-pane__img" />
           </span>
           <span className="fleet-pane__hint">{win.openLabel}</span>
         </button>
@@ -168,6 +181,14 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
                   &times;
                 </button>
               </div>
+              <Link
+                href={win.galleryHref}
+                className={`fleet-viewer__gallery${index === shots.length - 1 ? " is-on" : ""}`}
+                tabIndex={index === shots.length - 1 ? 0 : -1}
+              >
+                {win.galleryLabel}
+                <span aria-hidden="true"> &rarr;</span>
+              </Link>
               {shots.length > 1 ? (
                 <>
                   <button type="button" className="fleet-viewer__nav fleet-viewer__nav--prev" onClick={() => go(index - 1)} aria-label="Previous photo">

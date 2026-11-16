@@ -41,7 +41,6 @@
     "window": {
       "image": "/images/fleet/5y-val-salute",
       "alt": "5Y-VAL, a Bombardier CRJ200, taxiing at Wilson Airport under a water-cannon salute.",
-      "lead": "One aircraft,\nflown with care.",
       "caption": "5Y-VAL · Bombardier CRJ200 LR · up to 50 seats",
       "openLabel": "View the aircraft",
       "galleryLabel": "See the jet gallery",
@@ -112,7 +111,7 @@
       },
       {
         "title": "Confirm",
-        "text": "Approve the quote, sign and pay the deposit."
+        "text": "Approve the quote."
       },
       {
         "title": "Prepare",
@@ -124,7 +123,7 @@
       },
       {
         "title": "Follow up",
-        "text": "Arrival handling, transfers, invoice and feedback."
+        "text": "Arrival handling, transfers and feedback."
       }
     ],
     "acmiNote": "ACMI works differently. We agree the terms, hand over the aircraft, and you operate the flights under your own schedule."

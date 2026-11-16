@@ -157,7 +157,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
           <h2 id="fleet-pane-title" className="fleet-pane__title">
             {copy.heading}
           </h2>
-          <p className="fleet-pane__lead"><Lines text={win.lead} /></p>
+          {win.lead ? <p className="fleet-pane__lead"><Lines text={win.lead} /></p> : null}
         </div>
         <button
           ref={frameRef}

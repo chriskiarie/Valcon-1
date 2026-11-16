@@ -141,7 +141,7 @@ export type Home = {
       image: string;
       focus?: Focus;
       alt: string;
-      lead: string;
+      lead?: string;
       caption: string;
       openLabel: string;
       galleryLabel: string;

@@ -57,7 +57,14 @@ export function EastAfricaMap() {
           >
             <g className="eamap__land">
               {map.countries.map((country) => (
-                <path key={country.name} d={country.d} className={country.hi ? "is-hi" : undefined} />
+                <path
+                  key={country.name}
+                  d={country.d}
+                  className={country.hi ? "is-hi" : undefined}
+                  {...("cc" in country
+                    ? { "data-cc": country.cc, "data-fx": country.fx, "data-fy": country.fy }
+                    : {})}
+                />
               ))}
             </g>
 
@@ -74,6 +81,8 @@ export function EastAfricaMap() {
                       className="eamap__plane"
                       style={{ offsetPath: `path("${d}")` }}
                     />
+                    <circle cx={to[0]} cy={to[1]} r={5} className="eamap__ripple eamap__ripple--a" />
+                    <circle cx={to[0]} cy={to[1]} r={5} className="eamap__ripple eamap__ripple--b" />
                     <circle cx={to[0]} cy={to[1]} r={5} className="eamap__dot" />
                     <text
                       x={route.left ? to[0] - 10 : to[0] + 10}

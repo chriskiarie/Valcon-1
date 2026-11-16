@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Flag, FLAG_CODES } from "@/components/Flags";
 
 export type City = { id: string; name: string; country: string; text: string; image: string; credit?: string; creditUrl?: string };
 
@@ -15,6 +16,7 @@ export function MapShowcase({ cities, children }: { cities: City[]; children: Re
   const [index, setIndex] = useState(0);
   const [live, setLive] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [flag, setFlag] = useState<{ cc: string; x: number; y: number } | null>(null);
 
   useEffect(() => {
     const node = ref.current;
@@ -53,7 +55,28 @@ export function MapShowcase({ cities, children }: { cities: City[]; children: Re
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="eamap__stage">{children}</div>
+      <div
+        className="eamap__stage"
+        onMouseOver={(event) => {
+          const target = (event.target as Element).closest?.("[data-cc]");
+          const cc = target?.getAttribute("data-cc");
+          if (!target || !cc || !FLAG_CODES.includes(cc)) {
+            setFlag(null);
+            return;
+          }
+          setFlag({ cc, x: Number(target.getAttribute("data-fx")), y: Number(target.getAttribute("data-fy")) });
+        }}
+        onMouseLeave={() => setFlag(null)}
+      >
+        {children}
+        {flag ? (
+          <span key={flag.cc} className="eamap__flag" style={{ left: `${flag.x}%`, top: `${flag.y}%` }} aria-hidden="true">
+            <svg viewBox="0 0 30 20" width="64" height="43">
+              <Flag code={flag.cc} />
+            </svg>
+          </span>
+        ) : null}
+      </div>
 
       {cities.length > 0 ? (
         <aside className="eamap__card" aria-label="Places we fly to" aria-live="polite">

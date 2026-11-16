@@ -4854,7 +4854,7 @@ body.modal-open .site-main {
   display: none;
   justify-self: center;
   width: 100%;
-  max-width: 18rem;
+  max-width: 12.5rem;
 }
 
 @media (min-width: 900px) {
@@ -4888,4 +4888,100 @@ body.modal-open .site-main {
 @keyframes ca-float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-8px) rotate(-1deg); }
+}
+
+
+/* ---------- Map: landing ripples and country hover flags ---------- */
+.eamap__routes,
+.eamap__hub {
+  pointer-events: none;
+}
+
+.eamap__land path[data-cc] {
+  cursor: pointer;
+  transition: fill 250ms ease, stroke 250ms ease;
+}
+
+.eamap__land path[data-cc]:hover {
+  fill: rgb(236 58 0 / 0.16);
+  stroke: rgb(236 58 0 / 0.7);
+  stroke-width: 1.8;
+}
+
+.eamap__flag {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  padding: 3px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 14px 28px -10px rgb(40 18 70 / 0.55), 0 0 0 1px rgb(75 22 130 / 0.12);
+  pointer-events: none;
+  transform: translate(-50%, -125%);
+  transform-origin: 50% 100%;
+  animation: eamap-flag-pop 480ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.eamap__flag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  transform: translateX(-50%) rotate(45deg);
+  box-shadow: 2px 2px 3px -1px rgb(75 22 130 / 0.2);
+}
+
+.eamap__flag svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  border-radius: 5px;
+}
+
+@keyframes eamap-flag-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -80%) scale(0.35) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -125%) scale(1) rotate(0deg);
+  }
+}
+
+.eamap__ripple {
+  fill: none;
+  stroke: var(--brand-orange-500);
+  stroke-width: 3;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .eamap__layout.is-live .eamap__ripple {
+    animation: eamap-ripple 5.5s ease-out calc(var(--d, 0s) + 1.2s) infinite;
+  }
+
+  .js .eamap__layout.is-live .eamap__ripple--b {
+    animation-name: eamap-ripple-b;
+  }
+}
+
+/* The plane lands at 55% of its 5.5s loop; the rings open from there. */
+@keyframes eamap-ripple {
+  0%, 54% { opacity: 0; transform: scale(1); }
+  56% { opacity: 0.85; transform: scale(1); }
+  86% { opacity: 0; transform: scale(5.2); }
+  100% { opacity: 0; transform: scale(5.2); }
+}
+
+@keyframes eamap-ripple-b {
+  0%, 60% { opacity: 0; transform: scale(1); }
+  62% { opacity: 0.6; transform: scale(1); }
+  92% { opacity: 0; transform: scale(4); }
+  100% { opacity: 0; transform: scale(4); }
 }

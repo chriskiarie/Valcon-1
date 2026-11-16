@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import { getHome, getSite } from "@/lib/content";
-import { hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
+import { ClosingArt } from "@/components/ClosingArt";
+import { hasEmail, hasPhone, hasWhatsapp, whatsappHref } from "@/lib/contact";
 
 export function ClosingCTA() {
   const site = getSite();
@@ -11,7 +12,7 @@ export function ClosingCTA() {
   return (
     <div className="closing" data-reveal="below">
       <div className="closing__main">
-      <span className="eyebrow">{closing.eyebrow}</span>
+        <span className="eyebrow">{closing.eyebrow}</span>
       <h2 className="closing__title" data-flyby-avoid>{closing.title}</h2>
       <p className="closing__support" data-flyby-avoid>
         {closing.support}
@@ -42,30 +43,7 @@ export function ClosingCTA() {
         ) : null}
       </div>
       </div>
-      <ul className="closing__facts" data-flyby-avoid>
-        {hasPhone(site) ? (
-          <li>
-            <span>Call</span>
-            <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
-          </li>
-        ) : null}
-        {email ? (
-          <li>
-            <span>Email</span>
-            <a href={mailtoHref(site)}>{site.email}</a>
-          </li>
-        ) : null}
-        {site.hours[0] ? (
-          <li>
-            <span>Hours</span>
-            <p>
-              {site.hours[0].days}
-              <br />
-              {site.hours[0].time}
-            </p>
-          </li>
-        ) : null}
-      </ul>
+      <ClosingArt />
     </div>
   );
 }

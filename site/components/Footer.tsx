@@ -16,22 +16,28 @@ export function Footer({ compact = false }: { compact?: boolean }) {
         <div className="footer__top">
           <div className="footer__brand">
             <Wordmark site={site} variant="full" />
-            <p>{site.tagline}</p>
           </div>
 
-          <nav className="footer__nav" aria-label="Footer">
+          <nav className="footer__col" aria-label="Footer">
+            <h2 className="footer__head">Explore</h2>
             {site.nav.map((item) => (
               <Link key={item.href} href={item.href}>
                 {item.label}
               </Link>
             ))}
+            <Link href="/gallery/">Jet gallery</Link>
           </nav>
 
-          <div className="footer__contact">
+          <div className="footer__col">
+            <h2 className="footer__head">Contact</h2>
             {site.address.trim() ? (
-              <span>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address}, ${site.base}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {site.address}, {site.base}
-              </span>
+              </a>
             ) : null}
             {phone ? <a href={`tel:${site.phoneTel}`}>{site.phone}</a> : null}
             {whatsapp ? (
@@ -40,22 +46,24 @@ export function Footer({ compact = false }: { compact?: boolean }) {
               </a>
             ) : null}
             {email ? <a href={mailtoHref(site)}>{site.email}</a> : null}
-            {!phone && !whatsapp && !email ? (
-              <Link href="/contact/">Contact</Link>
-            ) : null}
+            {!phone && !whatsapp && !email ? <Link href="/contact/">Contact</Link> : null}
             {site.hours.map((row) => (
               <span key={row.days}>
                 {row.days}, {row.time}
               </span>
             ))}
-            {site.socials.map((social) => (
-              <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer">
-                {social.platform
-                  ? SOCIAL_LABELS[social.platform]
-                  : social.label}
-              </a>
-            ))}
           </div>
+
+          {site.socials.length > 0 ? (
+            <div className="footer__col">
+              <h2 className="footer__head">Follow</h2>
+              {site.socials.map((social) => (
+                <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer">
+                  {social.platform ? SOCIAL_LABELS[social.platform] : social.label}
+                </a>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <div className="footer__bottom">

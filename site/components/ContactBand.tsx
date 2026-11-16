@@ -77,25 +77,6 @@ export function ContactBand({ site, copy }: { site: Site; copy: Home["visit"] })
       ),
     });
   }
-  const socials = (site.socials ?? []).filter((social) => social.href?.trim());
-  if (socials.length > 0) {
-    items.push({
-      label: "Follow",
-      content: (
-        <>
-          {socials.map((social) => (
-            <span key={social.href} className="contact-band__hours">
-              <a href={social.href} target="_blank" rel="noopener noreferrer">
-                {social.platform
-                  ? social.platform.charAt(0).toUpperCase() + social.platform.slice(1)
-                  : social.label || "Social"}
-              </a>
-            </span>
-          ))}
-        </>
-      ),
-    });
-  }
   if (items.length === 0) return null;
 
   return (

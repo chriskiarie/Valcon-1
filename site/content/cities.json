@@ -4,41 +4,53 @@
     "name": "Nairobi",
     "country": "Kenya",
     "text": "Our home base. Every Valcon flight starts at Wilson Airport, minutes from the city centre and the gateway to Kenya's parks and conservancies.",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1741991110666-88115e724741?auto=format&fit=crop&w=1400&q=75",
+    "credit": "Photo: imsogabriel stock / Unsplash",
+    "creditUrl": "https://unsplash.com/photos/a-cityscape-of-nairobi-kenya-on-a-sunny-day-IaJm3mq0F5o"
   },
   {
     "id": "mombasa",
     "name": "Mombasa",
     "country": "Kenya",
     "text": "Kenya's port city on the Indian Ocean, with Old Town, Fort Jesus and the beaches of the north and south coast close by.",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1652723902429-990c11bd4b2d?auto=format&fit=crop&w=1400&q=75",
+    "credit": "Photo: Oliver Njeru / Unsplash",
+    "creditUrl": "https://unsplash.com/photos/a-tall-tower-with-a-clock-on-the-top-of-it-tXrpDr8UA6I"
   },
   {
     "id": "nanyuki",
     "name": "Nanyuki",
     "country": "Kenya",
     "text": "A highland town on the equator at the foot of Mount Kenya, and the usual way in to the Laikipia conservancies.",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1571636689955-99b9376505cc?auto=format&fit=crop&w=1400&q=75",
+    "credit": "Photo: Bj Pearce / Unsplash",
+    "creditUrl": "https://unsplash.com/photos/man-and-woman-standing-on-mountains-peak-iki5-gFD9u4"
   },
   {
     "id": "kisumu",
     "name": "Kisumu",
     "country": "Kenya",
     "text": "The lakeside city on the Winam Gulf of Lake Victoria, serving western Kenya and the wider lake region.",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1690715408641-fd1d5b8931fe?auto=format&fit=crop&w=1400&q=75",
+    "credit": "Photo: Evans Dims / Unsplash",
+    "creditUrl": "https://unsplash.com/photos/a-dock-with-a-gazebo-in-the-middle-of-the-water-bVTQhjqPnzU"
   },
   {
     "id": "malindi",
     "name": "Malindi",
     "country": "Kenya",
     "text": "A relaxed coastal town known for its long beaches, marine park and fishing, a short hop up the coast from Mombasa.",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1633345778967-3760204a4c57?auto=format&fit=crop&w=1400&q=75",
+    "credit": "Photo: Jessica Pamp / Unsplash",
+    "creditUrl": "https://unsplash.com/photos/a-sandy-beach-with-palm-trees-and-chairs-mIDfo78z-OA"
   },
   {
     "id": "lodwar",
     "name": "Lodwar",
     "country": "Kenya",
     "text": "The main town of Turkana County in the north-west, and the base for trips to Lake Turkana.",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1597713892259-f080d09cd902?auto=format&fit=crop&w=1400&q=75",
+    "credit": "Photo: Imani Manyara / Unsplash",
+    "creditUrl": "https://unsplash.com/photos/white-and-brown-houses-near-green-trees-and-mountains-during-daytime-6lvYpTlsBPs"
   }
 ]

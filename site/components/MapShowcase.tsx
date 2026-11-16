@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-export type City = { id: string; name: string; country: string; text: string; image: string };
+export type City = { id: string; name: string; country: string; text: string; image: string; credit?: string; creditUrl?: string };
 
 const INTERVAL = 6000;
 
@@ -73,6 +73,17 @@ export function MapShowcase({ cities, children }: { cities: City[]; children: Re
                       {city.name}
                     </span>
                   )}
+                  {city.credit && city.creditUrl ? (
+                    <a
+                      className="eamap__credit"
+                      href={city.creditUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={i === index ? 0 : -1}
+                    >
+                      {city.credit}
+                    </a>
+                  ) : null}
                 </div>
                 <figcaption>
                   <span className="eamap__country">{city.country}</span>

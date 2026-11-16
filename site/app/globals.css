@@ -4321,7 +4321,7 @@ body.modal-open .site-main {
     gap: 1.1rem;
   }
 
-  .gal__cell--wide { grid-column: span 4; grid-row: span 2; }
+  .gal__cell--wide { grid-column: span 2; }
 }
 
 .gal__tile {
@@ -4954,4 +4954,55 @@ body.modal-open .site-main {
 
 @keyframes ca-glow {
   to { opacity: 0.6; }
+}
+
+/* ---------- East Africa map on phones: bigger marks, labels only where they matter ---------- */
+@media (max-width: 639px) {
+  .eamap__route {
+    stroke-width: 3.5;
+  }
+
+  .eamap__dot {
+    r: 8px;
+    stroke-width: 3;
+  }
+
+  .eamap__layout[data-active] .eamap__stop .eamap__label {
+    display: none;
+  }
+
+  .eamap__layout[data-active="mombasa"] .eamap__stop--mombasa .eamap__label,
+  .eamap__layout[data-active="nanyuki"] .eamap__stop--nanyuki .eamap__label,
+  .eamap__layout[data-active="kisumu"] .eamap__stop--kisumu .eamap__label,
+  .eamap__layout[data-active="malindi"] .eamap__stop--malindi .eamap__label,
+  .eamap__layout[data-active="lodwar"] .eamap__stop--lodwar .eamap__label {
+    display: block;
+  }
+
+  .eamap__label {
+    font-size: 34px;
+    stroke-width: 7px;
+  }
+
+  .eamap__label--hub {
+    font-size: 36px;
+  }
+
+  .eamap__core {
+    r: 11px;
+  }
+
+  .eamap__plane {
+    stroke: var(--color-brand);
+    stroke-width: 4;
+    stroke-linejoin: round;
+  }
+
+  .eamap__layout[data-active="mombasa"] .eamap__stop--mombasa .eamap__dot,
+  .eamap__layout[data-active="nanyuki"] .eamap__stop--nanyuki .eamap__dot,
+  .eamap__layout[data-active="kisumu"] .eamap__stop--kisumu .eamap__dot,
+  .eamap__layout[data-active="malindi"] .eamap__stop--malindi .eamap__dot,
+  .eamap__layout[data-active="lodwar"] .eamap__stop--lodwar .eamap__dot {
+    r: 13px;
+  }
 }

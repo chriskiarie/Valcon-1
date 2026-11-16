@@ -14,25 +14,35 @@
     "size": "tall"
   },
   {
-    "image": "/images/hero/hero-3-desktop",
+    "image": "/images/gallery/takeoff",
     "ext": "jpg",
-    "alt": "Close view of the CRJ200's tail-mounted engine.",
-    "caption": "Engine detail",
-    "size": ""
+    "alt": "5Y-VAL climbing away after take-off, gear up.",
+    "caption": "Climbing out",
+    "size": "tall",
+    "focus": "50% 30%"
   },
   {
-    "image": "/images/hero/hero-1-desktop",
+    "image": "/images/gallery/engine",
+    "ext": "jpg",
+    "alt": "Close view of the CRJ200's tail-mounted engine and the 5Y-VAL registration.",
+    "caption": "Engine detail",
+    "size": "",
+    "focus": "70% 40%"
+  },
+  {
+    "image": "/images/gallery/head-on",
     "ext": "jpg",
     "alt": "5Y-VAL taxiing head-on towards the camera.",
     "caption": "Head on",
-    "size": ""
+    "size": "",
+    "focus": "50% 55%"
   },
   {
-    "image": "/images/hero/hero-2-desktop",
+    "image": "/images/gallery/profile",
     "ext": "jpg",
     "alt": "5Y-VAL in side profile on the runway at Wilson Airport.",
     "caption": "Side profile, Wilson Airport",
     "size": "wide",
-    "focus": "25% 78%"
+    "focus": "40% 72%"
   }
 ]

@@ -4850,10 +4850,11 @@ body.modal-open .site-main {
 
 /* ---------- Quote card illustration ---------- */
 .closing__art {
+  position: relative;
   display: none;
   justify-self: center;
   width: 100%;
-  max-width: 26rem;
+  max-width: 24rem;
 }
 
 @media (min-width: 900px) {
@@ -4862,161 +4863,29 @@ body.modal-open .site-main {
   }
 }
 
-.closing__art-svg {
+.closing__art-glow {
+  position: absolute;
+  inset: 8% 6%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(236 58 0 / 0.35), transparent 68%);
+  filter: blur(26px);
+}
+
+.closing__art-img {
+  position: relative;
   display: block;
   width: 100%;
   height: auto;
-  overflow: visible;
-}
-
-.closing__art .ca-sun {
-  fill: rgb(255 255 255 / 0.05);
-  stroke: rgb(255 255 255 / 0.18);
-  stroke-width: 1.5;
-}
-
-.closing__art .ca-sun--in {
-  fill: rgb(236 58 0 / 0.22);
-  stroke: none;
-}
-
-.closing__art .ca-route {
-  stroke: rgb(255 255 255 / 0.55);
-  stroke-width: 2;
-  stroke-dasharray: 3 9;
-}
-
-.closing__art .ca-stop {
-  fill: #fff;
-  stroke: rgb(255 255 255 / 0.3);
-  stroke-width: 6;
-}
-
-.closing__art .ca-stop--end {
-  fill: var(--brand-orange-500, #ec3a00);
-  stroke: rgb(236 58 0 / 0.35);
-}
-
-.closing__art .ca-body {
-  fill: #fff;
-}
-
-.closing__art .ca-tail,
-.closing__art .ca-engine {
-  fill: #e9e2f5;
-}
-
-.closing__art .ca-wing {
-  fill: #cfc2e8;
-}
-
-.closing__art .ca-window {
-  fill: #4b1682;
-}
-
-.closing__art .ca-line {
-  stroke: #fff;
-  stroke-width: 3;
-}
-
-.closing__art .ca-windows {
-  stroke: #4b1682;
-  stroke-width: 3.2;
-}
-
-.closing__art .ca-clouds path {
-  stroke: rgb(255 255 255 / 0.28);
-  stroke-width: 6;
+  filter: drop-shadow(0 18px 30px rgb(0 0 0 / 0.35));
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .closing__art .ca-jet {
+  .closing__art-img {
     animation: ca-float 6s ease-in-out infinite;
-  }
-
-  .closing__art .ca-clouds {
-    animation: ca-drift 14s ease-in-out infinite alternate;
-  }
-
-  .closing__art .ca-sun--in {
-    animation: ca-glow 5s ease-in-out infinite alternate;
   }
 }
 
 @keyframes ca-float {
-  0%, 100% { transform: translate(228px, 126px) rotate(-14deg); }
-  50% { transform: translate(236px, 116px) rotate(-12deg); }
-}
-
-@keyframes ca-drift {
-  to { transform: translateX(14px); }
-}
-
-@keyframes ca-glow {
-  to { opacity: 0.6; }
-}
-
-/* ---------- East Africa map on phones: bigger marks, labels only where they matter ---------- */
-@media (max-width: 639px) {
-  .eamap__route {
-    stroke-width: 3.5;
-  }
-
-  .eamap__dot {
-    r: 8px;
-    stroke-width: 3;
-  }
-
-  .eamap__layout[data-active] .eamap__stop .eamap__label {
-    display: none;
-  }
-
-  .eamap__layout[data-active="mombasa"] .eamap__stop--mombasa .eamap__label,
-  .eamap__layout[data-active="nanyuki"] .eamap__stop--nanyuki .eamap__label,
-  .eamap__layout[data-active="kisumu"] .eamap__stop--kisumu .eamap__label,
-  .eamap__layout[data-active="malindi"] .eamap__stop--malindi .eamap__label,
-  .eamap__layout[data-active="lodwar"] .eamap__stop--lodwar .eamap__label {
-    display: block;
-  }
-
-  .eamap__label {
-    font-size: 34px;
-    stroke-width: 7px;
-  }
-
-  .eamap__label--hub {
-    font-size: 36px;
-  }
-
-  .eamap__core {
-    r: 11px;
-  }
-
-  .eamap__plane {
-    stroke: var(--color-brand);
-    stroke-width: 4;
-    stroke-linejoin: round;
-  }
-
-  .eamap__layout[data-active="mombasa"] .eamap__stop--mombasa .eamap__dot,
-  .eamap__layout[data-active="nanyuki"] .eamap__stop--nanyuki .eamap__dot,
-  .eamap__layout[data-active="kisumu"] .eamap__stop--kisumu .eamap__dot,
-  .eamap__layout[data-active="malindi"] .eamap__stop--malindi .eamap__dot,
-  .eamap__layout[data-active="lodwar"] .eamap__stop--lodwar .eamap__dot {
-    r: 13px;
-  }
-}
-
-.eamap__credit {
-  position: absolute;
-  right: 0.7rem;
-  bottom: 0.6rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  background: rgb(20 8 40 / 0.45);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  color: rgb(255 255 255 / 0.9);
-  font-size: 0.68rem;
-  text-decoration: none;
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-1deg); }
 }

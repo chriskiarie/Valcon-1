@@ -4854,7 +4854,7 @@ body.modal-open .site-main {
   display: none;
   justify-self: center;
   width: 100%;
-  max-width: 24rem;
+  max-width: 18rem;
 }
 
 @media (min-width: 900px) {

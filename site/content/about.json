@@ -1,0 +1,79 @@
+{
+  "metaDescription": "About Valcon Air: an aviation operator at Wilson Airport, Nairobi, offering ACMI, charter flights and specialised missions.",
+  "eyebrow": "About Valcon Air",
+  "title": "The right aircraft, for every mission.",
+  "lede": "Aviation that is flexible, accessible and responsive to the needs of businesses, organisations and individuals.",
+  "vision": {
+    "eyebrow": "Our vision",
+    "heading": "Beyond fixed routes\nand schedules.",
+    "paragraphs": [
+      "Valcon Air was built around a vision of making aviation more flexible, accessible and responsive to the diverse needs of businesses, organisations and individuals. We recognise that aviation is not always about following fixed routes or schedules. Sometimes, it is about having the right aircraft, the right support and the flexibility to reach destinations and accomplish missions beyond conventional air travel."
+    ],
+    "artLabel": "Fixed timetable on the left, open routes from Nairobi on the right"
+  },
+  "photo": {
+    "image": "/images/gallery/head-on",
+    "ext": "jpg",
+    "alt": "5Y-VAL taxiing head-on towards the camera.",
+    "caption": "5Y-VAL, our Bombardier CRJ200 LR",
+    "focus": "50% 55%"
+  },
+  "approach": {
+    "eyebrow": "Our approach",
+    "heading": "Every flight has a purpose.",
+    "paragraphs": [
+      "From the outset, our focus has been to provide aviation solutions that bring together reliability, operational efficiency and adaptability. We believe that every flight has a purpose, and that purpose deserves an approach tailored to its unique requirements. Whether supporting commercial aviation operations, arranging private air travel or facilitating specialised missions, our commitment remains centred on delivering solutions with precision and professionalism."
+    ],
+    "pillars": [
+      {
+        "id": "reliability",
+        "title": "Reliability",
+        "text": "Aircraft, crew and support you can plan around."
+      },
+      {
+        "id": "efficiency",
+        "title": "Operational efficiency",
+        "text": "Precise planning, so every flight runs as intended."
+      },
+      {
+        "id": "adaptability",
+        "title": "Adaptability",
+        "text": "Each engagement is shaped around its own requirements."
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "What we do",
+    "heading": "Three core service areas.",
+    "paragraphs": [
+      "Through our three core service areas, Valcon Air offers a range of aviation solutions designed to meet different operational and travel requirements. Our approach is guided by an understanding that no two aviation needs are exactly alike. We therefore place emphasis on flexibility, attention to detail and the ability to respond to the specific demands of every engagement."
+    ],
+    "cards": [
+      {
+        "id": "acmi",
+        "title": "ACMI",
+        "text": "Aircraft, crew, maintenance and insurance, so you run your own routes."
+      },
+      {
+        "id": "charter",
+        "title": "Charter Flights",
+        "text": "A dedicated aircraft for your group or your journey."
+      },
+      {
+        "id": "missions",
+        "title": "Specialised Missions",
+        "text": "Planned around your exact requirements."
+      }
+    ],
+    "linkLabel": "See our services"
+  },
+  "partnership": {
+    "eyebrow": "Looking ahead",
+    "heading": "A more connected world,\nthrough aviation.",
+    "paragraphs": [
+      "At Valcon Air, we aspire to be more than an aviation service provider. We aim to build lasting relationships founded on trust, professionalism and a shared commitment to excellence. As we continue to establish our presence in the aviation industry, our vision remains clear: to deliver dependable aviation solutions, create meaningful partnerships and contribute to a more connected world through aviation."
+    ],
+    "primaryLabel": "Request a quote",
+    "secondaryLabel": "View the fleet"
+  }
+}

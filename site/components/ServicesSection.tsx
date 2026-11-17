@@ -50,6 +50,7 @@ export function ServicesSection({
   return (
     <section
       ref={sectionRef}
+      id="services"
       className="section services"
       aria-labelledby="services-title"
     >

@@ -25,6 +25,10 @@
       "label": "Fleet"
     },
     {
+      "href": "/about/",
+      "label": "About"
+    },
+    {
       "href": "/contact/",
       "label": "Contact"
     }

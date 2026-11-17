@@ -1,4 +1,5 @@
 // Turns the committed site content (site/content/*.json) into a Sanity NDJSON seed.
+// Only fields that exist in the Studio schema are written, so importing it makes Studio match the site exactly.
 // Run:    node scripts/make-seed.mjs
 // Import: npx sanity dataset import seed/seed.ndjson production --replace
 // Photos are not seeded: until an editor uploads one, the site keeps using the
@@ -36,6 +37,7 @@ const pages = read("pages.json");
 const aircraft = read("aircraft.json");
 const services = read("services.json");
 
+const pick = (obj = {}, keys) => Object.fromEntries(keys.filter((k) => obj[k] !== undefined).map((k) => [k, obj[k]]));
 const docs = [];
 
 docs.push({
@@ -53,6 +55,8 @@ docs.push({
   phoneTel: site.phoneTel,
   whatsapp: site.whatsapp,
   email: site.email,
+  address: site.address,
+  hours: keyed(site.hours),
   socials: keyed(site.socials),
   nav: keyed(site.nav),
   notices: site.notices,
@@ -60,19 +64,31 @@ docs.push({
   credits: keyed(site.credits),
 });
 
-const withoutPaths = (img) => ({ alt: img.alt, ...(img.caption ? { caption: img.caption } : {}) });
+// Photos are never seeded: until an editor uploads one, the site keeps its committed image.
+// An image's alt text and caption are seeded so the sync does not blank them.
+const textOnly = (img = {}) => pick(img, ["alt", "caption"]);
 docs.push({
   _id: "homePage",
   _type: "homePage",
-  hero: { ...home.hero, image: withoutPaths(home.hero.image) },
-  intro: { ...home.intro, image: withoutPaths(home.intro.image) },
-  fleet: home.fleet,
+  hero: pick(home.hero, ["eyebrow", "title", "support", "primaryCta", "secondaryCta"]),
+  intro: { ...pick(home.intro, ["eyebrow", "statement", "support"]), image: textOnly(home.intro.image) },
+  fleet: pick(home.fleet, ["heading", "pageHeading", "linkLabel"]),
   arrival: home.arrival,
   services: home.services,
+  howItWorks: { ...home.howItWorks, steps: keyed(home.howItWorks.steps) },
+  about: { ...home.about, values: keyed(home.about.values) },
+  gallery: pick(home.gallery, ["eyebrow", "heading"]),
+  visit: home.visit,
   closing: home.closing,
+  socials: home.socials,
 });
 
-docs.push({ _id: "pagesContent", _type: "pagesContent", fleet: pages.fleet, contact: pages.contact });
+docs.push({
+  _id: "pagesContent",
+  _type: "pagesContent",
+  fleet: pick(pages.fleet, ["eyebrow", "title", "lede", "metaDescription"]),
+  contact: pick(pages.contact, ["title", "lede", "panelEyebrow", "panelTitle", "metaDescription"]),
+});
 
 for (const a of aircraft) {
   docs.push({
@@ -98,6 +114,7 @@ services.forEach((s, i) => {
     title: s.title,
     slug: { _type: "slug", current: s.slug },
     summary: s.summary,
+    bestFor: s.bestFor,
     isPlaceholder: s.isPlaceholder,
     order: i + 1,
   });

@@ -45,7 +45,7 @@
   "messages": {
     "whatsappGeneral": "Hello Valcon Air, I’d like to enquire about a flight.",
     "whatsappAircraft": "Hello Valcon Air, I’d like to enquire about the {aircraft}.",
-    "contactUnconfirmed": "Direct contact details are being confirmed for this concept preview."
+    "contactUnconfirmed": "Direct contact details are being confirmed."
   },
   "phone": "0720 118217",
   "phoneTel": "+254720118217",

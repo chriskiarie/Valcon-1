@@ -25,7 +25,6 @@ export function Footer({ compact = false }: { compact?: boolean }) {
                 {item.label}
               </Link>
             ))}
-            <Link href="/gallery/">Jet gallery</Link>
           </nav>
 
           <div className="footer__col">

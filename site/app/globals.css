@@ -5052,6 +5052,21 @@ body.modal-open .site-main {
   fill: var(--brand-orange-500);
 }
 
+.ab-svg [data-tint] {
+  fill: #ebe6f6;
+}
+
+.ab-svg [data-disc] {
+  fill: #fff;
+}
+
+.ab-letter {
+  fill: currentColor;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+}
+
 .ab-svg [data-faint] {
   stroke-opacity: 0.4;
 }
@@ -5063,38 +5078,6 @@ body.modal-open .site-main {
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-}
-
-/* Photo band */
-.ab-photo__frame {
-  position: relative;
-  margin: 0;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  background: var(--brand-violet-100);
-  box-shadow: 0 0 0 1px var(--color-line);
-}
-
-.ab-photo__img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.ab-photo__caption {
-  position: absolute;
-  left: var(--space-4);
-  bottom: var(--space-4);
-  padding: 0.45rem 0.9rem;
-  border: 1px solid rgb(255 255 255 / 0.55);
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.55);
-  color: var(--color-ink);
-  font-size: var(--text-sm, 0.875rem);
-  font-weight: 500;
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
 }
 
 /* Pillars and service cards */
@@ -5157,9 +5140,6 @@ body.modal-open .site-main {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .ab-photo__img {
-    aspect-ratio: 21 / 9;
-  }
 }
 
 @media (min-width: 900px) {

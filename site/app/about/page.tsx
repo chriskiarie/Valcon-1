@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const { vision, photo, approach, services, partnership } = about;
+  const { vision, approach, services, partnership } = about;
 
   return (
     <div className="page">
@@ -51,26 +51,6 @@ export default function AboutPage() {
               <VisionArt label={vision.artLabel} />
             </InView>
           </div>
-        </Container>
-      </section>
-
-      <section className="ab-photo" aria-label="5Y-VAL">
-        <Container>
-          <figure className="ab-photo__frame" data-reveal="below">
-            <picture>
-              <source srcSet={`${photo.image}.avif`} type="image/avif" />
-              <source srcSet={`${photo.image}.webp`} type="image/webp" />
-              <img
-                src={`${photo.image}.${photo.ext}`}
-                alt={photo.alt}
-                className="ab-photo__img"
-                style={{ objectPosition: photo.focus }}
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-            <figcaption className="ab-photo__caption">{photo.caption}</figcaption>
-          </figure>
         </Container>
       </section>
 

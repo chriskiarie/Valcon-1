@@ -1,14 +1,20 @@
 import type { ReactNode } from "react";
 
-/** Line illustrations for the About page. Every stroked shape carries pathLength so it can draw itself in. */
+/**
+ * Line illustrations for the About page. Stroked shapes carry pathLength so they can draw themselves in;
+ * data-tint and data-disc are soft filled shapes behind the lines. No aircraft are drawn here on purpose.
+ */
 const S = { fill: "none", pathLength: 1 as const };
-
-const JET =
-  "M100 14 L107 46 L152 70 L152 78 L108 66 L104 96 L116 106 L116 112 L100 107 L84 112 L84 106 L96 96 L92 66 L48 78 L48 70 L93 46 Z";
 
 function Svg({ viewBox, label, children }: { viewBox: string; label?: string; children: ReactNode }) {
   return (
-    <svg className="ab-svg" viewBox={viewBox} role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
+    <svg
+      className="ab-svg"
+      viewBox={viewBox}
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+    >
       {children}
     </svg>
   );
@@ -17,25 +23,44 @@ function Svg({ viewBox, label, children }: { viewBox: string; label?: string; ch
 /** A fixed timetable on the left, open routes from Nairobi on the right. */
 export function VisionArt({ label }: { label: string }) {
   return (
-    <Svg viewBox="0 0 320 220" label={label}>
-      <path d="M24 70 H132" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
-      <circle cx="24" cy="70" r="5" {...S} data-draw data-faint />
-      <circle cx="132" cy="70" r="5" {...S} data-draw data-faint />
-      <path d="M24 150 H132" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
-      <circle cx="24" cy="150" r="5" {...S} data-draw data-faint />
-      <circle cx="132" cy="150" r="5" {...S} data-draw data-faint />
-      <path d="M200 110 C224 70 250 52 290 44" {...S} data-draw />
-      <path d="M200 110 C232 96 262 98 298 104" {...S} data-draw />
-      <path d="M200 110 C228 130 256 150 292 170" {...S} data-draw data-accent-line />
-      <path d="M200 110 C206 150 214 176 226 200" {...S} data-draw />
-      <path d="M200 110 C190 76 190 52 196 24" {...S} data-draw />
-      <circle cx="290" cy="44" r="5" {...S} data-draw />
-      <circle cx="298" cy="104" r="5" {...S} data-draw />
-      <circle cx="292" cy="170" r="5" {...S} data-draw data-accent-line />
-      <circle cx="226" cy="200" r="5" {...S} data-draw />
-      <circle cx="196" cy="24" r="5" {...S} data-draw />
-      <circle data-accent cx="200" cy="110" r="8" />
-      <circle className="ab-ripple" cx="200" cy="110" r="8" />
+    <Svg viewBox="0 0 340 230" label={label}>
+      <circle data-tint cx="228" cy="116" r="92" />
+      <circle cx="228" cy="116" r="60" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
+
+      {/* The fixed timetable */}
+      <rect data-disc x="12" y="34" width="116" height="160" rx="14" />
+      <rect x="12" y="34" width="116" height="160" rx="14" {...S} data-draw data-faint />
+      <circle cx="38" cy="62" r="11" {...S} data-draw data-faint />
+      <path d="M38 55 V62 L44 66" {...S} data-draw data-faint />
+      <path d="M58 62 H108" {...S} data-draw data-faint />
+      {[96, 124, 152].map((y) => (
+        <g key={y}>
+          <rect x="28" y={y - 7} width="14" height="14" rx="4" {...S} data-draw data-faint />
+          <path d={`M54 ${y} H112`} {...S} data-draw data-faint />
+        </g>
+      ))}
+      <path d="M24 178 H116" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
+
+      {/* Open routes from the hub */}
+      <path d="M228 116 C252 76 280 56 322 46" {...S} data-draw />
+      <path d="M228 116 C262 102 292 104 328 110" {...S} data-draw />
+      <path d="M228 116 C258 138 288 158 322 178" {...S} data-draw data-accent-line />
+      <path d="M228 116 C234 156 242 184 254 214" {...S} data-draw />
+      <path d="M228 116 C216 82 214 56 220 26" {...S} data-draw />
+      {[
+        [322, 46],
+        [328, 110],
+        [322, 178],
+        [254, 214],
+        [220, 26],
+      ].map(([x, y]) => (
+        <g key={`${x}-${y}`}>
+          <circle data-disc cx={x} cy={y} r="6.5" />
+          <circle cx={x} cy={y} r="6.5" {...S} data-draw data-accent-line={x === 322 && y === 178 ? "" : undefined} />
+        </g>
+      ))}
+      <circle data-accent cx="228" cy="116" r="9" />
+      <circle className="ab-ripple" cx="228" cy="116" r="9" />
     </Svg>
   );
 }
@@ -45,26 +70,29 @@ export function PillarIcon({ id }: { id: string }) {
     case "reliability":
       return (
         <Svg viewBox="0 0 64 64">
-          <path d="M32 8 L52 15 V32 C52 44 43 53 32 57 C21 53 12 44 12 32 V15 Z" {...S} data-draw />
-          <path d="M22 32 L29 39 L43 24" {...S} data-draw data-accent-line />
+          <circle data-disc cx="32" cy="32" r="29" />
+          <path d="M32 11 L50 17 V32 C50 43 42 51 32 55 C22 51 14 43 14 32 V17 Z" {...S} data-draw />
+          <path d="M23 32 L30 39 L42 25" {...S} data-draw data-accent-line />
         </Svg>
       );
     case "efficiency":
       return (
         <Svg viewBox="0 0 64 64">
-          <path d="M10 44 A22 22 0 0 1 54 44" {...S} data-draw />
-          <path d="M32 44 L44 26" {...S} data-draw data-accent-line />
-          <path d="M14 44 H20 M44 44 H50 M32 22 V28" {...S} data-draw />
-          <circle data-accent cx="32" cy="44" r="3.5" />
+          <circle data-disc cx="32" cy="32" r="29" />
+          <path d="M12 42 A20 20 0 0 1 52 42" {...S} data-draw />
+          <path d="M32 42 L43 27" {...S} data-draw data-accent-line />
+          <path d="M16 42 H21 M43 42 H48 M32 24 V29 M20 30 L23 33 M44 30 L41 33" {...S} data-draw />
+          <circle data-accent cx="32" cy="42" r="3.5" />
         </Svg>
       );
     default:
       return (
         <Svg viewBox="0 0 64 64">
-          <path d="M8 32 H24 C34 32 36 14 56 14" {...S} data-draw />
-          <path d="M24 32 C34 32 36 50 56 50" {...S} data-draw data-accent-line />
-          <path d="M50 8 L57 14 L50 20" {...S} data-draw />
-          <path d="M50 44 L57 50 L50 56" {...S} data-draw data-accent-line />
+          <circle data-disc cx="32" cy="32" r="29" />
+          <path d="M10 32 H24 C34 32 36 18 52 18" {...S} data-draw />
+          <path d="M24 32 C34 32 36 46 52 46" {...S} data-draw data-accent-line />
+          <path d="M47 12 L53 18 L47 24" {...S} data-draw />
+          <path d="M47 40 L53 46 L47 52" {...S} data-draw data-accent-line />
         </Svg>
       );
   }
@@ -75,31 +103,53 @@ export function ServiceIcon({ id }: { id: string }) {
     case "acmi":
       return (
         <Svg viewBox="0 0 200 130">
-          <path d={JET} transform="translate(0 0) scale(1)" {...S} data-draw />
-          <circle data-accent cx="36" cy="30" r="5" />
-          <circle data-accent cx="164" cy="30" r="5" />
-          <circle data-accent cx="36" cy="100" r="5" />
-          <circle data-accent cx="164" cy="100" r="5" />
-          <path d="M42 33 L70 52 M158 33 L130 52 M42 97 L72 82 M158 97 L128 82" {...S} data-draw data-faint />
+          <circle data-tint cx="100" cy="64" r="56" />
+          {["A", "C", "M", "I"].map((letter, i) => {
+            const x = 16 + i * 46;
+            return (
+              <g key={letter}>
+                <rect data-disc x={x} y="30" width="38" height="38" rx="10" />
+                <rect x={x} y="30" width="38" height="38" rx="10" {...S} data-draw />
+                <text x={x + 19} y="57" textAnchor="middle" className="ab-letter">
+                  {letter}
+                </text>
+              </g>
+            );
+          })}
+          <path d="M35 84 V94 H165 V84" {...S} data-draw data-accent-line />
+          <path d="M100 94 V104" {...S} data-draw data-accent-line />
+          <circle data-accent cx="100" cy="110" r="5" />
         </Svg>
       );
     case "charter":
       return (
         <Svg viewBox="0 0 200 130">
-          <path d="M28 98 C60 20 140 20 172 98" {...S} data-draw data-accent-line strokeDasharray="0.04 0.05" />
-          <circle cx="28" cy="98" r="7" {...S} data-draw />
-          <path d="M172 98 m-7 0 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" {...S} data-draw />
-          <path d="M92 52 L108 36 L124 52 L108 48 Z" {...S} data-draw />
-          <path d="M20 112 H180" {...S} data-draw data-faint />
+          <circle data-tint cx="100" cy="70" r="54" />
+          <path d="M28 96 C56 14 144 14 172 96" {...S} data-draw data-accent-line strokeDasharray="0.04 0.05" />
+          <circle data-disc cx="28" cy="96" r="9" />
+          <circle cx="28" cy="96" r="9" {...S} data-draw />
+          <circle data-accent cx="28" cy="96" r="3.5" />
+          <circle data-disc cx="172" cy="96" r="9" />
+          <circle cx="172" cy="96" r="9" {...S} data-draw />
+          <circle data-accent cx="172" cy="96" r="3.5" />
+          <rect data-disc x="66" y="66" width="68" height="36" rx="8" />
+          <path d="M66 78 H134 M66 90 H134" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
+          <rect x="66" y="66" width="68" height="36" rx="8" {...S} data-draw />
+          <path d="M80 84 H108" {...S} data-draw />
+          <path d="M116 84 H122" {...S} data-draw data-accent-line />
         </Svg>
       );
     default:
       return (
         <Svg viewBox="0 0 200 130">
-          <path d="M20 104 L72 40 L100 74 L122 50 L180 104 Z" {...S} data-draw />
-          <circle cx="146" cy="40" r="22" {...S} data-draw data-accent-line />
-          <path d="M146 10 V22 M146 58 V70 M116 40 H128 M164 40 H176" {...S} data-draw data-accent-line />
-          <circle data-accent cx="146" cy="40" r="4" />
+          <circle data-disc cx="150" cy="42" r="24" />
+          <circle cx="150" cy="42" r="24" {...S} data-draw data-accent-line />
+          <path d="M150 10 V22 M150 62 V74 M118 42 H130 M170 42 H182" {...S} data-draw data-accent-line />
+          <circle data-accent cx="150" cy="42" r="4.5" />
+          <path data-tint d="M14 108 L70 46 L98 80 L122 56 L186 108 Z" />
+          <path d="M14 108 L70 46 L98 80 L122 56 L186 108 Z" {...S} data-draw />
+          <path d="M70 46 V24" {...S} data-draw />
+          <path data-accent d="M70 24 L90 31 L70 38 Z" />
         </Svg>
       );
   }
@@ -108,26 +158,31 @@ export function ServiceIcon({ id }: { id: string }) {
 /** A hub and its connections, drawn once the closing block is in view. */
 export function NetworkArt() {
   return (
-    <Svg viewBox="0 0 320 240">
-      <path d="M160 120 L70 50" {...S} data-draw />
-      <path d="M160 120 L250 44" {...S} data-draw />
-      <path d="M160 120 L282 138" {...S} data-draw />
-      <path d="M160 120 L240 206" {...S} data-draw data-accent-line />
-      <path d="M160 120 L96 200" {...S} data-draw />
-      <path d="M160 120 L36 126" {...S} data-draw />
-      <path d="M70 50 L36 126 M250 44 L282 138 M96 200 L36 126" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
+    <Svg viewBox="0 0 340 250">
+      <circle data-tint cx="170" cy="124" r="100" />
+      <circle cx="170" cy="124" r="64" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
+      <path d="M170 124 L74 52" {...S} data-draw />
+      <path d="M170 124 L266 46" {...S} data-draw />
+      <path d="M170 124 L302 142" {...S} data-draw />
+      <path d="M170 124 L252 214" {...S} data-draw data-accent-line />
+      <path d="M170 124 L100 208" {...S} data-draw />
+      <path d="M170 124 L38 130" {...S} data-draw />
+      <path d="M74 52 L38 130 M266 46 L302 142 M100 208 L38 130 M252 214 L302 142" {...S} data-draw data-faint strokeDasharray="0.03 0.05" />
       {[
-        [70, 50],
-        [250, 44],
-        [282, 138],
-        [240, 206],
-        [96, 200],
-        [36, 126],
+        [74, 52],
+        [266, 46],
+        [302, 142],
+        [252, 214],
+        [100, 208],
+        [38, 130],
       ].map(([x, y]) => (
-        <circle key={`${x}-${y}`} cx={x} cy={y} r="6" {...S} data-draw />
+        <g key={`${x}-${y}`}>
+          <circle data-disc cx={x} cy={y} r="7" />
+          <circle cx={x} cy={y} r="7" {...S} data-draw />
+        </g>
       ))}
-      <circle data-accent cx="160" cy="120" r="10" />
-      <circle className="ab-ripple" cx="160" cy="120" r="10" />
+      <circle data-accent cx="170" cy="124" r="11" />
+      <circle className="ab-ripple" cx="170" cy="124" r="11" />
     </Svg>
   );
 }

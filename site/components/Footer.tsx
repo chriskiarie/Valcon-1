@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getSite } from "@/lib/content";
 import { hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
-import { SOCIAL_LABELS } from "@/lib/socials";
+import { SOCIAL_ICONS, SOCIAL_LABELS } from "@/lib/socials";
 import { Wordmark } from "@/components/Wordmark";
 
 export function Footer({ compact = false }: { compact?: boolean }) {
@@ -15,7 +15,7 @@ export function Footer({ compact = false }: { compact?: boolean }) {
       <div className="container">
         <div className="footer__top">
           <div className="footer__brand">
-            <Wordmark site={site} variant="full" />
+            <Wordmark site={site} variant="full" reversed />
           </div>
 
           <nav className="footer__col" aria-label="Footer">
@@ -56,11 +56,19 @@ export function Footer({ compact = false }: { compact?: boolean }) {
           {site.socials.length > 0 ? (
             <div className="footer__col">
               <h2 className="footer__head">Follow</h2>
-              {site.socials.map((social) => (
-                <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer">
-                  {social.platform ? SOCIAL_LABELS[social.platform] : social.label}
-                </a>
-              ))}
+              {site.socials.map((social) => {
+                const icon = social.platform ? SOCIAL_ICONS[social.platform] : null;
+                return (
+                  <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer" className="footer__social">
+                    {icon ? (
+                      <svg className="footer__social-icon" viewBox={icon.viewBox} aria-hidden="true">
+                        <path d={icon.path} />
+                      </svg>
+                    ) : null}
+                    {social.platform ? SOCIAL_LABELS[social.platform] : social.label}
+                  </a>
+                );
+              })}
             </div>
           ) : null}
         </div>

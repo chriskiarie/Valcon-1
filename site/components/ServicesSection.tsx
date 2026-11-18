@@ -5,6 +5,20 @@ import { Container } from "@/components/Container";
 import type { Home, Service } from "@/lib/types";
 import ServiceZoomModal from "@/components/ServiceZoomModal";
 
+/** Paragraphs split on blank lines; **bold** marks a phrase to emphasise. */
+function renderSummary(text: string) {
+  return text
+    .split(/\n\s*\n/)
+    .filter((para) => para.trim())
+    .map((para, i) => (
+      <p key={i}>
+        {para.split(/(\*\*[^*]+\*\*)/g).map((part, j) =>
+          part.startsWith("**") && part.endsWith("**") ? <strong key={j}>{part.slice(2, -2)}</strong> : part,
+        )}
+      </p>
+    ));
+}
+
 export function ServicesSection({
   services,
   copy,
@@ -81,7 +95,7 @@ export function ServicesSection({
                 />
               </div>
               <h3 className="service-card__title">{service.title}</h3>
-              <p className="service-card__summary">{service.summary}</p>
+              <div className="service-card__summary">{renderSummary(service.summary)}</div>
               {service.bestFor ? (
                 <p className="service-card__best">
                   <span className="service-card__best-label">{copy.bestForLabel}</span>

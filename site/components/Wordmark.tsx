@@ -25,6 +25,15 @@ export function Wordmark({
   const reversedClass = reversed && !isDefaultLogo ? " wordmark__image--reversed" : "";
   const inner = logo ? (
     <span className="wordmark__lockup">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className={`wordmark__image wordmark__image--${variant}${reversedClass}`}
+        src={logoSrc}
+        alt={logo.alt}
+        width={logo.width}
+        height={logo.height}
+        decoding="async"
+      />
       {icon ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -36,15 +45,6 @@ export function Wordmark({
           decoding="async"
         />
       ) : null}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className={`wordmark__image wordmark__image--${variant}${reversedClass}`}
-        src={logoSrc}
-        alt={logo.alt}
-        width={logo.width}
-        height={logo.height}
-        decoding="async"
-      />
     </span>
   ) : (
     <>

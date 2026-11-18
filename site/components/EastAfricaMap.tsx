@@ -34,9 +34,12 @@ function arc(from: Pt, to: Pt, side: 1 | -1): string {
   return `M${x1} ${y1} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x2} ${y2}`;
 }
 
-/** East Africa at a glance, with routes fanning out from Wilson Airport. */
+/** East Africa at a glance, with routes fanning out from Nairobi, where flights can depart from Wilson or JKIA. */
 export function EastAfricaMap() {
-  const hub = map.points.wilson as Pt;
+  const wilson = map.points.wilson as Pt;
+  const jkia = map.points.jkia as Pt;
+  // The two airports are about 11 km apart, so at this scale routes leave from the point between them.
+  const hub: Pt = [(wilson[0] + jkia[0]) / 2, (wilson[1] + jkia[1]) / 2];
 
   return (
     <section className="section eamap" aria-labelledby="eamap-title">
@@ -45,7 +48,7 @@ export function EastAfricaMap() {
           Where we fly
         </span>
         <h2 id="eamap-title" className="section-title" data-reveal="left">
-          From Wilson, across East Africa.
+          From Wilson and JKIA, across East Africa.
         </h2>
 
         <MapShowcase cities={cities as City[]}>
@@ -53,7 +56,7 @@ export function EastAfricaMap() {
             className="eamap__svg"
             viewBox={`0 0 ${map.width} ${map.height}`}
             role="img"
-            aria-label="Map of East Africa with flight routes from Wilson Airport, Nairobi, to Kenya, Uganda and Somalia"
+            aria-label="Map of East Africa with flight routes from Wilson Airport and Jomo Kenyatta International Airport, Nairobi, to Kenya, Uganda and Somalia"
           >
             <g className="eamap__land">
               {map.countries.map((country) => (
@@ -98,10 +101,12 @@ export function EastAfricaMap() {
             </g>
 
             <g className="eamap__hub eamap__stop--wilson">
-              <circle cx={hub[0]} cy={hub[1]} r={9} className="eamap__pulse" />
-              <circle cx={hub[0]} cy={hub[1]} r={7} className="eamap__core" />
-              <text x={hub[0] - 12} y={hub[1] + 26} textAnchor="end" className="eamap__label eamap__label--hub">
-                Wilson Airport
+              <circle cx={hub[0]} cy={hub[1]} r={11} className="eamap__pulse" />
+              <rect x={hub[0] - 9} y={hub[1] - 6.5} width={18} height={13} rx={6.5} className="eamap__core" />
+              <circle cx={wilson[0]} cy={wilson[1]} r={2.4} className="eamap__core-dot" />
+              <circle cx={jkia[0]} cy={jkia[1]} r={2.4} className="eamap__core-dot" />
+              <text x={hub[0] - 14} y={hub[1] + 26} textAnchor="end" className="eamap__label eamap__label--hub">
+                Wilson · JKIA
               </text>
             </g>
           </svg>

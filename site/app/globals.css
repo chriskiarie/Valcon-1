@@ -3927,6 +3927,10 @@ body.modal-open .site-main {
   stroke-width: 3;
 }
 
+.eamap__core-dot {
+  fill: #fff;
+}
+
 .eamap__pulse {
   fill: none;
   stroke: var(--brand-orange-500);

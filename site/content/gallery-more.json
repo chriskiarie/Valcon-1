@@ -1,0 +1,23 @@
+{
+  "eyebrow": "Second aircraft",
+  "title": "Photos to follow.",
+  "text": "Photography of our second aircraft will appear here as soon as we receive it.",
+  "placeholders": [
+    {
+      "label": "Exterior",
+      "size": "hero"
+    },
+    {
+      "label": "Cabin",
+      "size": "tall"
+    },
+    {
+      "label": "Cockpit",
+      "size": ""
+    },
+    {
+      "label": "In flight",
+      "size": ""
+    }
+  ]
+}

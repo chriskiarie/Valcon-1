@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Flag, FLAG_CODES } from "@/components/Flags";
+/** Countries that show a real flag on hover. Flag artwork: flag-icons (MIT), in /public/images/flags. */
+const FLAG_CODES = ["ke", "ug", "so", "tz", "et", "ss", "dj"];
 
 export type City = { id: string; name: string; country: string; text: string; image: string; credit?: string; creditUrl?: string };
 
@@ -17,6 +18,14 @@ export function MapShowcase({ cities, children }: { cities: City[]; children: Re
   const [live, setLive] = useState(false);
   const [paused, setPaused] = useState(false);
   const [flag, setFlag] = useState<{ cc: string; x: number; y: number } | null>(null);
+
+  // Warm the flag files so the first hover pops straight away.
+  useEffect(() => {
+    for (const code of FLAG_CODES) {
+      const img = new window.Image();
+      img.src = `/images/flags/${code}.svg`;
+    }
+  }, []);
 
   useEffect(() => {
     const node = ref.current;
@@ -71,9 +80,8 @@ export function MapShowcase({ cities, children }: { cities: City[]; children: Re
         {children}
         {flag ? (
           <span key={flag.cc} className="eamap__flag" style={{ left: `${flag.x}%`, top: `${flag.y}%` }} aria-hidden="true">
-            <svg viewBox="0 0 30 20" width="64" height="43">
-              <Flag code={flag.cc} />
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/images/flags/${flag.cc}.svg`} alt="" width={72} height={54} decoding="async" />
           </span>
         ) : null}
       </div>

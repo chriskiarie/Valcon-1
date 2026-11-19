@@ -1,9 +1,13 @@
+import { Fragment } from "react";
+
 export type GalleryPlaceholder = { label: string; size: string };
 
 /** Frosted tiles that hold a place for photos that have not arrived yet. */
-export function GalleryPlaceholders({ items }: { items: GalleryPlaceholder[] }) {
+export function GalleryPlaceholders({ items, bare = false }: { items: GalleryPlaceholder[]; bare?: boolean }) {
+  const Wrap = bare ? Fragment : "ul";
+  const wrapProps = bare ? {} : { className: "gal" };
   return (
-    <ul className="gal">
+    <Wrap {...wrapProps}>
       {items.map((it, i) => (
         <li key={it.label} className={`gal__cell${it.size ? ` gal__cell--${it.size}` : ""}`} style={{ ["--i" as string]: i }}>
           <div className="gal__tile gal__tile--empty">
@@ -16,6 +20,6 @@ export function GalleryPlaceholders({ items }: { items: GalleryPlaceholder[] }) 
           </div>
         </li>
       ))}
-    </ul>
+    </Wrap>
   );
 }

@@ -13,7 +13,7 @@
   },
   "tagline": "Feel the difference.",
   "base": "Wilson Airport, Nairobi, Kenya",
-  "description": "Valcon Air Solutions Limited is an aviation operator at Wilson Airport, Nairobi, offering charter, ACMI and specialised operations on a Bombardier CRJ200 LR.",
+  "description": "Valcon Air Solutions Limited is a charter airline at Wilson Airport, Nairobi, offering charter, ACMI and specialised operations on a Bombardier CRJ200 LR and a Fokker 50.",
   "metaTitle": "Valcon Air | Charter, ACMI and specialised operations, Nairobi",
   "nav": [
     {
@@ -47,8 +47,8 @@
     "whatsappAircraft": "Hello Valcon Air, I’d like to enquire about the {aircraft}.",
     "contactUnconfirmed": "Direct contact details are being confirmed."
   },
-  "phone": "0720 118217",
-  "phoneTel": "+254720118217",
+  "phone": "020 2118217",
+  "phoneTel": "+254202118217",
   "whatsapp": "",
   "email": "info@valconair.co.ke",
   "socials": [
@@ -78,7 +78,7 @@
     "width": 414,
     "height": 360
   },
-  "address": "Skyward Building, 4th Floor",
+  "address": "Skyward Express Building, 4th Floor",
   "hours": [
     {
       "days": "Monday to Friday",

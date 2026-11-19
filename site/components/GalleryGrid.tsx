@@ -16,7 +16,7 @@ function Pic({ item, className }: { item: GalleryItem; className?: string }) {
 }
 
 /** An uneven grid of frosted-glass tiles. Click one for a glass lightbox. */
-export function GalleryGrid({ items }: { items: GalleryItem[] }) {
+export function GalleryGrid({ items, extra }: { items: GalleryItem[]; extra?: React.ReactNode }) {
   const [open, setOpen] = useState<number | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -55,6 +55,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
             </button>
           </li>
         ))}
+        {extra}
       </ul>
 
       {item ? (

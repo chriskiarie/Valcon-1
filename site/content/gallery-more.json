@@ -1,22 +1,56 @@
 {
   "eyebrow": "Second aircraft",
-  "title": "Photos to follow.",
-  "text": "Photography of our second aircraft will appear here as soon as we receive it.",
+  "title": "Fokker 50",
+  "text": "Our twin-turboprop Fokker 50 at Wilson Airport. Cabin and cockpit photos are on the way.",
+  "items": [
+    {
+      "image": "/images/fokker/landing",
+      "ext": "jpg",
+      "alt": "The Fokker 50 touching down on the runway at Wilson Airport.",
+      "caption": "Touchdown",
+      "size": "hero",
+      "focus": "50% 60%"
+    },
+    {
+      "image": "/images/fokker/approach",
+      "ext": "jpg",
+      "alt": "The Fokker 50 on short final over the grass at Wilson Airport.",
+      "caption": "Short final",
+      "size": "tall",
+      "focus": "50% 45%"
+    },
+    {
+      "image": "/images/fokker/rear",
+      "ext": "jpg",
+      "alt": "The Fokker 50 seen from behind, rolling out on the runway.",
+      "caption": "Rolling out",
+      "size": "",
+      "focus": "50% 55%"
+    },
+    {
+      "image": "/images/fokker/runway",
+      "ext": "jpg",
+      "alt": "The Fokker 50 landing, seen from the terminal side.",
+      "caption": "On the runway",
+      "size": "",
+      "focus": "60% 70%"
+    },
+    {
+      "image": "/images/fokker/cinema-wide",
+      "ext": "jpg",
+      "alt": "A wide, cinematic view of the Fokker 50 just above the runway.",
+      "caption": "Wide view",
+      "size": "wide",
+      "focus": "50% 60%"
+    }
+  ],
   "placeholders": [
     {
-      "label": "Exterior",
-      "size": "hero"
-    },
-    {
       "label": "Cabin",
-      "size": "tall"
-    },
-    {
-      "label": "Cockpit",
       "size": ""
     },
     {
-      "label": "In flight",
+      "label": "Cockpit",
       "size": ""
     }
   ]

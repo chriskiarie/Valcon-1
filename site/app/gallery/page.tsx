@@ -8,7 +8,7 @@ import more from "@/content/gallery-more.json";
 
 export const metadata: Metadata = {
   title: "Aircraft gallery",
-  description: "Photos of Valcon Air's aircraft, starting with 5Y-VAL, a Bombardier CRJ200, from the ground and the air.",
+  description: "Photos of Valcon Air's aircraft: 5Y-VAL, a Bombardier CRJ200 LR, and our Fokker 50.",
 };
 
 export default function GalleryPage() {
@@ -23,7 +23,7 @@ export default function GalleryPage() {
             The aircraft gallery.
           </h1>
           <p className="interior-hero__lede" data-reveal="below">
-            Our Bombardier CRJ200 at Wilson Airport and above the clouds. More aircraft and cabin photos are on the way.
+            Our Bombardier CRJ200 and Fokker 50 at Wilson Airport, and above the clouds. More cabin photos are on the way.
           </p>
         </Container>
       </section>
@@ -44,7 +44,10 @@ export default function GalleryPage() {
               <h2 className="section-title">{more.title}</h2>
               <p className="gal-group__text">{more.text}</p>
             </header>
-            <GalleryPlaceholders items={more.placeholders as GalleryPlaceholder[]} />
+            <GalleryGrid
+              items={more.items as GalleryItem[]}
+              extra={<GalleryPlaceholders bare items={more.placeholders as GalleryPlaceholder[]} />}
+            />
           </div>
         </Container>
       </section>

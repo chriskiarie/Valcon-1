@@ -5293,3 +5293,11 @@ body.modal-open .site-main {
   font-size: var(--text-xs);
   opacity: 0.8;
 }
+
+.gal-group__more {
+  margin-top: var(--space-4);
+}
+
+.gal-group__more .gal {
+  grid-auto-rows: 9rem;
+}

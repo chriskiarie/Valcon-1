@@ -24,5 +24,29 @@
     },
     "gallery": [],
     "order": 1
+  },
+  {
+    "slug": "fokker-50",
+    "name": "Fokker 50",
+    "registrations": [],
+    "status": "active",
+    "isPlaceholder": false,
+    "summary": "Valcon Air's second aircraft, a twin-turboprop Fokker 50 based at Wilson Airport, Nairobi. It flies in a plain white livery for now.",
+    "specs": {
+      "seats": null,
+      "range": null,
+      "cruiseSpeed": null
+    },
+    "features": [
+      "Twin-turboprop regional aircraft",
+      "Registration, seating and cabin layout to be confirmed"
+    ],
+    "hero": {
+      "desktop": "/images/fokker/landing.avif",
+      "mobile": "/images/fokker/landing.avif",
+      "alt": "Valcon Air's Fokker 50 touching down at Wilson Airport, Nairobi."
+    },
+    "gallery": [],
+    "order": 2
   }
 ]

@@ -117,6 +117,14 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
 
   useEffect(() => {
     if (!open) return;
+    document.documentElement.dataset.lightbox = "open";
+    return () => {
+      delete document.documentElement.dataset.lightbox;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") closeViewer();
       if (event.key === "ArrowRight") go(index + 1);

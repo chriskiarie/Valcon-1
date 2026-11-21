@@ -42,6 +42,16 @@ export function GalleryGrid({ items, extra }: { items: GalleryItem[]; extra?: Re
     };
   }, [open, step]);
 
+  // While the lightbox is open the header folds away into a single drop (see .site-header in globals.css).
+  const viewing = open !== null;
+  useEffect(() => {
+    if (!viewing) return;
+    document.documentElement.dataset.lightbox = "open";
+    return () => {
+      delete document.documentElement.dataset.lightbox;
+    };
+  }, [viewing]);
+
   const item = open === null ? null : items[open];
 
   return (

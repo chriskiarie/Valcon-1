@@ -66,7 +66,8 @@ export function QuoteForm({ site, services }: { site: Site; services: Service[] 
     const trap = event.currentTarget.elements.namedItem("botcheck") as HTMLInputElement | null;
     if (trap?.checked) return;
 
-    const subject = `Quote request - ${form.name.trim()}`;
+    const route = [form.from.trim(), form.to.trim()].filter(Boolean).join(" to ");
+    const subject = `New quote request: ${[chosenService(), route].filter(Boolean).join(", ") || "trip details inside"} (${form.name.trim()})`;
     if (!FORM_KEY) {
       if (hasEmail(site)) {
         window.location.href = mailtoHref(site, subject, buildMessage());
@@ -75,7 +76,19 @@ export function QuoteForm({ site, services }: { site: Site; services: Service[] 
       return;
     }
     setState("sending");
-    const result = await sendEnquiry({ subject, name: form.name.trim(), email: form.email.trim(), message: buildMessage() });
+    const result = await sendEnquiry({
+      subject,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      fields: {
+        Service: chosenService(),
+        Route: route,
+        "Travel date": form.date,
+        Passengers: String(pax),
+        Notes: form.notes,
+        Phone: form.phone.trim(),
+      },
+    });
     if (result === "sent") {
       setState("sent");
       setForm(EMPTY);

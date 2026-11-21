@@ -24,7 +24,18 @@ const textFont = Manrope({
 
 const siteContent = getSite();
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://valcon-1.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  openGraph: {
+    type: "website",
+    siteName: siteContent.name,
+    title: siteContent.metaTitle,
+    description: siteContent.description,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Valcon Air" }],
+  },
+  twitter: { card: "summary_large_image", images: ["/og.png"] },
   title: {
     default: siteContent.metaTitle,
     template: `%s | ${siteContent.name}`,

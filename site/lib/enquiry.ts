@@ -5,7 +5,16 @@ const FORM_URL = "https://api.web3forms.com/submit";
 
 export type SendResult = "sent" | "failed" | "unavailable";
 
-export async function sendEnquiry(input: { subject: string; name: string; email: string; message: string }): Promise<SendResult> {
+/**
+ * Sends an enquiry as separate labelled fields, so the email arrives as a tidy table
+ * (Service, Route, Date, ...) instead of one long paragraph. Empty fields are left out.
+ */
+export async function sendEnquiry(input: {
+  subject: string;
+  name: string;
+  email: string;
+  fields: Record<string, string>;
+}): Promise<SendResult> {
   if (!FORM_KEY) return "unavailable";
   try {
     const response = await fetch(FORM_URL, {
@@ -15,9 +24,9 @@ export async function sendEnquiry(input: { subject: string; name: string; email:
         access_key: FORM_KEY,
         subject: input.subject,
         from_name: "Valcon Air website",
+        ...Object.fromEntries(Object.entries(input.fields).filter(([, value]) => value.trim() !== "")),
         name: input.name,
         email: input.email || undefined,
-        message: input.message,
         botcheck: "",
       }),
     });

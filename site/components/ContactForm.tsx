@@ -31,7 +31,7 @@ export function ContactForm({ site }: { site: Site }) {
     const trap = event.currentTarget.elements.namedItem("botcheck") as HTMLInputElement | null;
     if (trap?.checked) return;
 
-    const subject = `Website message - ${form.name.trim()}`;
+    const subject = `Website message from ${form.name.trim()}`;
     const message = `${form.message.trim()}\n\nName: ${form.name.trim()}\nReply to: ${reply}`;
     if (!FORM_KEY) {
       if (hasEmail(site)) {
@@ -41,7 +41,12 @@ export function ContactForm({ site }: { site: Site }) {
       return;
     }
     setState("sending");
-    const result = await sendEnquiry({ subject, name: form.name.trim(), email: reply.includes("@") ? reply : "", message });
+    const result = await sendEnquiry({
+      subject,
+      name: form.name.trim(),
+      email: reply.includes("@") ? reply : "",
+      fields: { Message: form.message.trim(), "Reply to": reply },
+    });
     if (result === "sent") {
       setState("sent");
       setForm(EMPTY);

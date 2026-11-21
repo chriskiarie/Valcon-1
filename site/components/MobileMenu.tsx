@@ -95,7 +95,15 @@ export function MobileMenu({
   useEffect(() => {
     if (previousPath.current !== pathname) {
       previousPath.current = pathname;
-      if (open) onClose();
+      if (open) {
+        // The new page is ready: dissolve the sheet instead of shrinking it over the page.
+        const panel = panelRef.current;
+        if (panel) {
+          panel.dataset.leaving = "true";
+          window.setTimeout(() => delete panel.dataset.leaving, 450);
+        }
+        onClose();
+      }
     }
   }, [pathname, open, onClose]);
 
@@ -138,7 +146,9 @@ export function MobileMenu({
             href={item.href}
             style={{ ["--i" as string]: index }}
             aria-current={isActive(pathname, item.href) ? "page" : undefined}
-            onClick={onClose}
+            onClick={() => {
+              if (item.href === pathname || item.href === `${pathname}/`) onClose();
+            }}
           >
             <span className="mobile-menu__index" aria-hidden="true">
               {String(index + 1).padStart(2, "0")}
@@ -152,7 +162,7 @@ export function MobileMenu({
       </nav>
 
       <div className="mobile-menu__foot" style={{ ["--i" as string]: site.nav.length }}>
-        <Link className="mobile-menu__cta" href="/quote/" onClick={onClose}>
+        <Link className="mobile-menu__cta" href="/quote/" onClick={() => pathname.startsWith("/quote") && onClose()}>
           <span>Request a quote</span>
           <PlaneIcon />
         </Link>
@@ -178,7 +188,7 @@ export function MobileMenu({
           {!hasDirect ? (
             <>
               <p>{site.messages.contactUnconfirmed}</p>
-              <Link href="/contact/" onClick={onClose}>
+              <Link href="/contact/">
                 Contact
               </Link>
             </>

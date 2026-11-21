@@ -69,12 +69,32 @@
             "desktop": "50% 60%",
             "mobile": "50% 60%"
           }
+        },
+        {
+          "image": "/images/fokker/landing",
+          "alt": "Valcon Air's Fokker 50 touching down at Wilson Airport.",
+          "caption": "Fokker 50 · twin-turboprop regional aircraft",
+          "tab": "Fokker 50",
+          "focus": {
+            "desktop": "50% 62%",
+            "mobile": "52% 62%"
+          }
+        },
+        {
+          "image": "/images/fokker/rear",
+          "alt": "The Fokker 50 rolling out on the runway at Wilson Airport.",
+          "caption": "Fokker 50 · twin-turboprop regional aircraft",
+          "focus": {
+            "desktop": "50% 55%",
+            "mobile": "50% 55%"
+          }
         }
       ],
       "focus": {
         "desktop": "72% 62%",
         "mobile": "85% 62%"
-      }
+      },
+      "tab": "5Y-VAL · CRJ200"
     }
   },
   "arrival": {
@@ -126,7 +146,7 @@
         "text": "Arrival handling, transfers and feedback."
       }
     ],
-    "acmiNote": "ACMI works differently. We agree the terms, hand over the aircraft, and you operate the flights under your own schedule."
+    "acmiNote": "ACMI works differently. We agree the terms and you operate the flights under your own schedule."
   },
   "about": {
     "show": false,

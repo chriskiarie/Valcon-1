@@ -143,10 +143,11 @@ export type Home = {
       alt: string;
       lead?: string;
       caption: string;
+      tab?: string;
       openLabel: string;
       galleryLabel: string;
       galleryHref: string;
-      more: { image: string; alt: string; focus?: { desktop: string; mobile: string } }[];
+      more: { image: string; alt: string; caption?: string; tab?: string; focus?: { desktop: string; mobile: string } }[];
     };
   };
   arrival: {

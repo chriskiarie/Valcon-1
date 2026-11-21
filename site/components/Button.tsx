@@ -12,6 +12,7 @@ type ButtonProps = {
   ariaLabel?: string;
   target?: string;
   rel?: string;
+  disabled?: boolean;
 };
 
 export function Button({
@@ -24,6 +25,7 @@ export function Button({
   ariaLabel,
   target,
   rel,
+  disabled,
 }: ButtonProps) {
   const classes = `btn btn--${variant} ${className}`.trim();
 
@@ -47,6 +49,7 @@ export function Button({
       type={type}
       onClick={onClick}
       aria-label={ariaLabel}
+      disabled={disabled}
     >
       {children}
     </button>

@@ -8,7 +8,7 @@ import { Lines } from "@/components/Lines";
 import type { Focus, Home } from "@/lib/types";
 
 type FleetCopy = Home["fleet"];
-type Shot = { image: string; alt: string; focus?: Focus };
+type Shot = { image: string; alt: string; focus?: Focus; caption?: string; tab?: string };
 
 function Picture({ image, alt, className, focus }: { image: string; alt: string; className?: string; focus?: Shot["focus"] }) {
   const style = focus
@@ -39,7 +39,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
   const [shown, setShown] = useState(0);
   const originRect = useRef<DOMRect | null>(null);
 
-  const shots: Shot[] = win ? [{ image: win.image, alt: win.alt, focus: win.focus }, ...win.more] : [];
+  const shots: Shot[] = win ? [{ image: win.image, alt: win.alt, focus: win.focus, tab: win.tab }, ...win.more] : [];
 
   const openViewer = useCallback(() => {
     if (frameRef.current) originRect.current = frameRef.current.getBoundingClientRect();
@@ -149,6 +149,9 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
   if (!win) return null;
 
   const current = shots[shown] ?? shots[0];
+  const tabs = shots.flatMap((shot, i) => (shot.tab ? [{ label: shot.tab, index: i }] : []));
+  const activeTab = tabs.filter((tab) => tab.index <= shown).pop()?.index ?? 0;
+  const captionAt = (i: number) => shots[i]?.caption ?? win.caption;
 
   return (
     <section className="section fleet-pane" aria-labelledby="fleet-pane-title">
@@ -171,8 +174,23 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
           </span>
           <span className="fleet-pane__hint">{win.openLabel}</span>
         </button>
+        {tabs.length > 1 ? (
+          <div className="fleet-pane__tabs" role="group" aria-label="Choose an aircraft">
+            {tabs.map((tab) => (
+              <button
+                key={tab.label}
+                type="button"
+                className="fleet-pane__tab"
+                aria-pressed={tab.index === activeTab}
+                onClick={() => setShown(tab.index)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        ) : null}
         <div className="fleet-pane__foot">
-          <p className="fleet-pane__caption">{win.caption}</p>
+          <p className="fleet-pane__caption">{captionAt(shown)}</p>
           <Link className="fleet-pane__link" href={win.galleryHref}>
             {win.galleryLabel}
             <span aria-hidden="true"> &rarr;</span>
@@ -187,7 +205,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
               className="fleet-viewer"
               role="dialog"
               aria-modal="true"
-              aria-label={win.caption}
+              aria-label={captionAt(index)}
               tabIndex={-1}
             >
               <div ref={trackRef} className="fleet-viewer__track">
@@ -201,7 +219,7 @@ export function FleetWindow({ copy }: { copy: FleetCopy }) {
                 <span className="fleet-viewer__count">
                   {index + 1} / {shots.length}
                 </span>
-                <span className="fleet-viewer__caption">{win.caption}</span>
+                <span className="fleet-viewer__caption">{captionAt(index)}</span>
                 <button type="button" className="fleet-viewer__close" onClick={closeViewer} aria-label="Close">
                   &times;
                 </button>

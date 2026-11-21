@@ -6,6 +6,8 @@ import gsap from "gsap";
 
 const PLANE_ASPECT = 377 / 1625;
 const BASE_PITCH = 0;
+// Where the fuselage centreline sits in the plane image (0 = top, 1 = bottom). The line pass lines this up with the dashed route.
+const BODY_CENTER_Y = 0.64;
 const TAIL_NAVY = "#0C1B32";
 const NEAR_ANCHOR = { x: 0.2, y: 0.8 };
 const FAR_ANCHOR = { x: 0.19, y: 0.56 };
@@ -947,7 +949,7 @@ export function FlybySystem() {
           const s = Math.min(flight.progress.s, flight.length);
           const lineY = flight.kind === "reveal" ? revealLineY() : null;
           const point = { ...pointAt(flight.path, s) };
-          if (lineY !== null) point.y = lineY;
+          if (lineY !== null) point.y = lineY - flight.planeH * (BODY_CENTER_Y - 0.5);
           const progress = flight.length > 0 ? s / flight.length : 1;
           const bank =
             Math.sin(progress * Math.PI * 2 + flight.bankPhase) * flight.bankAmp;

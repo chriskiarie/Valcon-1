@@ -16,12 +16,18 @@ type Fields = {
   notes: string;
 };
 
+// Web3Forms access key (public by design). It emails each enquiry to the inbox the key was issued for.
+// When it is not set, the form falls back to opening the visitor's email app.
+const FORM_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+const FORM_URL = "https://api.web3forms.com/submit";
+
 const EMPTY: Fields = { name: "", email: "", phone: "", from: "", to: "", date: "", passengers: "", notes: "" };
 
 export function ContactForm({ site, services }: { site: Site; services: Service[] }) {
   const [form, setForm] = useState<Fields>(EMPTY);
   const [error, setError] = useState("");
-  const [sent, setSent] = useState<"" | "email" | "copied">("");
+  const [sent, setSent] = useState<"" | "email" | "delivered" | "copied">("");
+  const [sending, setSending] = useState(false);
   const serviceRef = useRef<HTMLSelectElement>(null);
 
   // A services card links here as /contact/?service=<slug>. Set the dropdown once, without
@@ -82,10 +88,41 @@ export function ContactForm({ site, services }: { site: Site; services: Service[
 
   const canWhatsapp = hasWhatsapp(site);
   const canEmail = hasEmail(site);
+  const canSubmit = canEmail || Boolean(FORM_KEY);
 
-  function onSubmit(event: React.FormEvent) {
+  async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (!validate()) return;
+    if (!validate() || sending) return;
+    if (FORM_KEY) {
+      const honeypot = (event.currentTarget as HTMLFormElement).elements.namedItem("botcheck") as HTMLInputElement | null;
+      if (honeypot?.checked) return;
+      setSending(true);
+      try {
+        const response = await fetch(FORM_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: FORM_KEY,
+            subject: `Quote request - ${form.name.trim()}`,
+            from_name: "Valcon Air website",
+            name: form.name.trim(),
+            email: form.email.trim() || undefined,
+            message: buildMessage(),
+            botcheck: "",
+          }),
+        });
+        const result = (await response.json()) as { success?: boolean };
+        if (!response.ok || !result.success) throw new Error("rejected");
+        setSent("delivered");
+        setForm(EMPTY);
+        if (serviceRef.current) serviceRef.current.value = "";
+      } catch {
+        setError(`We could not send that just now. Please try again, or email ${site.email} or call ${site.phone}.`);
+      } finally {
+        setSending(false);
+      }
+      return;
+    }
     if (canEmail) {
       window.location.href = mailtoHref(site, `Quote request - ${form.name.trim()}`, buildMessage());
       setSent("email");
@@ -109,6 +146,7 @@ export function ContactForm({ site, services }: { site: Site; services: Service[
 
   return (
     <form className="qf" onSubmit={onSubmit} noValidate>
+      <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" className="qf__hp" />
       <div className="qf__grid">
         <div className="qf__field">
           <label htmlFor="qf-name">Your name</label>
@@ -191,7 +229,9 @@ export function ContactForm({ site, services }: { site: Site; services: Service[
 
       <p className="qf__status" role="status" aria-live="polite" data-state={error ? "error" : sent ? "ok" : ""}>
         {error ||
-          (sent === "email"
+          (sent === "delivered"
+            ? "Thank you. Your quote request has been sent and we will reply during office hours."
+            : sent === "email"
             ? `Your email app should have opened with the quote request ready to send. If nothing opened, write to ${site.email} or tap Copy.`
             : sent === "copied"
               ? "Copied. Paste it into an email or message to us."
@@ -199,9 +239,9 @@ export function ContactForm({ site, services }: { site: Site; services: Service[
       </p>
 
       <div className="qf__actions">
-        {canEmail ? (
-          <Button type="submit" variant="solid">
-            Send quote request
+        {canSubmit ? (
+          <Button type="submit" variant="solid" disabled={sending}>
+            {sending ? "Sending..." : "Send quote request"}
           </Button>
         ) : null}
         {canWhatsapp ? (
@@ -212,9 +252,13 @@ export function ContactForm({ site, services }: { site: Site; services: Service[
         <button type="button" className="qf__copy" onClick={onCopy}>
           Copy enquiry
         </button>
-        {!canWhatsapp && !canEmail ? <p className="form-unavailable">{site.messages.contactUnconfirmed}</p> : null}
+        {!canWhatsapp && !canSubmit ? <p className="form-unavailable">{site.messages.contactUnconfirmed}</p> : null}
       </div>
-      <p className="qf__note">This opens your email app with everything filled in. We reply during office hours.</p>
+      <p className="qf__note">
+        {FORM_KEY
+          ? "Your request goes straight to our team. We reply during office hours."
+          : "This opens your email app with everything filled in. We reply during office hours."}
+      </p>
     </form>
   );
 }

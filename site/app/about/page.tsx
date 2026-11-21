@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const { vision, approach, services, partnership } = about;
+  const { company, vision, approach, services, partnership } = about;
 
   return (
     <div className="page">
@@ -28,6 +28,19 @@ export default function AboutPage() {
           <p className="interior-hero__lede" data-reveal="below">
             {about.lede}
           </p>
+        </Container>
+      </section>
+
+      <section className="ab-section ab-company" aria-labelledby="ab-company">
+        <Container>
+          <div className="ab-copy ab-copy--wide">
+            <span className="eyebrow" id="ab-company" data-reveal="below">
+              {company.eyebrow}
+            </span>
+            <p className="ab-company__text" data-reveal="below">
+              {company.text}
+            </p>
+          </div>
         </Container>
       </section>
 

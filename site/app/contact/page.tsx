@@ -88,7 +88,7 @@ export default function ContactPage() {
             <aside className="fx-card__side">
               <span className="eyebrow eyebrow--on-dark">{contact.panelEyebrow}</span>
               <h2 id="message-title" className="fx-card__title">{contact.panelTitle}</h2>
-              <p className="fx-card__lede">A question, a change to a booking, or anything else. We reply during office hours.</p>
+              <p className="fx-card__lede">A question, a change to a booking, or anything else.</p>
               <p className="fx-card__talk">
                 Planning a flight? <Link href="/quote/">Request a quote</Link>
               </p>

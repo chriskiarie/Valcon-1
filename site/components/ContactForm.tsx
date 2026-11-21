@@ -56,7 +56,7 @@ export function ContactForm({ site }: { site: Site }) {
       <div className="fx-done" role="status">
         <span className="fx-done__tick"><CheckIcon /></span>
         <h3>Message sent.</h3>
-        <p>Thank you. We will reply during office hours.</p>
+        <p>Thank you. We will be in touch shortly.</p>
         <button type="button" className="fx-link" onClick={() => setState("")}>Send another message</button>
       </div>
     );

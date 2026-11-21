@@ -335,57 +335,54 @@
   z-index: 50;
   padding-top: var(--safe-top);
   color: var(--color-ink);
-  /* Wide open at rest, so the capsule's shadow is never clipped */
-  clip-path: inset(-3rem -3rem -3rem -3rem round 0);
   transition:
     background-color var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out),
     color var(--dur-fast) var(--ease-out),
-    clip-path 0.8s cubic-bezier(0.65, 0, 0.2, 1);
+    transform 0.55s cubic-bezier(0.65, 0, 0.2, 1),
+    opacity 0.4s ease;
 }
 
-/* The drop that the header folds into while a photo viewer is open */
-.site-header::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2rem;
-  height: 2rem;
-  margin: -1rem 0 0 -1rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff 0 12%, var(--brand-orange) 14% 55%, var(--brand-purple) 100%);
-  box-shadow: 0 8px 22px -6px rgb(236 58 0 / 0.55);
-  opacity: 0;
-  transform: scale(0.4);
-  transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  pointer-events: none;
-}
-
-.site-header__inner {
-  transition: opacity 0.3s ease;
+/* While a photo viewer is open the bar folds away and a small glass drop takes its place. */
+.site-header {
+  transform-origin: 50% 3rem;
 }
 
 html[data-lightbox="open"] .site-header {
-  z-index: 260;
-  pointer-events: none;
-  clip-path: inset(calc(50% - 1rem) calc(50% - 1rem) calc(50% - 1rem) calc(50% - 1rem) round 999px);
-  transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.2, 1), z-index 0s;
-}
-
-html[data-lightbox="open"] .site-header .site-header__inner {
   opacity: 0;
+  pointer-events: none;
+  transform: scale(0.05, 0.6);
 }
 
-html[data-lightbox="open"] .site-header::after {
+.glass-drop {
+  position: fixed;
+  top: calc(var(--safe-top) + 3rem);
+  left: 50%;
+  z-index: 260;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: -1.3rem 0 0 -1.3rem;
+  border: 1px solid rgb(255 255 255 / 0.65);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgb(255 255 255 / 0.75) 0 10%, rgb(255 255 255 / 0.22) 35%, rgb(255 255 255 / 0.1) 100%);
+  -webkit-backdrop-filter: blur(12px) saturate(1.7);
+  backdrop-filter: blur(12px) saturate(1.7);
+  box-shadow: inset 0 -6px 12px rgb(255 255 255 / 0.18), 0 10px 26px -8px rgb(20 8 40 / 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.2);
+  transition: opacity 0.25s ease, transform 0.5s cubic-bezier(0.65, 0, 0.2, 1);
+}
+
+html[data-lightbox="open"] .glass-drop {
   opacity: 1;
   transform: scale(1);
-  transition-delay: 0.45s;
+  transition-delay: 0.2s;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .site-header,
-  html[data-lightbox="open"] .site-header {
+  .glass-drop {
     transition: none;
   }
 }
@@ -5959,4 +5956,14 @@ a.ct-tile:hover .ct-tile__icon {
   .fx-card {
     box-shadow: 6px 6px 0 var(--brand-purple-300);
   }
+}
+
+.ab-company__text {
+  max-width: 52rem;
+  margin: var(--space-3) 0 0;
+  color: var(--color-brand);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
 }

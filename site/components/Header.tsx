@@ -56,6 +56,7 @@ export function Header({
   return (
     <>
       <div ref={sentinelRef} className="scroll-sentinel" aria-hidden="true" />
+      <span className="glass-drop" aria-hidden="true" />
       <header
         className={[
           "site-header",

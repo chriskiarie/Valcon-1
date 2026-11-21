@@ -1,0 +1,13 @@
+{
+  "metaDescription": "Request a quote from Valcon Air for charter, ACMI or specialised operations from Wilson Airport or JKIA, Nairobi.",
+  "eyebrow": "Request a quote",
+  "title": "Plan your flight.",
+  "lede": "Tell us where you need to go and when. Our team will respond with a clear, tailored quote.",
+  "stepsTitle": "What happens next",
+  "steps": [
+    { "title": "Tell us the trip", "text": "Route, dates and passengers. Rough is fine." },
+    { "title": "We plan it", "text": "We check the aircraft, crew, airports and permits." },
+    { "title": "You get a clear quote", "text": "Approve the quote and we take it from there." }
+  ],
+  "talkTitle": "Prefer to talk it through?"
+}

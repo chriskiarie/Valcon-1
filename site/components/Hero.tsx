@@ -20,7 +20,7 @@ export function Hero() {
           </h1>
           <p className="hero__support">{hero.support}</p>
           <div className="hero__actions">
-            <Button href="/contact/#quote" variant="solid">
+            <Button href="/quote/" variant="solid">
               {hero.primaryCta}
             </Button>
             <Button href="/fleet/" variant="outline">

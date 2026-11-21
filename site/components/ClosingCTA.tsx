@@ -18,7 +18,7 @@ export function ClosingCTA() {
         {closing.support}
       </p>
       <div className="closing__actions" data-flyby-avoid>
-        <Button href="/contact/#quote" variant="on-dark">
+        <Button href="/quote/" variant="on-dark">
           {closing.primaryCta}
         </Button>
         {whatsapp ? (

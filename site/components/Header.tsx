@@ -83,7 +83,7 @@ export function Header({
 
           <div className="site-header__actions">
             <Button
-              href="/contact/#quote"
+              href="/quote/"
               variant="solid"
               className="site-header__quote"
             >

@@ -340,7 +340,7 @@ export function FleetExperience({
                       href={
                         hasWhatsapp(site)
                           ? whatsappHref(site, aircraftMessage(site, selected.name))
-                          : "/contact/#quote"
+                          : "/quote/"
                       }
                       variant="solid"
                       target={hasWhatsapp(site) ? "_blank" : undefined}

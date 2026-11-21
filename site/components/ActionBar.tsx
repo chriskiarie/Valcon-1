@@ -62,7 +62,7 @@ export function ActionBar({ site, hidden }: { site: Site; hidden: boolean }) {
 
   return (
     <nav className="action-bar" data-hidden={hidden} aria-label="Quick actions">
-      {[first, second, { href: "/contact/#quote", label: "Request a quote", icon: <QuoteIcon /> }].map(
+      {[first, second, { href: "/quote/", label: "Request a quote", icon: <QuoteIcon /> }].map(
         (item) => (
           <a
             key={item.label}

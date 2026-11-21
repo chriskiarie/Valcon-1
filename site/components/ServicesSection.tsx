@@ -116,7 +116,7 @@ export function ServicesSection({
                 <span className="service-zoom-label">{copy.imageButtonLabel}</span>
                 <span className="service-zoom-icon">↗</span>
               </button>
-              <a className="service-card__quote" href={`/contact/?service=${service.slug}#quote`}>
+              <a className="service-card__quote" href={`/quote/?service=${service.slug}`}>
                 {copy.quoteLabel}
                 <span aria-hidden="true">→</span>
               </a>

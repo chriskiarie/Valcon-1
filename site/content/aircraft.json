@@ -28,7 +28,9 @@
   {
     "slug": "fokker-50",
     "name": "Fokker 50",
-    "registrations": [],
+    "registrations": [
+      "7Q-SAS"
+    ],
     "status": "active",
     "isPlaceholder": false,
     "summary": "Valcon Air's second aircraft, a twin-turboprop Fokker 50 based at Wilson Airport, Nairobi. It flies in a plain white livery for now.",
@@ -39,7 +41,7 @@
     },
     "features": [
       "Twin-turboprop regional aircraft",
-      "Registration, seating and cabin layout to be confirmed"
+      "Registration 7Q-SAS; seating and cabin layout to be confirmed"
     ],
     "hero": {
       "desktop": "/images/fokker/landing.avif",

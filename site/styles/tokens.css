@@ -145,7 +145,7 @@
   --tap-min: 2.75rem; /* 44px minimum touch target */
   --header-h: 4.5rem;
   --header-h-desktop: 6rem;
-  --actionbar-h: 3.5rem;
+  --actionbar-h: 5rem;
   --section-pad: clamp(2rem, 3.4vw, 3rem); /* half the gap between sections */
   --hero-min: 35rem;
   --modal-max: 60rem;

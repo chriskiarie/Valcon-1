@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import type { Site } from "@/lib/types";
 import { hasDirectContact, hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 import { Wordmark } from "@/components/Wordmark";
+import { ChatIcon, MailIcon, PhoneIcon, PlaneIcon } from "@/components/FormIcons";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -130,41 +131,59 @@ export function MobileMenu({
       </div>
 
       <nav className="mobile-menu__nav" aria-label="Mobile">
-        {site.nav.map((item) => (
+        {site.nav.map((item, index) => (
           <Link
             key={item.href}
             className="mobile-menu__link"
             href={item.href}
+            style={{ ["--i" as string]: index }}
             aria-current={isActive(pathname, item.href) ? "page" : undefined}
             onClick={onClose}
           >
-            {item.label}
+            <span className="mobile-menu__index" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className="mobile-menu__label">{item.label}</span>
+            <span className="mobile-menu__arrow" aria-hidden="true">
+              &rarr;
+            </span>
           </Link>
         ))}
       </nav>
 
-      <div className="mobile-menu__contact">
-        {phone ? (
-          <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
-        ) : null}
-        {whatsapp ? (
-          <a
-            href={whatsappHref(site)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            WhatsApp
-          </a>
-        ) : null}
-        {email ? <a href={mailtoHref(site)}>{site.email}</a> : null}
-        {!hasDirect ? (
-          <>
-            <p>{site.messages.contactUnconfirmed}</p>
-            <Link href="/contact/" onClick={onClose}>
-              Contact
-            </Link>
-          </>
-        ) : null}
+      <div className="mobile-menu__foot" style={{ ["--i" as string]: site.nav.length }}>
+        <Link className="mobile-menu__cta" href="/quote/" onClick={onClose}>
+          <span>Request a quote</span>
+          <PlaneIcon />
+        </Link>
+        <div className="mobile-menu__contact">
+          {phone ? (
+            <a href={`tel:${site.phoneTel}`}>
+              <PhoneIcon />
+              <span>{site.phone}</span>
+            </a>
+          ) : null}
+          {whatsapp ? (
+            <a href={whatsappHref(site)} target="_blank" rel="noopener noreferrer">
+              <ChatIcon />
+              <span>WhatsApp</span>
+            </a>
+          ) : null}
+          {email ? (
+            <a href={mailtoHref(site)}>
+              <MailIcon />
+              <span>{site.email}</span>
+            </a>
+          ) : null}
+          {!hasDirect ? (
+            <>
+              <p>{site.messages.contactUnconfirmed}</p>
+              <Link href="/contact/" onClick={onClose}>
+                Contact
+              </Link>
+            </>
+          ) : null}
+        </div>
       </div>
     </div>
   );

@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
 
-const PLANE_ASPECT = 185 / 960;
-const BASE_PITCH = 10.34;
+const PLANE_ASPECT = 377 / 1625;
+const BASE_PITCH = 0;
 const TAIL_NAVY = "#0C1B32";
-const NEAR_ANCHOR = { x: 0.222, y: 0.72 };
-const FAR_ANCHOR = { x: 0.212, y: 0.493 };
+const NEAR_ANCHOR = { x: 0.2, y: 0.8 };
+const FAR_ANCHOR = { x: 0.19, y: 0.56 };
 
 const MAX_DPR = 1.5;
 const PATH_STEP = 6;

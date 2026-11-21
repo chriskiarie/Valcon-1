@@ -1261,14 +1261,14 @@
 }
 
 .flyby-anchor--near {
-  left: 22.2%;
-  top: 72%;
+  left: 20%;
+  top: 80%;
   background: #ff3b30;
 }
 
 .flyby-anchor--far {
-  left: 21.2%;
-  top: 49.3%;
+  left: 19%;
+  top: 56%;
   background: #00e5ff;
 }
 
@@ -4866,7 +4866,7 @@ body.modal-open .site-main {
   display: none;
   justify-self: center;
   width: 100%;
-  max-width: 14rem;
+  max-width: 10rem;
 }
 
 @media (min-width: 900px) {
@@ -5227,8 +5227,8 @@ body.modal-open .site-main {
 
 /* Footer logo: larger signature mark on the left */
 .site-footer .wordmark__image--full {
-  height: clamp(8rem, 11vw, 10.5rem);
-  max-width: 24rem;
+  height: clamp(6.25rem, 8.4vw, 8rem);
+  max-width: 19rem;
 }
 
 /* Footer logo: an uploaded (non-default) logo is shown as a white silhouette on the purple footer */

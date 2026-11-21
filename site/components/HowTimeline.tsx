@@ -20,20 +20,34 @@ export function HowTimeline({ steps, art }: { steps: Step[]; art: React.ReactNod
     }
 
     let frame = 0;
-    function update() {
+    let target = 0;
+    let current = -1;
+
+    // The fill glides toward where the scroll is, instead of jumping with every wheel tick.
+    function glide() {
       frame = 0;
+      if (!list) return;
+      if (current < 0) current = target;
+      current += (target - current) * 0.1;
+      if (Math.abs(target - current) < 0.4) current = target;
+      list.style.setProperty("--fill", `${current.toFixed(1)}px`);
+      if (current !== target) frame = requestAnimationFrame(glide);
+    }
+
+    function update() {
       if (!list) return;
       const rect = list.getBoundingClientRect();
       const mark = window.innerHeight * 0.62;
-      const px = Math.min(Math.max(mark - rect.top, 0), rect.height);
-      list.style.setProperty("--fill", `${px}px`);
+      target = Math.min(Math.max(mark - rect.top, 0), rect.height);
       for (const item of items) {
         const node = item.getBoundingClientRect().top + 28;
         item.classList.toggle("is-active", node < mark);
       }
+      if (!frame) frame = requestAnimationFrame(glide);
     }
+
     function onScroll() {
-      if (!frame) frame = requestAnimationFrame(update);
+      update();
     }
     update();
     window.addEventListener("scroll", onScroll, { passive: true });

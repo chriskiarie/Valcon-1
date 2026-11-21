@@ -3506,6 +3506,20 @@ body.modal-open .site-main {
   box-shadow: 0 0 12px rgb(236 58 0 / 0.35);
 }
 
+/* A glowing bead rides the tip of the line */
+.how__line-fill::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--brand-orange-500), 0 0 18px 4px rgb(236 58 0 / 0.55);
+}
+
 .how__step {
   position: relative;
   display: grid;
@@ -3584,7 +3598,7 @@ body.modal-open .site-main {
   .js .how__svg [data-draw] {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    transition: stroke-dashoffset 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: stroke-dashoffset 1800ms cubic-bezier(0.65, 0, 0.15, 1);
   }
 
   .js .how__svg [data-draw][stroke-dasharray] {
@@ -3595,31 +3609,108 @@ body.modal-open .site-main {
     stroke-dashoffset: 0;
   }
 
+  /* Lines draw one after another */
+  .js .how__svg [data-draw]:nth-child(2) { transition-delay: 90ms; }
+  .js .how__svg [data-draw]:nth-child(3) { transition-delay: 180ms; }
+  .js .how__svg [data-draw]:nth-child(4) { transition-delay: 270ms; }
+  .js .how__svg [data-draw]:nth-child(5) { transition-delay: 360ms; }
+  .js .how__svg [data-draw]:nth-child(n + 6) { transition-delay: 450ms; }
+
   .js .how__svg [data-accent] {
     transform-box: fill-box;
     transform-origin: center;
     transform: scale(0);
-    transition: transform 600ms var(--ease-out) 300ms;
+    transition: transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1) 500ms;
   }
 
   .js .how__step.is-active .how__svg [data-accent] {
     transform: scale(1);
   }
 
-  .js .how__copy {
-    opacity: 0.35;
-    transform: translateY(0.75rem);
-    transition: opacity 700ms ease, transform 700ms var(--ease-out);
+  /* The picture eases up out of the page, the words follow from their own side, softly out of focus */
+  .js .how__art {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(1.75rem) scale(0.93);
+    transition:
+      opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 900ms ease;
+    will-change: transform, opacity;
   }
 
-  .js .how__step.is-active .how__copy {
+  .js .how__step.is-active .how__art {
     opacity: 1;
+    filter: blur(0);
     transform: none;
+  }
+
+  .js .how__num,
+  .js .how__step-title,
+  .js .how__step-text {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(var(--how-shift, 1.75rem), 0, 0);
+    transition:
+      opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 800ms ease;
+  }
+
+  .js .how__step:nth-child(odd) {
+    --how-shift: -1.75rem;
+  }
+
+  .js .how__step.is-active .how__num,
+  .js .how__step.is-active .how__step-title,
+  .js .how__step.is-active .how__step-text {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+
+  .js .how__step.is-active .how__step-title {
+    transition-delay: 110ms;
+  }
+
+  .js .how__step.is-active .how__step-text {
+    transition-delay: 220ms;
+  }
+
+  /* The node pops, then rings out once */
+  .how__node {
+    transition:
+      border-color 400ms ease,
+      background 400ms ease,
+      box-shadow 400ms ease,
+      transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .js .how__step:not(.is-active) .how__node {
+    transform: scale(0.8);
+  }
+
+  .js .how__step.is-active .how__node {
+    animation: how-node-ring 1100ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+  }
+
+  .how__svg {
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 500ms ease;
+  }
+
+  .how__step.is-active .how__art:hover .how__svg {
+    transform: translateY(-4px);
+    box-shadow: inset 0 0 0 1px rgb(75 22 130 / 0.1), 0 18px 34px -18px rgb(63 0 130 / 0.4);
   }
 
   .js .how__step.is-active .how__flyer {
     animation: how-fly 3.4s cubic-bezier(0.45, 0, 0.25, 1) 0.5s both;
   }
+}
+
+@keyframes how-node-ring {
+  0% { box-shadow: 0 0 0 0 rgb(236 58 0 / 0.5); }
+  100% { box-shadow: 0 0 0 16px rgb(236 58 0 / 0); }
 }
 
 @keyframes how-fly {

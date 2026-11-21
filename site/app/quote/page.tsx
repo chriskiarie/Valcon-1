@@ -18,7 +18,7 @@ export default function QuotePage() {
 
   return (
     <div className="page">
-      <section className="fx-stage fx-stage--checker" aria-labelledby="quote-title">
+      <section className="fx-stage" aria-labelledby="quote-title">
         <Container>
           <div className="fx-card" data-reveal="below">
             <aside className="fx-card__side">

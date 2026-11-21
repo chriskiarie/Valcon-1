@@ -82,7 +82,7 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <section className="fx-stage fx-stage--dots" aria-labelledby="message-title">
+      <section className="fx-stage" aria-labelledby="message-title">
         <Container>
           <div className="fx-card fx-card--message" data-reveal="below">
             <aside className="fx-card__side">

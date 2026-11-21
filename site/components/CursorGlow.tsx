@@ -50,7 +50,6 @@ export function CursorGlow() {
       }
       const target = event.target instanceof Element ? event.target : null;
       glow.dataset.tone = target?.closest(DARK_SURFACES) ? "dark" : "light";
-      glow.dataset.hot = target?.closest("a, button, summary, [role='button'], .btn") ? "true" : "false";
       glow.dataset.on = "true";
       if (!frame) frame = window.requestAnimationFrame(draw);
     };

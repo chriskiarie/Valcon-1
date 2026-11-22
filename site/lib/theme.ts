@@ -52,7 +52,7 @@ export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
     .then(() => {
       root.animate(
         { "--theme-r": ["0px", `${reach}px`] },
-        { duration: 1100, easing: "cubic-bezier(0.5, 0, 0.2, 1)", pseudoElement: "::view-transition-new(root)" },
+        { duration: 1100, easing: "cubic-bezier(0.5, 0, 0.2, 1)", fill: "forwards", pseudoElement: "::view-transition-new(root)" },
       );
     })
     .catch(() => {});

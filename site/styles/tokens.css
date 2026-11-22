@@ -48,6 +48,8 @@
   --shadow-rgb: 63 0 130;
   --violet-rgb: 124 116 184;
   --glass-rgb: 255 255 255;
+  --art-tint: #ebe6f6;                   /* soft filled shapes in line illustrations */
+  --art-disc: #ffffff;
   --map-halo: rgb(255 255 255 / 0.92);   /* outline behind map text and pins */
   --map-hub-ink: var(--brand-orange-700);
 
@@ -184,6 +186,8 @@
   --shadow-rgb: 0 0 0;
   --violet-rgb: 139 122 214;
   --glass-rgb: 23 18 41;
+  --art-tint: #231b40;
+  --art-disc: #1d1736;
   --map-halo: rgb(14 11 23 / 0.92);
   --map-hub-ink: #ff8a5c;
 

@@ -32,15 +32,18 @@ export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
     /* storage blocked: the choice lasts for this visit only */
   }
 
-  const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void>; finished: Promise<void> } };
   const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const root = document.documentElement;
+  root.classList.add("theme-switching");
+  const release = () => requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
   if (!doc.startViewTransition || calm || !origin) {
     apply(theme);
+    release();
     return;
   }
 
   // The new theme grows out of the button as a soft-edged wave that sweeps across the page.
-  const root = document.documentElement;
   const reach = Math.hypot(Math.max(origin.x, innerWidth - origin.x), Math.max(origin.y, innerHeight - origin.y)) * 1.5;
   root.style.setProperty("--theme-x", `${origin.x}px`);
   root.style.setProperty("--theme-y", `${origin.y}px`);
@@ -53,6 +56,7 @@ export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
       );
     })
     .catch(() => {});
+  transition.finished.then(release, release);
 }
 
 export function subscribe(cb: () => void) {

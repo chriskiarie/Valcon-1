@@ -5405,11 +5405,13 @@ body.modal-open .site-main {
 }
 
 .ab-svg [data-tint] {
-  fill: #ebe6f6;
+  fill: var(--art-tint);
 }
 
 .ab-svg [data-disc] {
-  fill: #fff;
+  fill: var(--art-disc);
+  stroke: var(--color-line);
+  stroke-width: 1;
 }
 
 .ab-letter {
@@ -6371,4 +6373,11 @@ a.ct-tile:hover .ct-tile__icon {
   syntax: "<length>";
   inherits: false;
   initial-value: 0px;
+}
+
+/* No colour transitions while the theme switches: they would replay on the live page after the wave and show as a flash. */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
 }

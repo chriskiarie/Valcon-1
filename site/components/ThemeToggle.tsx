@@ -29,7 +29,10 @@ export function ThemeToggle({ variant = "icon" }: { variant?: "icon" | "row" }) 
     <button
       type="button"
       className={`theme-toggle theme-toggle--${variant}`}
-      onClick={() => setTheme(next)}
+      onClick={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        setTheme(next, { x: r.left + r.width / 2, y: r.top + r.height / 2 });
+      }}
       aria-label={`Switch to ${label.toLowerCase()}`}
       title={label}
     >

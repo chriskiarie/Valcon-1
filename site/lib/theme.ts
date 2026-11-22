@@ -25,13 +25,31 @@ function apply(theme: Theme) {
   window.dispatchEvent(new Event("valcon-theme"));
 }
 
-export function setTheme(theme: Theme) {
+export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
   try {
     localStorage.setItem(THEME_KEY, theme);
   } catch {
     /* storage blocked: the choice lasts for this visit only */
   }
-  apply(theme);
+
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
+  const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!doc.startViewTransition || calm || !origin) {
+    apply(theme);
+    return;
+  }
+
+  // The new theme grows out of the button as a circle that sweeps across the page.
+  const radius = Math.hypot(Math.max(origin.x, innerWidth - origin.x), Math.max(origin.y, innerHeight - origin.y));
+  const transition = doc.startViewTransition(() => apply(theme));
+  transition.ready
+    .then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${origin.x}px ${origin.y}px)`, `circle(${radius}px at ${origin.x}px ${origin.y}px)`] },
+        { duration: 750, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" },
+      );
+    })
+    .catch(() => {});
 }
 
 export function subscribe(cb: () => void) {

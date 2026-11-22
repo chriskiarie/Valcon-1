@@ -6349,3 +6349,18 @@ a.ct-tile:hover .ct-tile__icon {
 :root[data-theme="dark"] .eamap__svg {
   background: rgb(var(--glass-rgb) / 0.7);
 }
+
+/* Theme switch: the browser cross-fades two snapshots; we replace that with a circular reveal driven from theme.ts. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { GalleryGrid, type GalleryItem } from "@/components/GalleryGrid";
-import { GalleryPlaceholders, type GalleryPlaceholder } from "@/components/GalleryPlaceholders";
 import gallery from "@/content/gallery.json";
 import more from "@/content/gallery-more.json";
 
@@ -23,7 +22,7 @@ export default function GalleryPage() {
             The aircraft gallery.
           </h1>
           <p className="interior-hero__lede" data-reveal="below">
-            Our Bombardier CRJ200 and Fokker 50 at Wilson Airport, and above the clouds. More cabin photos are on the way.
+            Our Bombardier CRJ200 and Fokker 50 at Wilson Airport, and above the clouds.
           </p>
         </Container>
       </section>
@@ -46,7 +45,6 @@ export default function GalleryPage() {
             </header>
             <GalleryGrid
               items={more.items as GalleryItem[]}
-              extra={<GalleryPlaceholders bare items={more.placeholders as GalleryPlaceholder[]} />}
             />
           </div>
         </Container>

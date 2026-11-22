@@ -3180,57 +3180,6 @@ body.modal-open .site-main {
   }
 }
 
-/* Background geometry */
-.geometry {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: clip;
-  pointer-events: none;
-}
-
-.geometry__shape {
-  position: absolute;
-  color: var(--color-geometry);
-  opacity: var(--shape-opacity, 0.06);
-  will-change: transform;
-}
-
-.geometry__ring {
-  border: 1px solid currentColor;
-  border-radius: 50%;
-}
-
-.geometry__dots {
-  background-image: radial-gradient(currentColor 1px, transparent 1px);
-  background-size: 18px 18px;
-}
-
-.geometry__triangle {
-  background: currentColor;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-
-.geometry__diamond {
-  border: 1px solid currentColor;
-  rotate: 45deg;
-}
-
-.geometry__arc {
-  overflow: visible;
-}
-
-.geometry__arc svg {
-  width: 100%;
-  height: 100%;
-}
-
-.geometry__arc circle {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1;
-}
-
 /* Scroll reveal initial state. The tiny inline script adds .js. */
 .js [data-reveal] {
   opacity: 0;
@@ -3295,10 +3244,6 @@ body.modal-open .site-main {
 @media (prefers-reduced-motion: reduce) {
   .parallax__media,
   .parallax__lineart {
-    transform: none !important;
-  }
-
-  .geometry__shape {
     transform: none !important;
   }
 }
@@ -6380,4 +6325,217 @@ html.theme-switching *,
 html.theme-switching *::before,
 html.theme-switching *::after {
   transition: none !important;
+}
+
+/* ── Intro: frosted loader that melts away ── */
+.intro {
+  display: none;
+}
+
+html.js[data-intro="on"] .intro,
+html.js[data-intro="melting"] .intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+}
+
+html.js[data-intro="on"] {
+  overflow: hidden;
+}
+
+html.js[data-intro="melting"] .intro {
+  pointer-events: none;
+}
+
+.intro__frost {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 50% 48%, rgb(var(--tint-rgb) / 0.16), transparent 70%),
+    rgb(var(--glass-rgb) / 0.5);
+  -webkit-backdrop-filter: blur(26px) saturate(1.25);
+  backdrop-filter: blur(26px) saturate(1.25);
+  overflow: hidden;
+}
+
+/* Ice grain and a cold sheen, masked away together with the frost. */
+.intro__frost::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 -0.28'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.55;
+  mix-blend-mode: soft-light;
+}
+
+.intro__frost::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.14) 46%, transparent 58%),
+    linear-gradient(295deg, transparent 40%, rgb(255 255 255 / 0.1) 52%, transparent 64%);
+}
+
+.intro__core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 8.25rem;
+  height: 8.25rem;
+  border-radius: 50%;
+  background: rgb(var(--glass-rgb) / 0.4);
+  border: 1px solid rgb(255 255 255 / 0.4);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    0 24px 60px rgb(var(--shadow-rgb) / 0.22);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  animation: intro-float 3.2s ease-in-out infinite;
+  transition: transform 0.6s var(--ease-out), opacity 0.5s ease;
+}
+
+@keyframes intro-float {
+  50% {
+    translate: 0 -6px;
+  }
+}
+
+.intro__ring {
+  position: absolute;
+  inset: 0.45rem;
+  width: calc(100% - 0.9rem);
+  height: calc(100% - 0.9rem);
+  transform: rotate(-90deg);
+}
+
+.intro__stop-a {
+  stop-color: var(--color-brand);
+}
+
+.intro__stop-b {
+  stop-color: var(--brand-orange-500);
+}
+
+.intro__track,
+.intro__bar {
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.intro__track {
+  stroke: rgb(var(--tint-rgb) / 0.16);
+}
+
+.intro__bar {
+  stroke: url(#intro-grad);
+}
+
+.intro__mark {
+  width: 3.4rem;
+  height: 3rem;
+  background: linear-gradient(135deg, var(--color-brand) 30%, var(--brand-orange-500));
+  -webkit-mask: url("/images/brand/valcon-v-white.webp") center / contain no-repeat;
+  mask: url("/images/brand/valcon-v-white.webp") center / contain no-repeat;
+  transition: transform 0.5s var(--ease-out), filter 0.5s ease;
+}
+
+.intro__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--brand-orange-500);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro.is-go .intro__mark {
+  transform: scale(1.14);
+  filter: drop-shadow(0 0 14px rgb(255 90 31 / 0.55));
+}
+
+.intro.is-go .intro__pulse {
+  animation: intro-pulse 0.9s ease-out;
+}
+
+@keyframes intro-pulse {
+  from {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+.intro.is-go .intro__core {
+  opacity: 0;
+  transform: scale(0.82);
+  transition-delay: 0.5s;
+}
+
+.intro__welcome {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.9rem;
+  padding: 0 var(--space-5, 1.25rem);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro__hello {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.2rem, 7vw, 4.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+  text-shadow: 0 2px 30px rgb(var(--glass-rgb) / 0.8);
+}
+
+.intro__tag {
+  margin: 0;
+  color: var(--color-brand);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.intro.is-go .intro__welcome {
+  animation: intro-welcome 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+@keyframes intro-welcome {
+  0% {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(14px);
+    letter-spacing: 0.16em;
+  }
+  20% {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+    letter-spacing: 0.02em;
+  }
+  50% {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(-8px);
+  }
 }

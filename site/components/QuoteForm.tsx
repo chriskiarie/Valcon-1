@@ -104,7 +104,7 @@ export function QuoteForm({ site, services }: { site: Site; services: Service[] 
       <div className="fx-done" role="status">
         <span className="fx-done__tick"><CheckIcon /></span>
         <h3>Quote request sent.</h3>
-        <p>Thank you. Our team will reply with a clear, tailored quote during office hours.</p>
+        <p>Thank you. Our team will reply with a clear, tailored quote.</p>
         <button type="button" className="fx-link" onClick={() => setState("")}>Send another request</button>
       </div>
     );

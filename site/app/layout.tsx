@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
-import { BackgroundGeometry } from "@/components/BackgroundGeometry";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
 import { Header } from "@/components/Header";
 import { ScrollChoreography } from "@/components/ScrollChoreography";
 import { getSite } from "@/lib/content";
-import { THEME_INIT_SCRIPT } from "@/lib/theme";
+import { INTRO_INIT_SCRIPT, THEME_INIT_SCRIPT } from "@/lib/theme";
+import { Intro } from "@/components/Intro";
 
 const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
@@ -68,6 +68,7 @@ export default function RootLayout({
     <html lang="en" className={`${displayFont.variable} ${textFont.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: INTRO_INIT_SCRIPT }} />
       </head>
       <body>
         <script
@@ -78,7 +79,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <BackgroundGeometry />
+        <Intro />
         <Header site={site} />
         <main id="main" className="site-main" tabIndex={-1}>
           {children}

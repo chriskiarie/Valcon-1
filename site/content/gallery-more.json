@@ -1,7 +1,7 @@
 {
   "eyebrow": "Second aircraft",
   "title": "Fokker 50",
-  "text": "Our twin-turboprop Fokker 50 at Wilson Airport. Cabin and cockpit photos are on the way.",
+  "text": "Our twin-turboprop Fokker 50 at Wilson Airport.",
   "items": [
     {
       "image": "/images/fokker/landing",
@@ -42,16 +42,6 @@
       "caption": "Wide view",
       "size": "wide",
       "focus": "50% 60%"
-    }
-  ],
-  "placeholders": [
-    {
-      "label": "Cabin",
-      "size": ""
-    },
-    {
-      "label": "Cockpit",
-      "size": ""
     }
   ]
 }

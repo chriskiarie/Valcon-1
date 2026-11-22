@@ -6363,4 +6363,12 @@ a.ct-tile:hover .ct-tile__icon {
 
 ::view-transition-new(root) {
   z-index: 2;
+  -webkit-mask-image: radial-gradient(circle at var(--theme-x, 50%) var(--theme-y, 50%), #000 calc(var(--theme-r) * 0.7), transparent var(--theme-r));
+  mask-image: radial-gradient(circle at var(--theme-x, 50%) var(--theme-y, 50%), #000 calc(var(--theme-r) * 0.7), transparent var(--theme-r));
+}
+
+@property --theme-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
 }

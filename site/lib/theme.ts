@@ -39,14 +39,17 @@ export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
     return;
   }
 
-  // The new theme grows out of the button as a circle that sweeps across the page.
-  const radius = Math.hypot(Math.max(origin.x, innerWidth - origin.x), Math.max(origin.y, innerHeight - origin.y));
+  // The new theme grows out of the button as a soft-edged wave that sweeps across the page.
+  const root = document.documentElement;
+  const reach = Math.hypot(Math.max(origin.x, innerWidth - origin.x), Math.max(origin.y, innerHeight - origin.y)) * 1.5;
+  root.style.setProperty("--theme-x", `${origin.x}px`);
+  root.style.setProperty("--theme-y", `${origin.y}px`);
   const transition = doc.startViewTransition(() => apply(theme));
   transition.ready
     .then(() => {
-      document.documentElement.animate(
-        { clipPath: [`circle(0px at ${origin.x}px ${origin.y}px)`, `circle(${radius}px at ${origin.x}px ${origin.y}px)`] },
-        { duration: 750, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" },
+      root.animate(
+        { "--theme-r": ["0px", `${reach}px`] },
+        { duration: 1100, easing: "cubic-bezier(0.5, 0, 0.2, 1)", pseudoElement: "::view-transition-new(root)" },
       );
     })
     .catch(() => {});

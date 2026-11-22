@@ -39,7 +39,6 @@ export default function GalleryPage() {
 
           <div className="gal-group">
             <header className="gal-group__head">
-              <span className="eyebrow">{more.eyebrow}</span>
               <h2 className="section-title">{more.title}</h2>
               <p className="gal-group__text">{more.text}</p>
             </header>

@@ -2,17 +2,8 @@ export type Theme = "light" | "dark";
 
 export const THEME_KEY = "valcon-theme";
 
-/** Runs in <head> before first paint: sets data-theme to the saved choice, or to the device setting on a first visit. */
-export const THEME_INIT_SCRIPT = `(function(){try{var p=null;try{p=localStorage.getItem('${THEME_KEY}')}catch(e){}var d=p==='dark'||(p!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';}catch(e){}})();`;
-
-function saved(): Theme | null {
-  try {
-    const v = localStorage.getItem(THEME_KEY);
-    return v === "dark" || v === "light" ? v : null;
-  } catch {
-    return null;
-  }
-}
+/** Runs in <head> before first paint: light is the default; dark only when the visitor has chosen it. */
+export const THEME_INIT_SCRIPT = `(function(){try{var p=null;try{p=localStorage.getItem('${THEME_KEY}')}catch(e){}document.documentElement.dataset.theme=p==='dark'?'dark':'light';}catch(e){}})();`;
 
 export function currentTheme(): Theme {
   return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
@@ -25,22 +16,26 @@ function apply(theme: Theme) {
   window.dispatchEvent(new Event("valcon-theme"));
 }
 
-export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
+/** Switches theme. With an origin point the new theme sweeps out from it; resolves once any transition has finished. */
+export function setTheme(theme: Theme, origin?: { x: number; y: number }): Promise<void> {
   try {
     localStorage.setItem(THEME_KEY, theme);
   } catch {
     /* storage blocked: the choice lasts for this visit only */
   }
 
-  const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void>; finished: Promise<void> } };
+  const doc = document as Document & {
+    startViewTransition?: (cb: () => void) => { ready: Promise<void>; finished: Promise<void> };
+  };
   const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const root = document.documentElement;
   root.classList.add("theme-switching");
   const release = () => requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
+
   if (!doc.startViewTransition || calm || !origin) {
     apply(theme);
     release();
-    return;
+    return Promise.resolve();
   }
 
   // The new theme grows out of the button as a soft-edged wave that sweeps across the page.
@@ -57,20 +52,15 @@ export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
     })
     .catch(() => {});
   transition.finished.then(release, release);
+  return transition.finished.then(
+    () => undefined,
+    () => undefined,
+  );
 }
 
 export function subscribe(cb: () => void) {
-  const mq = window.matchMedia("(prefers-color-scheme: dark)");
-  // Until the visitor picks a theme, follow the device.
-  const onDevice = () => {
-    if (!saved()) apply(mq.matches ? "dark" : "light");
-  };
   window.addEventListener("valcon-theme", cb);
-  mq.addEventListener("change", onDevice);
-  return () => {
-    window.removeEventListener("valcon-theme", cb);
-    mq.removeEventListener("change", onDevice);
-  };
+  return () => window.removeEventListener("valcon-theme", cb);
 }
 
 /** Head script: show the intro once per session, never for reduced motion. A timeout makes sure it can never stick. */

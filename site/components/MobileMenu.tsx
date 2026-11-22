@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import type { Site } from "@/lib/types";
 import { hasDirectContact, hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 import { Wordmark } from "@/components/Wordmark";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { ChatIcon, MailIcon, PhoneIcon, PlaneIcon } from "@/components/FormIcons";
 
 function isActive(pathname: string, href: string) {
@@ -195,7 +194,6 @@ export function MobileMenu({
             </>
           ) : null}
         </div>
-        <ThemeToggle variant="row" />
       </div>
     </div>
   );

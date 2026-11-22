@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { currentTheme, setTheme, subscribe, type Theme } from "@/lib/theme";
 
 function Icon({ theme }: { theme: Theme }) {
@@ -20,23 +20,59 @@ function Icon({ theme }: { theme: Theme }) {
   );
 }
 
-/** Switches between light and dark. "icon" is the round nav button; "row" is the labelled button for the menu and footer. */
+type Phase = "idle" | "drop" | "hold" | "rise";
+
+/**
+ * Switches between light and dark. "icon" is the round button in the header; "row" is the labelled one in the footer.
+ * On click the button sinks into the page, the new theme sweeps out from that point, then the button springs back
+ * up showing the opposite theme's icon.
+ */
 export function ThemeToggle({ variant = "icon" }: { variant?: "icon" | "row" }) {
   const theme = useSyncExternalStore(subscribe, currentTheme, () => "light" as Theme);
+  const [phase, setPhase] = useState<Phase>("idle");
+  const timers = useRef<number[]>([]);
   const next: Theme = theme === "dark" ? "light" : "dark";
   const label = next === "dark" ? "Dark mode" : "Light mode";
+
+  useEffect(() => {
+    const list = timers.current;
+    return () => list.forEach(clearTimeout);
+  }, []);
+
+  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (phase !== "idle") return;
+    const btn = e.currentTarget;
+    const r = btn.getBoundingClientRect();
+    const origin = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (calm) {
+      void setTheme(next);
+      return;
+    }
+    const later = (fn: () => void, ms: number) => timers.current.push(window.setTimeout(fn, ms));
+    setPhase("drop");
+    later(() => {
+      setPhase("hold");
+      // Own layer in the transition, so the button stays above the sweeping wave and keeps animating.
+      btn.style.setProperty("view-transition-name", "theme-btn");
+      void setTheme(next, origin).then(() => btn.style.removeProperty("view-transition-name"));
+      later(() => setPhase("rise"), 520);
+      later(() => setPhase("idle"), 520 + 700);
+    }, 240);
+  };
+
   return (
     <button
       type="button"
       className={`theme-toggle theme-toggle--${variant}`}
-      onClick={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        setTheme(next, { x: r.left + r.width / 2, y: r.top + r.height / 2 });
-      }}
+      data-phase={phase}
+      onClick={toggle}
       aria-label={`Switch to ${label.toLowerCase()}`}
       title={label}
     >
-      <Icon theme={theme} />
+      <span className="theme-toggle__icon">
+        <Icon theme={theme} />
+      </span>
       {variant === "row" ? <span>{label}</span> : null}
     </button>
   );

@@ -94,6 +94,8 @@ export function Header({
             </Button>
           </div>
 
+          <div className="site-header__tools">
+            <ThemeToggle />
           <button
             ref={buttonRef}
             className="menu-toggle"
@@ -105,6 +107,7 @@ export function Header({
           >
             <span className="menu-toggle__lines" aria-hidden="true" />
           </button>
+          </div>
         </div>
       </header>
 

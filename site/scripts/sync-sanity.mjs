@@ -311,12 +311,13 @@ async function mapAircraft(baseList, docs) {
     const item = {
       slug,
       name: doc.name,
-      registrations: doc.registrations ?? [],
+      // An empty list in Studio falls back to the repo, so a registration added in the repo is never hidden by a stale Studio record.
+      registrations: doc.registrations?.length ? doc.registrations : (base?.registrations ?? []),
       status: doc.status,
       isPlaceholder: doc.isPlaceholder ?? false,
       summary: doc.summary ?? "",
       specs: { seats: doc.specs?.seats ?? null, range: doc.specs?.range ?? null, cruiseSpeed: doc.specs?.cruiseSpeed ?? null },
-      features: doc.features ?? [],
+      features: doc.features?.length ? doc.features : (base?.features ?? []),
       hero: { ...(base?.hero ?? { desktop: "", mobile: "", alt: "" }) },
       gallery: base?.gallery ?? [],
       order: doc.order ?? out.length + 1,

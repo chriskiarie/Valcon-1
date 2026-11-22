@@ -6382,100 +6382,69 @@ html.js[data-intro="melting"] .splash {
 .splash__core {
   position: relative;
   display: grid;
-  place-items: center;
-  width: 8.25rem;
-  height: 8.25rem;
-  border-radius: 50%;
-  background: rgb(var(--glass-rgb) / 0.4);
-  border: 1px solid rgb(255 255 255 / 0.4);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.5),
-    0 24px 60px rgb(var(--shadow-rgb) / 0.22);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  justify-items: center;
+  gap: 1.35rem;
+  transition: transform 0.5s var(--ease-out), opacity 0.4s ease;
+}
+
+.splash__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: min(80vw, 23rem);
   animation: splash-float 3.2s ease-in-out infinite;
-  transition: transform 0.6s var(--ease-out), opacity 0.5s ease;
+  transition: filter 0.4s ease;
+}
+
+.splash__wordmark {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: auto;
+}
+
+.splash__icon {
+  flex: 0 0 auto;
+  width: 16%;
+  height: auto;
 }
 
 @keyframes splash-float {
   50% {
-    translate: 0 -6px;
+    translate: 0 -5px;
   }
 }
 
-.splash__ring {
-  position: absolute;
-  inset: 0.45rem;
-  width: calc(100% - 0.9rem);
-  height: calc(100% - 0.9rem);
-  transform: rotate(-90deg);
-}
-
-.splash__stop-a {
-  stop-color: var(--color-brand);
-}
-
-.splash__stop-b {
-  stop-color: var(--brand-orange-500);
-}
-
-.splash__track,
-.splash__bar {
-  fill: none;
-  stroke-width: 2.4;
-  stroke-linecap: round;
-}
-
-.splash__track {
-  stroke: rgb(var(--tint-rgb) / 0.16);
+.splash__line {
+  position: relative;
+  display: block;
+  width: min(48vw, 11rem);
+  height: 3px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgb(var(--tint-rgb) / 0.18);
 }
 
 .splash__bar {
-  stroke: url(#splash-grad);
-}
-
-.splash__mark {
-  width: 3.4rem;
-  height: 3rem;
-  background: linear-gradient(135deg, var(--color-brand) 30%, var(--brand-orange-500));
-  -webkit-mask: url("/images/brand/valcon-v-white.webp") center / contain no-repeat;
-  mask: url("/images/brand/valcon-v-white.webp") center / contain no-repeat;
-  transition: transform 0.5s var(--ease-out), filter 0.5s ease;
-}
-
-.splash__pulse {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  border: 2px solid var(--brand-orange-500);
-  opacity: 0;
-  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-brand), var(--brand-orange-500));
+  transform-origin: left center;
+  transform: scaleX(0);
 }
 
-.splash.is-go .splash__mark {
-  transform: scale(1.14);
-  filter: drop-shadow(0 0 14px rgb(255 90 31 / 0.55));
-}
-
-.splash.is-go .splash__pulse {
-  animation: splash-pulse 0.9s ease-out;
-}
-
-@keyframes splash-pulse {
-  from {
-    opacity: 0.85;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(2.6);
-  }
+.splash.is-go .splash__logo {
+  filter: drop-shadow(0 0 16px rgb(255 90 31 / 0.4));
 }
 
 .splash.is-go .splash__core {
   opacity: 0;
-  transform: scale(0.82);
-  transition-delay: 0.5s;
+  transform: scale(0.94);
+  transition-delay: 0.22s;
+}
+
+:root[data-theme="dark"] .splash__logo img {
+  filter: brightness(0) invert(1);
 }
 
 .splash__welcome {
@@ -6511,7 +6480,7 @@ html.js[data-intro="melting"] .splash {
 }
 
 .splash.is-go .splash__welcome {
-  animation: splash-welcome 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+  animation: splash-welcome 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
 }
 
 @keyframes splash-welcome {

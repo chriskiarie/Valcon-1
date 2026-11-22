@@ -10,9 +10,9 @@ import { useEffect, useRef } from "react";
  * (data-intro="on" on <html>); this component runs the sequence and then switches it off.
  */
 
-const MIN_SHOW = 1300; // the loader is always visible this long, ms
-const MAX_WAIT = 4500; // never wait longer than this for the page, ms
-const MELT = 2000; // longest single melt, ms
+const MIN_SHOW = 650; // the loader is always visible this long, ms
+const MAX_WAIT = 3000; // never wait longer than this for the page, ms
+const MELT = 1300; // longest single melt, ms
 
 type Seed = { x: number; y: number; delay: number; dur: number };
 
@@ -26,8 +26,8 @@ function makeSeeds(w: number, h: number): Seed[] {
       seeds.push({
         x: ((c + 0.15 + Math.random() * 0.7) / cols) * w,
         y: ((r + 0.15 + Math.random() * 0.7) / rows) * h,
-        delay: Math.random() * 700,
-        dur: 1100 + Math.random() * 800,
+        delay: Math.random() * 350,
+        dur: 800 + Math.random() * 500,
       });
     }
   }
@@ -37,14 +37,14 @@ function makeSeeds(w: number, h: number): Seed[] {
 export function Splash() {
   const rootRef = useRef<HTMLDivElement>(null);
   const frostRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<SVGCircleElement>(null);
+  const barRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const html = document.documentElement;
     const root = rootRef.current;
     const frost = frostRef.current;
-    const ring = ringRef.current;
-    if (html.dataset.intro !== "on" || !root || !frost || !ring) return;
+    const bar = barRef.current;
+    if (html.dataset.intro !== "on" || !root || !frost || !bar) return;
 
     try {
       sessionStorage.setItem("valcon-intro", "1");
@@ -52,10 +52,8 @@ export function Splash() {
       /* private mode: it may show again next visit */
     }
 
-    const CIRC = 2 * Math.PI * 46;
-    ring.style.strokeDasharray = String(CIRC);
     const setProgress = (p: number) => {
-      ring.style.strokeDashoffset = String(CIRC * (1 - p));
+      bar.style.transform = `scaleX(${p})`;
     };
     setProgress(0);
 
@@ -65,6 +63,7 @@ export function Splash() {
     const t0 = performance.now();
     let pageReady = false;
     let finishing = false;
+    let progress = 0;
 
     const cleanup = () => {
       done = true;
@@ -121,7 +120,7 @@ export function Splash() {
         last = Math.max(last, s.delay + s.dur);
         void a;
       });
-      timers.push(window.setTimeout(cleanup, Math.min(last, MELT + 700) + 250));
+      timers.push(window.setTimeout(cleanup, Math.min(last, MELT + 350) + 200));
     };
 
     const finish = () => {
@@ -129,24 +128,24 @@ export function Splash() {
       finishing = true;
       cancelAnimationFrame(raf);
       // Fill the ring, then pulse, then let the welcome appear as the frost starts to go.
-      const from = parseFloat(ring.style.strokeDashoffset || String(CIRC));
+      const from = progress;
       const start = performance.now();
       const fill = (now: number) => {
-        const k = Math.min(1, (now - start) / 320);
-        ring.style.strokeDashoffset = String(from * (1 - k));
+        const k = Math.min(1, (now - start) / 200);
+        setProgress(from + (1 - from) * k);
         if (k < 1) requestAnimationFrame(fill);
       };
       requestAnimationFrame(fill);
-      timers.push(window.setTimeout(() => root.classList.add("is-go"), 340));
-      timers.push(window.setTimeout(melt, 1140));
+      timers.push(window.setTimeout(() => root.classList.add("is-go"), 220));
+      timers.push(window.setTimeout(melt, 560));
     };
 
     // Smooth, honest-looking progress: eases toward 90% while the page loads, completes when it is ready.
     const tick = (now: number) => {
       if (done || finishing) return;
       const t = now - t0;
-      const eased = 0.9 * (1 - Math.exp(-t / 650));
-      setProgress(eased);
+      progress = 0.9 * (1 - Math.exp(-t / 380));
+      setProgress(progress);
       if (pageReady && t >= MIN_SHOW) finish();
       else if (t >= MAX_WAIT) finish();
       else raf = requestAnimationFrame(tick);
@@ -170,18 +169,15 @@ export function Splash() {
     <div className="splash" ref={rootRef} aria-hidden="true">
       <div className="splash__frost" ref={frostRef} />
       <div className="splash__core">
-        <svg className="splash__ring" viewBox="0 0 100 100">
-          <defs>
-            <linearGradient id="splash-grad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" className="splash__stop-a" />
-              <stop offset="1" className="splash__stop-b" />
-            </linearGradient>
-          </defs>
-          <circle className="splash__track" cx="50" cy="50" r="46" />
-          <circle className="splash__bar" cx="50" cy="50" r="46" ref={ringRef} />
-        </svg>
-        <span className="splash__mark" />
-        <span className="splash__pulse" />
+        <div className="splash__logo">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="splash__wordmark" src="/images/brand/valcon-wordmark.png" alt="" width={640} height={91} decoding="async" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="splash__icon" src="/images/brand/valcon-icon.png" alt="" width={414} height={360} decoding="async" />
+        </div>
+        <span className="splash__line">
+          <span className="splash__bar" ref={barRef} />
+        </span>
       </div>
       <div className="splash__welcome">
         <p className="splash__hello">Welcome aboard</p>

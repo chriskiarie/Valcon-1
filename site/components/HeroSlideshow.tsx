@@ -1,10 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { ResponsiveImage } from "@/lib/types";
 
 /** How long each photo stays before the next one fades in. Matches --hero-hold in globals.css. */
 const HOLD_MS = 7000;
+
+/** True once the first-visit loader (data-intro on <html>) has finished, so the slideshow starts on the home page itself. */
+function watchIntro(cb: () => void) {
+  const observer = new MutationObserver(cb);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-intro"] });
+  return () => observer.disconnect();
+}
+const introDone = () => !document.documentElement.dataset.intro;
 
 type SlideState = "active" | "leaving" | "idle";
 
@@ -20,6 +28,7 @@ export function HeroSlideshow({ slides }: { slides: ResponsiveImage[] }) {
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
+  const loaderGone = useSyncExternalStore(watchIntro, introDone, () => true);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const go = useCallback(
@@ -44,7 +53,7 @@ export function HeroSlideshow({ slides }: { slides: ResponsiveImage[] }) {
     };
   }, [count]);
 
-  const playing = !paused && inView && pageVisible;
+  const playing = !paused && inView && pageVisible && loaderGone;
 
   return (
     <>

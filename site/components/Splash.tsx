@@ -171,8 +171,6 @@ export function Splash() {
       <div className="splash__core">
         <div className="splash__logo">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="splash__wordmark" src="/images/brand/valcon-wordmark.png" alt="" width={640} height={91} decoding="async" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="splash__icon" src="/images/brand/valcon-icon.png" alt="" width={414} height={360} decoding="async" />
         </div>
         <span className="splash__line">

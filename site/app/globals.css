@@ -6388,23 +6388,14 @@ html.js[data-intro="melting"] .splash {
 }
 
 .splash__logo {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  width: min(80vw, 23rem);
+  display: grid;
+  place-items: center;
   animation: splash-float 3.2s ease-in-out infinite;
   transition: filter 0.4s ease;
 }
 
-.splash__wordmark {
-  flex: 1 1 auto;
-  min-width: 0;
-  height: auto;
-}
-
 .splash__icon {
-  flex: 0 0 auto;
-  width: 16%;
+  width: clamp(5rem, 16vw, 6.5rem);
   height: auto;
 }
 

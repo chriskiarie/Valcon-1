@@ -7,6 +7,7 @@ import { ConceptPill } from "@/components/ConceptPill";
 import { Header } from "@/components/Header";
 import { ScrollChoreography } from "@/components/ScrollChoreography";
 import { getSite } from "@/lib/content";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
@@ -65,6 +66,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={`${displayFont.variable} ${textFont.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         <script
           dangerouslySetInnerHTML={{

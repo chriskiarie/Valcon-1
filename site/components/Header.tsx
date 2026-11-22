@@ -8,6 +8,7 @@ import { Button } from "@/components/Button";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ActionBar } from "@/components/ActionBar";
 import { Wordmark } from "@/components/Wordmark";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -83,6 +84,7 @@ export function Header({
           </nav>
 
           <div className="site-header__actions">
+            <ThemeToggle />
             <Button
               href="/quote/"
               variant="solid"

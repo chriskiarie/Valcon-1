@@ -4194,7 +4194,7 @@ body.modal-open .site-main {
 .eamap__layout[data-active="kisumu"] .eamap__stop--kisumu .eamap__label,
 .eamap__layout[data-active="malindi"] .eamap__stop--malindi .eamap__label,
 .eamap__layout[data-active="lodwar"] .eamap__stop--lodwar .eamap__label {
-  fill: var(--brand-orange-700);
+  fill: var(--map-hub-ink);
 }
 
 .eamap__svg {
@@ -4238,27 +4238,30 @@ body.modal-open .site-main {
 
 .eamap__dot {
   fill: var(--color-brand);
-  stroke: #fff;
+  stroke: var(--map-halo);
   stroke-width: 2;
 }
 
 .eamap__label {
-  fill: var(--color-brand);
-  font-size: 19px;
+  fill: var(--color-ink);
+  font-size: 20px;
   font-weight: 600;
+  letter-spacing: 0.01em;
   paint-order: stroke;
-  stroke: rgb(255 255 255 / 0.85);
-  stroke-width: 4px;
+  stroke: var(--map-halo);
+  stroke-width: 6px;
+  stroke-linejoin: round;
 }
 
 .eamap__label--hub {
-  fill: var(--brand-orange-700);
-  font-size: 21px;
+  fill: var(--map-hub-ink);
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .eamap__core {
   fill: var(--brand-orange-500);
-  stroke: #fff;
+  stroke: var(--map-halo);
   stroke-width: 3;
 }
 

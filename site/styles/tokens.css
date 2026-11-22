@@ -48,6 +48,8 @@
   --shadow-rgb: 63 0 130;
   --violet-rgb: 124 116 184;
   --glass-rgb: 255 255 255;
+  --map-halo: rgb(255 255 255 / 0.92);   /* outline behind map text and pins */
+  --map-hub-ink: var(--brand-orange-700);
 
   /* ── Derived neutrals ── */
   --color-bg: #FCFCFE;        /* page background: barely-tinted off-white, dialled back */
@@ -182,6 +184,8 @@
   --shadow-rgb: 0 0 0;
   --violet-rgb: 139 122 214;
   --glass-rgb: 23 18 41;
+  --map-halo: rgb(14 11 23 / 0.92);
+  --map-hub-ink: #ff8a5c;
 
   --color-bg: #0e0b17;
   --color-surface: #171229;

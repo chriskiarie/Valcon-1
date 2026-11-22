@@ -1,53 +1,49 @@
-export type ThemePref = "system" | "light" | "dark";
+export type Theme = "light" | "dark";
 
 export const THEME_KEY = "valcon-theme";
 
-/** Runs in <head> before first paint: sets data-theme to the saved choice, or the device setting. */
+/** Runs in <head> before first paint: sets data-theme to the saved choice, or to the device setting on a first visit. */
 export const THEME_INIT_SCRIPT = `(function(){try{var p=null;try{p=localStorage.getItem('${THEME_KEY}')}catch(e){}var d=p==='dark'||(p!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';}catch(e){}})();`;
 
-export function readPref(): ThemePref {
+function saved(): Theme | null {
   try {
     const v = localStorage.getItem(THEME_KEY);
-    return v === "dark" || v === "light" ? v : "system";
+    return v === "dark" || v === "light" ? v : null;
   } catch {
-    return "system";
+    return null;
   }
 }
 
-export function resolve(pref: ThemePref): "light" | "dark" {
-  if (pref !== "system") return pref;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+export function currentTheme(): Theme {
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
-export function applyTheme(pref: ThemePref) {
-  document.documentElement.dataset.theme = resolve(pref);
+function apply(theme: Theme) {
+  document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", resolve(pref) === "dark" ? "#0e0b17" : "#3F0082");
+  if (meta) meta.setAttribute("content", theme === "dark" ? "#0e0b17" : "#3F0082");
+  window.dispatchEvent(new Event("valcon-theme"));
 }
 
-export function setPref(pref: ThemePref) {
+export function setTheme(theme: Theme) {
   try {
-    if (pref === "system") localStorage.removeItem(THEME_KEY);
-    else localStorage.setItem(THEME_KEY, pref);
+    localStorage.setItem(THEME_KEY, theme);
   } catch {
     /* storage blocked: the choice lasts for this visit only */
   }
-  applyTheme(pref);
-  window.dispatchEvent(new Event("valcon-theme"));
+  apply(theme);
 }
 
 export function subscribe(cb: () => void) {
   const mq = window.matchMedia("(prefers-color-scheme: dark)");
-  const onSystem = () => {
-    if (readPref() === "system") applyTheme("system");
-    cb();
+  // Until the visitor picks a theme, follow the device.
+  const onDevice = () => {
+    if (!saved()) apply(mq.matches ? "dark" : "light");
   };
   window.addEventListener("valcon-theme", cb);
-  window.addEventListener("storage", onSystem);
-  mq.addEventListener("change", onSystem);
+  mq.addEventListener("change", onDevice);
   return () => {
     window.removeEventListener("valcon-theme", cb);
-    window.removeEventListener("storage", onSystem);
-    mq.removeEventListener("change", onSystem);
+    mq.removeEventListener("change", onDevice);
   };
 }

@@ -6327,13 +6327,13 @@ html.theme-switching *::after {
   transition: none !important;
 }
 
-/* ── Intro: frosted loader that melts away ── */
-.intro {
+/* ── Splash: frosted loader that melts away ── */
+.splash {
   display: none;
 }
 
-html.js[data-intro="on"] .intro,
-html.js[data-intro="melting"] .intro {
+html.js[data-intro="on"] .splash,
+html.js[data-intro="melting"] .splash {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -6345,11 +6345,11 @@ html.js[data-intro="on"] {
   overflow: hidden;
 }
 
-html.js[data-intro="melting"] .intro {
+html.js[data-intro="melting"] .splash {
   pointer-events: none;
 }
 
-.intro__frost {
+.splash__frost {
   position: absolute;
   inset: 0;
   background:
@@ -6361,7 +6361,7 @@ html.js[data-intro="melting"] .intro {
 }
 
 /* Ice grain and a cold sheen, masked away together with the frost. */
-.intro__frost::before {
+.splash__frost::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -6370,7 +6370,7 @@ html.js[data-intro="melting"] .intro {
   mix-blend-mode: soft-light;
 }
 
-.intro__frost::after {
+.splash__frost::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -6379,7 +6379,7 @@ html.js[data-intro="melting"] .intro {
     linear-gradient(295deg, transparent 40%, rgb(255 255 255 / 0.1) 52%, transparent 64%);
 }
 
-.intro__core {
+.splash__core {
   position: relative;
   display: grid;
   place-items: center;
@@ -6393,17 +6393,17 @@ html.js[data-intro="melting"] .intro {
     0 24px 60px rgb(var(--shadow-rgb) / 0.22);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
-  animation: intro-float 3.2s ease-in-out infinite;
+  animation: splash-float 3.2s ease-in-out infinite;
   transition: transform 0.6s var(--ease-out), opacity 0.5s ease;
 }
 
-@keyframes intro-float {
+@keyframes splash-float {
   50% {
     translate: 0 -6px;
   }
 }
 
-.intro__ring {
+.splash__ring {
   position: absolute;
   inset: 0.45rem;
   width: calc(100% - 0.9rem);
@@ -6411,30 +6411,30 @@ html.js[data-intro="melting"] .intro {
   transform: rotate(-90deg);
 }
 
-.intro__stop-a {
+.splash__stop-a {
   stop-color: var(--color-brand);
 }
 
-.intro__stop-b {
+.splash__stop-b {
   stop-color: var(--brand-orange-500);
 }
 
-.intro__track,
-.intro__bar {
+.splash__track,
+.splash__bar {
   fill: none;
   stroke-width: 2.4;
   stroke-linecap: round;
 }
 
-.intro__track {
+.splash__track {
   stroke: rgb(var(--tint-rgb) / 0.16);
 }
 
-.intro__bar {
-  stroke: url(#intro-grad);
+.splash__bar {
+  stroke: url(#splash-grad);
 }
 
-.intro__mark {
+.splash__mark {
   width: 3.4rem;
   height: 3rem;
   background: linear-gradient(135deg, var(--color-brand) 30%, var(--brand-orange-500));
@@ -6443,7 +6443,7 @@ html.js[data-intro="melting"] .intro {
   transition: transform 0.5s var(--ease-out), filter 0.5s ease;
 }
 
-.intro__pulse {
+.splash__pulse {
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -6452,16 +6452,16 @@ html.js[data-intro="melting"] .intro {
   pointer-events: none;
 }
 
-.intro.is-go .intro__mark {
+.splash.is-go .splash__mark {
   transform: scale(1.14);
   filter: drop-shadow(0 0 14px rgb(255 90 31 / 0.55));
 }
 
-.intro.is-go .intro__pulse {
-  animation: intro-pulse 0.9s ease-out;
+.splash.is-go .splash__pulse {
+  animation: splash-pulse 0.9s ease-out;
 }
 
-@keyframes intro-pulse {
+@keyframes splash-pulse {
   from {
     opacity: 0.85;
     transform: scale(1);
@@ -6472,13 +6472,13 @@ html.js[data-intro="melting"] .intro {
   }
 }
 
-.intro.is-go .intro__core {
+.splash.is-go .splash__core {
   opacity: 0;
   transform: scale(0.82);
   transition-delay: 0.5s;
 }
 
-.intro__welcome {
+.splash__welcome {
   position: absolute;
   inset: 0;
   display: grid;
@@ -6491,7 +6491,7 @@ html.js[data-intro="melting"] .intro {
   pointer-events: none;
 }
 
-.intro__hello {
+.splash__hello {
   margin: 0;
   color: var(--color-ink);
   font-family: var(--font-display), Georgia, serif;
@@ -6501,7 +6501,7 @@ html.js[data-intro="melting"] .intro {
   text-shadow: 0 2px 30px rgb(var(--glass-rgb) / 0.8);
 }
 
-.intro__tag {
+.splash__tag {
   margin: 0;
   color: var(--color-brand);
   font-size: 0.75rem;
@@ -6510,11 +6510,11 @@ html.js[data-intro="melting"] .intro {
   text-transform: uppercase;
 }
 
-.intro.is-go .intro__welcome {
-  animation: intro-welcome 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+.splash.is-go .splash__welcome {
+  animation: splash-welcome 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
 }
 
-@keyframes intro-welcome {
+@keyframes splash-welcome {
   0% {
     opacity: 0;
     filter: blur(14px);
@@ -6527,12 +6527,12 @@ html.js[data-intro="melting"] .intro {
     transform: none;
     letter-spacing: 0.02em;
   }
-  50% {
+  38% {
     opacity: 1;
     filter: blur(0);
     transform: none;
   }
-  80%,
+  64%,
   100% {
     opacity: 0;
     filter: blur(10px);

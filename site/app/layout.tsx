@@ -7,7 +7,7 @@ import { Header } from "@/components/Header";
 import { ScrollChoreography } from "@/components/ScrollChoreography";
 import { getSite } from "@/lib/content";
 import { INTRO_INIT_SCRIPT, THEME_INIT_SCRIPT } from "@/lib/theme";
-import { Intro } from "@/components/Intro";
+import { Splash } from "@/components/Splash";
 
 const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
@@ -79,7 +79,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <Intro />
+        <Splash />
         <Header site={site} />
         <main id="main" className="site-main" tabIndex={-1}>
           {children}

@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
  * First-visit intro: a frosted-glass screen over the page with a small loader in the middle.
  * When the page is ready the loader pulses, "Welcome aboard" appears, and the frost melts away from many
  * points at once (radial masks growing at different speeds), like ice clearing on a window.
- * Shown once per browser session; skipped for reduced motion. The head script in lib/intro.ts decides that
+ * Shown once per browser session; skipped for reduced motion. The head script in lib/theme.ts (INTRO_INIT_SCRIPT) decides that
  * (data-intro="on" on <html>); this component runs the sequence and then switches it off.
  */
 
@@ -34,7 +34,7 @@ function makeSeeds(w: number, h: number): Seed[] {
   return seeds;
 }
 
-export function Intro() {
+export function Splash() {
   const rootRef = useRef<HTMLDivElement>(null);
   const frostRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
@@ -167,25 +167,25 @@ export function Intro() {
   }, []);
 
   return (
-    <div className="intro" ref={rootRef} aria-hidden="true">
-      <div className="intro__frost" ref={frostRef} />
-      <div className="intro__core">
-        <svg className="intro__ring" viewBox="0 0 100 100">
+    <div className="splash" ref={rootRef} aria-hidden="true">
+      <div className="splash__frost" ref={frostRef} />
+      <div className="splash__core">
+        <svg className="splash__ring" viewBox="0 0 100 100">
           <defs>
-            <linearGradient id="intro-grad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" className="intro__stop-a" />
-              <stop offset="1" className="intro__stop-b" />
+            <linearGradient id="splash-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" className="splash__stop-a" />
+              <stop offset="1" className="splash__stop-b" />
             </linearGradient>
           </defs>
-          <circle className="intro__track" cx="50" cy="50" r="46" />
-          <circle className="intro__bar" cx="50" cy="50" r="46" ref={ringRef} />
+          <circle className="splash__track" cx="50" cy="50" r="46" />
+          <circle className="splash__bar" cx="50" cy="50" r="46" ref={ringRef} />
         </svg>
-        <span className="intro__mark" />
-        <span className="intro__pulse" />
+        <span className="splash__mark" />
+        <span className="splash__pulse" />
       </div>
-      <div className="intro__welcome">
-        <p className="intro__hello">Welcome aboard</p>
-        <p className="intro__tag">Valcon Air Solutions · Nairobi</p>
+      <div className="splash__welcome">
+        <p className="splash__hello">Welcome aboard</p>
+        <p className="splash__tag">Valcon Air Solutions · Nairobi</p>
       </div>
     </div>
   );

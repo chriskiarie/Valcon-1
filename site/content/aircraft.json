@@ -13,10 +13,7 @@
       "range": "Up to 3,150 km (1,700 nm)",
       "cruiseSpeed": "About 785 km/h (424 kt)"
     },
-    "features": [
-      "Cabin about 12.4 m long, 2.5 m wide and 1.85 m high",
-      "Seating up to 50 in the standard layout; cabin layout for 5Y-VAL to be confirmed"
-    ],
+    "features": [],
     "hero": {
       "desktop": "/images/fleet/5y-val-salute.avif",
       "mobile": "/images/fleet/5y-val-salute.avif",
@@ -39,10 +36,7 @@
       "range": null,
       "cruiseSpeed": null
     },
-    "features": [
-      "Twin-turboprop regional aircraft",
-      "Registration 7Q-SAS; seating and cabin layout to be confirmed"
-    ],
+    "features": [],
     "hero": {
       "desktop": "/images/fokker/final.avif",
       "mobile": "/images/fokker/final.avif",

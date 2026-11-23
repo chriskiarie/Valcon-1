@@ -317,7 +317,8 @@ async function mapAircraft(baseList, docs) {
       isPlaceholder: doc.isPlaceholder ?? false,
       summary: doc.summary ?? "",
       specs: { seats: doc.specs?.seats ?? null, range: doc.specs?.range ?? null, cruiseSpeed: doc.specs?.cruiseSpeed ?? null },
-      features: doc.features ?? [],
+      // Cabin detail bullets are switched off site-wide (client request), whatever Studio holds.
+      features: [],
       hero: { ...(base?.hero ?? { desktop: "", mobile: "", alt: "" }) },
       gallery: base?.gallery ?? [],
       order: doc.order ?? out.length + 1,

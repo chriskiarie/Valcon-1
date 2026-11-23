@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export type GalleryItem = { image: string; ext: string; alt: string; caption: string; size: string; focus?: string };
+export type GalleryItem = { image: string; ext: string; alt: string; caption: string; size: string; focus?: string; fit?: string };
 
 function Pic({ item, className }: { item: GalleryItem; className?: string }) {
   const style = item.focus ? { objectPosition: item.focus } : undefined;
@@ -10,7 +10,7 @@ function Pic({ item, className }: { item: GalleryItem; className?: string }) {
     <picture>
       <source type="image/avif" srcSet={`${item.image}.avif`} />
       {item.ext !== "webp" ? <source type="image/webp" srcSet={`${item.image}.webp`} /> : null}
-      <img className={className} style={style} src={`${item.image}.${item.ext}`} alt={item.alt} decoding="async" />
+      <img className={`${className ?? ""}${item.fit === "contain" ? " is-contain" : ""}`} style={style} src={`${item.image}.${item.ext}`} alt={item.alt} decoding="async" />
     </picture>
   );
 }

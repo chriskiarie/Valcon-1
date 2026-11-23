@@ -4,12 +4,12 @@
   "text": "Our twin-turboprop Fokker 50 at Wilson Airport.",
   "items": [
     {
-      "image": "/images/fokker/landing",
+      "image": "/images/fokker/climb",
       "ext": "jpg",
-      "alt": "The Fokker 50 touching down on the runway at Wilson Airport.",
-      "caption": "Touchdown",
+      "alt": "The Fokker 50 climbing away after take-off against a clear blue sky.",
+      "caption": "Climbing out",
       "size": "hero",
-      "focus": "50% 60%"
+      "focus": "50% 50%"
     },
     {
       "image": "/images/fokker/approach",
@@ -42,6 +42,14 @@
       "caption": "Wide view",
       "size": "wide",
       "focus": "50% 60%"
+    },
+    {
+      "image": "/images/fokker/seating",
+      "ext": "png",
+      "alt": "Seating layout of the Fokker 50: 13 numbered rows with two seats either side of the aisle.",
+      "caption": "Seating layout",
+      "size": "wide",
+      "fit": "contain"
     }
   ]
 }

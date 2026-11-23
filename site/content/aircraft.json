@@ -44,9 +44,9 @@
       "Registration 7Q-SAS; seating and cabin layout to be confirmed"
     ],
     "hero": {
-      "desktop": "/images/fokker/landing.avif",
-      "mobile": "/images/fokker/landing.avif",
-      "alt": "Valcon Air's Fokker 50 touching down at Wilson Airport, Nairobi."
+      "desktop": "/images/fokker/final.avif",
+      "mobile": "/images/fokker/final.avif",
+      "alt": "Valcon Air's Fokker 50 on final approach to Wilson Airport, Nairobi."
     },
     "gallery": [],
     "order": 2

@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
  * First-visit intro: a frosted-glass screen over the page with a small loader in the middle.
  * When the page is ready the loader pulses, "Welcome aboard" appears, and the frost melts away from many
  * points at once (radial masks growing at different speeds), like ice clearing on a window.
- * Shown once per browser session; skipped for reduced motion. The head script in lib/theme.ts (INTRO_INIT_SCRIPT) decides that
+ * Shown once per browser session; skipped for reduced motion. The head script in lib/intro.ts (INTRO_INIT_SCRIPT) decides that
  * (data-intro="on" on <html>); this component runs the sequence and then switches it off.
  */
 

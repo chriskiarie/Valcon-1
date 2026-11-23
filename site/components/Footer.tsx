@@ -3,7 +3,6 @@ import { getSite } from "@/lib/content";
 import { hasEmail, hasPhone, hasWhatsapp, mailtoHref, whatsappHref } from "@/lib/contact";
 import { SOCIAL_ICONS, SOCIAL_LABELS } from "@/lib/socials";
 import { Wordmark } from "@/components/Wordmark";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Footer({ compact = false }: { compact?: boolean }) {
   const site = getSite();
@@ -81,7 +80,6 @@ export function Footer({ compact = false }: { compact?: boolean }) {
             </span>
             {site.notices.footerNote ? <span>{site.notices.footerNote}</span> : null}
           </div>
-          <ThemeToggle variant="row" />
         </div>
       </div>
     </footer>

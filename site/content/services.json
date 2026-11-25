@@ -2,7 +2,7 @@
   {
     "slug": "charter",
     "title": "Charter Flights",
-    "summary": "Travel on your own schedule, to the places you choose. Our charter service gives you a dedicated aircraft for your group or your journey, with no queues and no fixed timetables. Whether it is a business trip, a family journey or an urgent departure, we plan every detail so you can arrive relaxed and on time.",
+    "summary": "Our charter service provides a dedicated aircraft for your group or journey, offering flexibility, convenience, and comfort without queues or fixed timetables.\n\nWhether you're travelling for business, taking a family trip, or arranging an urgent departure, we take care of every detail to ensure you arrive relaxed and on time.",
     "isPlaceholder": false,
     "image": "/images/services/service-charter.jpg",
     "bestFor": "Companies, groups and individuals who want a flight that fits their plans."
@@ -10,10 +10,10 @@
   {
     "slug": "acmi",
     "title": "ACMI Aircraft Leasing",
-    "summary": "Valcon Air Solutions offers aircraft on an **ACMI (Aircraft, Crew, Maintenance and Insurance)** basis, providing flexible and reliable aviation solutions to airlines and operators.\n\nOur ACMI services provide a complete aircraft operating solution, allowing clients to expand capacity, serve new routes and meet operational demands without the commitment of aircraft ownership.",
+    "summary": "Valcon Air Solutions offers aircraft on an **ACMI (Aircraft, Crew, Maintenance and Insurance)** basis, providing flexible and reliable aviation solutions to airline companies and operators.\n\nOur ACMI services provide a complete aircraft operating solution, allowing clients to expand capacity, serve new routes and meet operational demands without the commitment of aircraft ownership.",
     "isPlaceholder": false,
     "image": "/images/services/service-acmi.jpg",
-    "bestFor": "Airlines and operators who need extra capacity for a season, a route or a contract."
+    "bestFor": "Airline companies and operators who need extra capacity for a season, a route or a contract."
   },
   {
     "slug": "specialized-operations",

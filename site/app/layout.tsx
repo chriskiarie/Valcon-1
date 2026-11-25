@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
@@ -9,16 +9,10 @@ import { getSite } from "@/lib/content";
 import { INTRO_INIT_SCRIPT } from "@/lib/intro";
 import { Splash } from "@/components/Splash";
 
-const displayFont = Cormorant_Garamond({
+// One family for the whole site: headings and body use the same font.
+const textFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const textFont = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-text",
   display: "swap",
 });
@@ -65,7 +59,7 @@ export default function RootLayout({
   const site = getSite();
 
   return (
-    <html lang="en" className={`${displayFont.variable} ${textFont.variable}`} suppressHydrationWarning>
+    <html lang="en" className={textFont.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: INTRO_INIT_SCRIPT }} />
       </head>

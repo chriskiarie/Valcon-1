@@ -135,7 +135,8 @@
   --weight-medium: 500;
   --weight-semibold: 600;
   --tracking-eyebrow: 0.14em;
-  --font-fallback-display: Georgia, 'Times New Roman', serif;
+  --font-display: var(--font-text);
+  --font-fallback-display: system-ui, sans-serif;
 
   /* space (4px base) */
   --space-1: 0.25rem;
@@ -152,8 +153,8 @@
   /* shape and layout */
   --radius-card: 1.25rem;
   --radius-pill: 999px;
-  --container-max: 80rem;
-  --gutter: clamp(1rem, 4vw, 3rem);
+  --container-max: 120rem;
+  --gutter: clamp(1rem, 3vw, 2.5rem);
   --tap-min: 2.75rem; /* 44px minimum touch target */
   --header-h: 4.5rem;
   --header-h-desktop: 6rem;

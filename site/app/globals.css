@@ -6448,3 +6448,31 @@ html.js[data-intro="melting"] .splash {
     grid-column: auto;
   }
 }
+
+/* Gallery: a tile that spans the full row (the seating layout). */
+.gal__cell--full { grid-column: 1 / -1; }
+
+/* Services: justified copy, with the "Best for" rows lining up across the cards. */
+.service-card__summary p,
+.service-card__best {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.service-card__title {
+  min-height: 1.3em;
+}
+
+@media (min-width: 768px) {
+  .ab-card__text {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+}
+
+@media (min-width: 1100px) {
+  .service-card__best {
+    min-height: 6.9rem;
+    align-content: start;
+  }
+}

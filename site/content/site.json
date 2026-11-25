@@ -21,16 +21,16 @@
       "label": "Home"
     },
     {
+      "href": "/about/",
+      "label": "About"
+    },
+    {
       "href": "/fleet/",
       "label": "Fleet"
     },
     {
       "href": "/gallery/",
       "label": "Aircraft gallery"
-    },
-    {
-      "href": "/about/",
-      "label": "About"
     },
     {
       "href": "/contact/",

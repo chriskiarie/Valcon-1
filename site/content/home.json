@@ -18,6 +18,16 @@
         "desktop": "/images/hero/hero-3-desktop",
         "mobile": "/images/hero/hero-3-mobile",
         "alt": "The rear engine and tail of Valcon Air's Bombardier CRJ200, registration 5Y-VAL."
+      },
+      {
+        "desktop": "/images/hero/hero-4-desktop",
+        "mobile": "/images/hero/hero-4-mobile",
+        "alt": "Valcon Air's Fokker 50 on final approach to Wilson Airport."
+      },
+      {
+        "desktop": "/images/hero/hero-5-desktop",
+        "mobile": "/images/hero/hero-5-mobile",
+        "alt": "Valcon Air's Fokker 50 climbing away after take-off."
       }
     ],
     "primaryCta": "Request a quote",
@@ -79,6 +89,14 @@
             "desktop": "50% 50%",
             "mobile": "50% 50%"
           }
+        },
+        {
+          "image": "/images/fokker/climb",
+          "alt": "Valcon Air's Fokker 50 climbing away after take-off.",
+          "focus": {
+            "desktop": "50% 50%",
+            "mobile": "50% 50%"
+          }
         }
       ],
       "focus": {
@@ -109,7 +127,7 @@
   "howItWorks": {
     "show": true,
     "eyebrow": "How it works",
-    "heading": "From first message to touchdown,\nwe take it from there.",
+    "heading": "From first interaction to touchdown,\nwe take it from there.",
     "intro": "You act at the start and at confirmation. We handle the rest.",
     "steps": [
       {

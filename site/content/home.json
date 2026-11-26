@@ -27,11 +27,6 @@
       {
         "desktop": "/images/hero/hero-5-desktop",
         "mobile": "/images/hero/hero-5-mobile",
-        "alt": "Valcon Air's Fokker 50 touching down with the Nairobi hills behind."
-      },
-      {
-        "desktop": "/images/hero/hero-6-desktop",
-        "mobile": "/images/hero/hero-6-mobile",
         "alt": "Valcon Air's Fokker 50 rolling out on the runway."
       }
     ],
@@ -90,14 +85,6 @@
           "alt": "Valcon Air's Fokker 50 landing at Wilson Airport, Nairobi.",
           "caption": "Fokker 50 · twin-turboprop regional aircraft",
           "tab": "Fokker 50",
-          "focus": {
-            "desktop": "50% 50%",
-            "mobile": "50% 50%"
-          }
-        },
-        {
-          "image": "/images/fokker/wilson-c",
-          "alt": "Valcon Air's Fokker 50 touching down with the Nairobi hills behind.",
           "focus": {
             "desktop": "50% 50%",
             "mobile": "50% 50%"

@@ -187,7 +187,7 @@
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.04;
 }
 
@@ -196,7 +196,7 @@
   font-size: var(--display-l);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.06;
 }
 
@@ -751,7 +751,7 @@ html[data-lightbox="open"] .glass-drop {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(1.6rem, 7.4vw, 2.1rem);
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1;
   text-decoration: none;
   transition: background-color 0.25s, border-color 0.25s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1201,7 +1201,7 @@ html[data-lightbox="open"] .glass-drop {
   font-size: var(--display-xl);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 0.92;
 }
 
@@ -1659,7 +1659,7 @@ html[data-lightbox="open"] .glass-drop {
   font-size: var(--display-l);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.02;
 }
 
@@ -1888,7 +1888,7 @@ html[data-lightbox="open"] .glass-drop {
   font-size: var(--display-l);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.02;
 }
 
@@ -2480,7 +2480,7 @@ body.modal-open .site-main {
   font-size: var(--text-xl);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1;
 }
 
@@ -2650,7 +2650,7 @@ body.modal-open .site-main {
   font-size: var(--text-xl);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1;
 }
 
@@ -3015,7 +3015,7 @@ body.modal-open .site-main {
   font-size: var(--display-l);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 0.98;
 }
 
@@ -3212,7 +3212,7 @@ body.modal-open .site-main {
   font-size: var(--display-l);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 0.98;
 }
 
@@ -3385,7 +3385,7 @@ body.modal-open .site-main {
   font-size: var(--display-l);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1;
 }
 
@@ -3445,7 +3445,7 @@ body.modal-open .site-main {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(1.3rem, 1.6vw, 1.55rem);
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.2;
 }
 
@@ -3530,7 +3530,7 @@ body.modal-open .site-main {
   font-size: var(--display-l);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1;
 }
 
@@ -3949,7 +3949,7 @@ body.modal-open .site-main {
   font-size: var(--text-2xl, 2rem);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.1;
 }
 
@@ -4083,7 +4083,7 @@ body.modal-open .site-main {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
 }
 
 .eamap__slide figcaption {
@@ -4106,7 +4106,7 @@ body.modal-open .site-main {
   font-size: var(--text-2xl, 2rem);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.1;
 }
 
@@ -4335,7 +4335,7 @@ body.modal-open .site-main {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
 }
 
 .about__values {
@@ -4361,7 +4361,7 @@ body.modal-open .site-main {
   font-size: var(--text-xl);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.1;
 }
 
@@ -4444,7 +4444,7 @@ body.modal-open .site-main {
   font-size: clamp(1.4rem, 2vw, 1.85rem);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.15;
 }
 
@@ -4863,7 +4863,7 @@ body.modal-open .site-main {
   font-size: var(--text-xl);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
 }
 
 .quote-aside__list {
@@ -5448,7 +5448,7 @@ body.modal-open .site-main {
   font-size: var(--text-xl);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.15;
 }
 
@@ -5711,7 +5711,7 @@ body.modal-open .site-main {
   font-size: clamp(2rem, 3.4vw, 2.9rem);
   font-weight: 600;
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1;
 }
 
@@ -6196,7 +6196,7 @@ a.ct-tile:hover .ct-tile__icon {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(1.15rem, 1.5vw, 1.4rem);
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.25;
 }
 
@@ -6239,7 +6239,7 @@ a.ct-tile:hover .ct-tile__icon {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(1.4rem, 2.4vw, 2rem);
   letter-spacing: -0.012em;
-  word-spacing: 0.08em;
+  word-spacing: 0.03em;
   line-height: 1.3;
 }
 

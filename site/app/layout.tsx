@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
@@ -10,7 +10,7 @@ import { INTRO_INIT_SCRIPT } from "@/lib/intro";
 import { Splash } from "@/components/Splash";
 
 // One family for the whole site: headings and body use the same font.
-const textFont = Plus_Jakarta_Sans({
+const textFont = Manrope({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-text",

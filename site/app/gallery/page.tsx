@@ -22,7 +22,7 @@ export default function GalleryPage() {
             The aircraft gallery.
           </h1>
           <p className="interior-hero__lede" data-reveal="below">
-            Our Bombardier CRJ200 and Fokker 50 at Wilson Airport, and above the clouds.
+            Our Bombardier CRJ200 and Fokker 50 at Wilson Airport.
           </p>
         </Container>
       </section>

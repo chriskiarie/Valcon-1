@@ -22,12 +22,17 @@
       {
         "desktop": "/images/hero/hero-4-desktop",
         "mobile": "/images/hero/hero-4-mobile",
-        "alt": "Valcon Air's Fokker 50 on final approach to Wilson Airport."
+        "alt": "Valcon Air's Fokker 50 landing at Wilson Airport, Nairobi."
       },
       {
         "desktop": "/images/hero/hero-5-desktop",
         "mobile": "/images/hero/hero-5-mobile",
-        "alt": "Valcon Air's Fokker 50 climbing away after take-off."
+        "alt": "Valcon Air's Fokker 50 touching down with the Nairobi hills behind."
+      },
+      {
+        "desktop": "/images/hero/hero-6-desktop",
+        "mobile": "/images/hero/hero-6-mobile",
+        "alt": "Valcon Air's Fokker 50 rolling out on the runway."
       }
     ],
     "primaryCta": "Request a quote",
@@ -81,8 +86,8 @@
           }
         },
         {
-          "image": "/images/fokker/final",
-          "alt": "Valcon Air's Fokker 50 on final approach to Wilson Airport.",
+          "image": "/images/fokker/wilson-a",
+          "alt": "Valcon Air's Fokker 50 landing at Wilson Airport, Nairobi.",
           "caption": "Fokker 50 · twin-turboprop regional aircraft",
           "tab": "Fokker 50",
           "focus": {
@@ -91,8 +96,16 @@
           }
         },
         {
-          "image": "/images/fokker/climb",
-          "alt": "Valcon Air's Fokker 50 climbing away after take-off.",
+          "image": "/images/fokker/wilson-c",
+          "alt": "Valcon Air's Fokker 50 touching down with the Nairobi hills behind.",
+          "focus": {
+            "desktop": "50% 50%",
+            "mobile": "50% 50%"
+          }
+        },
+        {
+          "image": "/images/fokker/wilson-b",
+          "alt": "Valcon Air's Fokker 50 rolling out on the runway.",
           "focus": {
             "desktop": "50% 50%",
             "mobile": "50% 50%"

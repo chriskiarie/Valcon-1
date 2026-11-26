@@ -38,9 +38,9 @@
     },
     "features": [],
     "hero": {
-      "desktop": "/images/fokker/final.avif",
-      "mobile": "/images/fokker/final.avif",
-      "alt": "Valcon Air's Fokker 50 on final approach to Wilson Airport, Nairobi."
+      "desktop": "/images/hero/hero-4-desktop.avif",
+      "mobile": "/images/hero/hero-4-mobile.avif",
+      "alt": "Valcon Air's Fokker 50 landing at Wilson Airport, Nairobi."
     },
     "gallery": [],
     "order": 2

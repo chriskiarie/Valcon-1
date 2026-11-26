@@ -48,7 +48,7 @@ export function EastAfricaMap() {
           Where we fly
         </span>
         <h2 id="eamap-title" className="section-title" data-reveal="left">
-          From Wilson and JKIA, across East Africa.
+          From Wilson and JKIA, across Africa and beyond.
         </h2>
 
         <MapShowcase cities={cities as City[]}>

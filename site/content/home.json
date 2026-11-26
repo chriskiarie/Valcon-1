@@ -36,7 +36,7 @@
   "intro": {
     "eyebrow": "Based at Wilson Airport, Nairobi",
     "statement": "Flying should feel considered,\nnot complicated.",
-    "support": "Valcon Air Solutions Limited operates from Wilson Airport, the gateway to East Africa's skies. Our Bombardier CRJ200 LR, 5Y-VAL, is ready for charter, ACMI and specialised missions.",
+    "support": "Valcon Air Solutions Limited operates from Wilson Airport, the gateway to Africa's skies. Our Bombardier CRJ200 LR, 5Y-VAL, is ready for charter, ACMI and specialised missions.",
     "image": {
       "desktop": "/images/features/parallax-desktop",
       "mobile": "/images/features/parallax-mobile",
@@ -177,7 +177,7 @@
       },
       {
         "title": "Local",
-        "text": "Nairobi roots, East African reach."
+        "text": "Nairobi roots, African reach."
       }
     ]
   },

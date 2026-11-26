@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
+import { Raleway } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
@@ -10,9 +10,9 @@ import { INTRO_INIT_SCRIPT } from "@/lib/intro";
 import { Splash } from "@/components/Splash";
 
 // One family for the whole site: headings and body use the same font.
-const textFont = Manrope({
+const textFont = Raleway({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-text",
   display: "swap",
 });

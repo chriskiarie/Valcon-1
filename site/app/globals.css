@@ -185,7 +185,7 @@
 
 .display {
   font-family: var(--font-display), system-ui, sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.04;
@@ -194,7 +194,7 @@
 .section-title {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-l);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.06;
@@ -471,7 +471,7 @@ html[data-lightbox="open"] .glass-drop {
   color: currentColor;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.18em;
   line-height: 1;
   text-decoration: none;
@@ -1199,7 +1199,7 @@ html[data-lightbox="open"] .glass-drop {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-xl);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 0.92;
@@ -1597,7 +1597,7 @@ html[data-lightbox="open"] .glass-drop {
   display: block;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.1;
 }
 
@@ -1657,7 +1657,7 @@ html[data-lightbox="open"] .glass-drop {
   max-width: 32ch;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-l);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.02;
@@ -1886,7 +1886,7 @@ html[data-lightbox="open"] .glass-drop {
 .fleet-pane__title {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-l);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.02;
@@ -2324,7 +2324,7 @@ html[data-lightbox="open"] .glass-drop {
 .fleet-card__title {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-lg);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.1;
 }
 
@@ -2478,7 +2478,7 @@ body.modal-open .site-main {
 .fleet-modal__title {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1;
@@ -2648,7 +2648,7 @@ body.modal-open .site-main {
 .arrival__title {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1;
@@ -2831,7 +2831,7 @@ body.modal-open .site-main {
   margin-bottom: var(--space-3);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-lg);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.1;
 }
 
@@ -3013,7 +3013,7 @@ body.modal-open .site-main {
   margin-bottom: var(--space-4);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-l);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 0.98;
@@ -3210,7 +3210,7 @@ body.modal-open .site-main {
   max-width: 14ch;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-l);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 0.98;
@@ -3236,7 +3236,7 @@ body.modal-open .site-main {
 .quote-panel__title {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1;
 }
 
@@ -3383,7 +3383,7 @@ body.modal-open .site-main {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-l);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1;
@@ -3528,7 +3528,7 @@ body.modal-open .site-main {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--display-l);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1;
@@ -3947,7 +3947,7 @@ body.modal-open .site-main {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-2xl, 2rem);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.1;
@@ -4104,7 +4104,7 @@ body.modal-open .site-main {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-2xl, 2rem);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.1;
@@ -4359,7 +4359,7 @@ body.modal-open .site-main {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.1;
@@ -4442,7 +4442,7 @@ body.modal-open .site-main {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(1.4rem, 2vw, 1.85rem);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.15;
@@ -4861,7 +4861,7 @@ body.modal-open .site-main {
   margin-bottom: var(--space-4);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
 }
@@ -5394,7 +5394,7 @@ body.modal-open .site-main {
   fill: currentColor;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .ab-svg [data-faint] {
@@ -5446,7 +5446,7 @@ body.modal-open .site-main {
   color: var(--color-brand);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1.15;
@@ -5709,7 +5709,7 @@ body.modal-open .site-main {
   margin: 0;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(2rem, 3.4vw, 2.9rem);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
   word-spacing: 0.03em;
   line-height: 1;
@@ -6081,7 +6081,7 @@ body.modal-open .site-main {
   margin: 0;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: var(--text-2xl, 2rem);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-brand);
 }
 
@@ -6375,7 +6375,7 @@ html.js[data-intro="melting"] .splash {
   color: var(--color-ink);
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(2.2rem, 7vw, 4.6rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.05;
   text-shadow: 0 2px 30px rgb(var(--glass-rgb) / 0.8);
 }
@@ -6499,4 +6499,10 @@ html.js[data-intro="melting"] .splash {
     min-height: 6.9rem;
     align-content: start;
   }
+}
+
+/* Raleway ships old-style numerals by default; keep lining figures for 5Y-VAL, CRJ200 and phone numbers. */
+html {
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
 }

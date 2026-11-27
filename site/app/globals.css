@@ -6960,3 +6960,16 @@ body:has(.page--home) .splash__tag {
 .interior-hero--center {
   padding-bottom: var(--space-8);
 }
+
+/* Fleet page: details first, photo below. */
+.fleet-grid--page .fleet-card {
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+  .fleet-grid--page .fleet-card__summary {
+    display: block;
+    min-height: calc(1.6em * 2);
+  }
+}

@@ -7,6 +7,13 @@
     "size": "hero"
   },
   {
+    "image": "/images/gallery/above-clouds",
+    "ext": "webp",
+    "alt": "Wing and clouds from a window seat at altitude.",
+    "caption": "Above the clouds",
+    "size": "tall"
+  },
+  {
     "image": "/images/gallery/tail",
     "ext": "jpg",
     "alt": "The tail and rear engine of 5Y-VAL on the ground at Wilson Airport.",
@@ -22,27 +29,27 @@
     "focus": "50% 30%"
   },
   {
-    "image": "/images/gallery/engine",
-    "ext": "jpg",
-    "alt": "Close view of the CRJ200's tail-mounted engine and the 5Y-VAL registration.",
-    "caption": "Engine detail",
-    "size": "",
-    "focus": "70% 40%"
-  },
-  {
-    "image": "/images/gallery/head-on",
-    "ext": "jpg",
-    "alt": "5Y-VAL taxiing head-on towards the camera.",
-    "caption": "Head on",
-    "size": "",
-    "focus": "50% 55%"
-  },
-  {
     "image": "/images/gallery/profile",
     "ext": "jpg",
     "alt": "5Y-VAL in side profile on the runway at Wilson Airport.",
     "caption": "Side profile, Wilson Airport",
     "size": "wide",
     "focus": "40% 72%"
+  },
+  {
+    "image": "/images/gallery/engine",
+    "ext": "jpg",
+    "alt": "Close view of the CRJ200's tail-mounted engine and the 5Y-VAL registration.",
+    "caption": "Engine detail",
+    "size": "tall",
+    "focus": "68% 50%"
+  },
+  {
+    "image": "/images/gallery/head-on",
+    "ext": "jpg",
+    "alt": "5Y-VAL taxiing head-on towards the camera.",
+    "caption": "Head on",
+    "size": "wide",
+    "focus": "50% 55%"
   }
 ]

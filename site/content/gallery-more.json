@@ -20,6 +20,30 @@
       "focus": "45% 55%"
     },
     {
+      "image": "/images/fokker/wilson-c",
+      "ext": "jpg",
+      "alt": "Valcon Air's Fokker 50 touching down with the Nairobi hills behind.",
+      "caption": "Touchdown",
+      "size": "hero",
+      "focus": "55% 60%"
+    },
+    {
+      "image": "/images/fokker/close-a",
+      "ext": "jpg",
+      "alt": "Close view of Valcon Air's Fokker 50 just above the runway.",
+      "caption": "Close view",
+      "size": "wide",
+      "focus": "50% 50%"
+    },
+    {
+      "image": "/images/fokker/close-b",
+      "ext": "jpg",
+      "alt": "Valcon Air's Fokker 50 just before touchdown at Wilson Airport.",
+      "caption": "Rolling out",
+      "size": "wide",
+      "focus": "50% 50%"
+    },
+    {
       "image": "/images/fokker/seating",
       "ext": "png",
       "alt": "Seating layout of the Fokker 50: 13 numbered rows with two seats either side of the aisle.",

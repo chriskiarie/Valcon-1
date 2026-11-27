@@ -135,6 +135,7 @@
   --weight-medium: 500;
   --weight-semibold: 600;
   --tracking-eyebrow: 0.14em;
+  --font-text: "Helvetica Neue", Helvetica, Arial, var(--font-arimo), sans-serif;
   --font-display: var(--font-text);
   --font-fallback-display: system-ui, sans-serif;
 

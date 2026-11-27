@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Raleway } from "next/font/google";
+import { Arimo } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
@@ -9,11 +9,13 @@ import { getSite } from "@/lib/content";
 import { INTRO_INIT_SCRIPT } from "@/lib/intro";
 import { Splash } from "@/components/Splash";
 
-// One family for the whole site: headings and body use the same font.
-const textFont = Raleway({
+// Helvetica (client request) via the system stack, which every Apple device has. Arimo, a metric-compatible
+// Helvetica/Arial look-alike, is only downloaded on devices (Android, Linux) that have neither Helvetica nor Arial.
+const textFont = Arimo({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-text",
+  weight: ["400", "700"],
+  variable: "--font-arimo",
+  preload: false,
   display: "swap",
 });
 

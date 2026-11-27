@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Arimo } from "next/font/google";
+import { Arimo, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
@@ -11,6 +11,14 @@ import { Splash } from "@/components/Splash";
 
 // Helvetica (client request) via the system stack, which every Apple device has. Arimo, a metric-compatible
 // Helvetica/Arial look-alike, is only downloaded on devices (Android, Linux) that have neither Helvetica nor Arial.
+// The original serif, kept only for the landing-page headline (client request).
+const heroFont = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-hero",
+  display: "swap",
+});
+
 const textFont = Arimo({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -61,7 +69,7 @@ export default function RootLayout({
   const site = getSite();
 
   return (
-    <html lang="en" className={textFont.variable} suppressHydrationWarning>
+    <html lang="en" className={`${heroFont.variable} ${textFont.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: INTRO_INIT_SCRIPT }} />
       </head>

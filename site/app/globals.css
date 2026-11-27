@@ -1194,10 +1194,10 @@ html[data-lightbox="open"] .glass-drop {
 .hero__title {
   max-width: 30ch;
   color: var(--color-brand);
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: var(--font-hero), Georgia, "Times New Roman", serif;
   font-size: var(--display-xl);
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  letter-spacing: -0.035em;
   line-height: 0.92;
 }
 

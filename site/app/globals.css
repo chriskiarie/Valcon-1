@@ -6942,3 +6942,21 @@ body:has(.page--home) .splash__tag {
 .interior-hero__lede {
   max-width: none;
 }
+
+/* Fleet page title block is centred. */
+.interior-hero--center {
+  text-align: center;
+}
+
+.interior-hero--center .eyebrow {
+  justify-content: center;
+}
+
+.interior-hero--center .interior-hero__title {
+  max-width: none;
+  margin-inline: auto;
+}
+
+.interior-hero--center {
+  padding-bottom: var(--space-8);
+}

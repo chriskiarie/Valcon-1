@@ -17,7 +17,7 @@ export default function FleetPage() {
 
   return (
     <div className="page">
-      <section className="interior-hero" aria-labelledby="fleet-page-title">
+      <section className="interior-hero interior-hero--center" aria-labelledby="fleet-page-title">
         <Container>
           <span className="eyebrow" data-reveal="left">
             {fleet.eyebrow}
@@ -25,9 +25,6 @@ export default function FleetPage() {
           <h1 id="fleet-page-title" className="interior-hero__title" data-reveal="left">
             {fleet.title}
           </h1>
-          <p className="interior-hero__lede" data-reveal="below">
-            {fleet.lede}
-          </p>
         </Container>
       </section>
 

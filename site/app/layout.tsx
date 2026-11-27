@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Arimo, Cormorant_Garamond } from "next/font/google";
+import { Arimo, Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ConceptPill } from "@/components/ConceptPill";
@@ -16,6 +16,14 @@ const heroFont = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-hero",
+  display: "swap",
+});
+
+// The landing page keeps the original body font (client request).
+const homeTextFont = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -69,7 +77,7 @@ export default function RootLayout({
   const site = getSite();
 
   return (
-    <html lang="en" className={`${heroFont.variable} ${textFont.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${heroFont.variable} ${homeTextFont.variable} ${textFont.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: INTRO_INIT_SCRIPT }} />
       </head>

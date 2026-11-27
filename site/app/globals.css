@@ -6504,3 +6504,405 @@ html.js[data-intro="melting"] .splash {
   font-size: var(--text-xl);
   font-weight: 700;
 }
+
+/* Home page keeps the original type (Cormorant Garamond headings, Manrope text), at the original weights and tracking. */
+body:has(.page--home) {
+  --font-text: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-hero), Georgia, "Times New Roman", serif;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-text);
+}
+
+body:has(.page--home) .skip-link {
+  font-weight: 600;
+}
+
+body:has(.page--home) .eyebrow {
+  font-weight: 600;
+}
+
+body:has(.page--home) .display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+body:has(.page--home) .section-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+body:has(.page--home) .text-link {
+  font-weight: 600;
+}
+
+body:has(.page--home) .btn {
+  font-weight: 600;
+}
+
+body:has(.page--home) .pill {
+  font-weight: 600;
+}
+
+body:has(.page--home) .wordmark {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+
+body:has(.page--home) .site-nav__link {
+  font-weight: 600;
+}
+
+body:has(.page--home) .mobile-menu__link {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .mobile-menu__index {
+  font-family: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+}
+
+body:has(.page--home) .mobile-menu__arrow {
+  font-family: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+}
+
+body:has(.page--home) .mobile-menu__cta {
+  font-weight: 700;
+}
+
+body:has(.page--home) .mobile-menu__contact a {
+  font-weight: 600;
+}
+
+body:has(.page--home) .action-bar__link {
+  font-weight: 700;
+}
+
+body:has(.page--home) .hero__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+body:has(.page--home) .flyby-card__eyebrow {
+  font-weight: 600;
+}
+
+body:has(.page--home) .flyby-card__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+}
+
+body:has(.page--home) .flyby-card__link {
+  font-weight: 600;
+}
+
+body:has(.page--home) .intro__statement {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+body:has(.page--home) .fleet-pane__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+body:has(.page--home) .fleet-pane__hint {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fleet-pane__link {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fleet-card__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+}
+
+body:has(.page--home) .fleet-modal__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .arrival__reg {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: 0.04em;
+}
+
+body:has(.page--home) .arrival__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .service-card__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+}
+
+body:has(.page--home) .service-card__summary strong {
+  font-weight: 600;
+}
+
+body:has(.page--home) .service-zoom-label {
+  font-weight: var(--weight-semibold);
+}
+
+body:has(.page--home) .service-zoom-label {
+  font-weight: var(--weight-semibold);
+}
+
+body:has(.page--home) .closing__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+body:has(.page--home) .footer__head {
+  font-weight: 600;
+}
+
+body:has(.page--home) .interior-hero__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+body:has(.page--home) .quote-panel__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+}
+
+body:has(.page--home) .contact-item a,
+body:has(.page--home) .contact-item strong {
+  font-weight: 600;
+}
+
+body:has(.page--home) .contact-band__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+body:has(.page--home) .contact-band__item dt {
+  font-weight: 600;
+}
+
+body:has(.page--home) .contact-band__item dd {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .video-gallery__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+body:has(.page--home) .service-card__best-label {
+  font-weight: var(--weight-semibold);
+}
+
+body:has(.page--home) .service-card__quote {
+  font-weight: var(--weight-semibold);
+}
+
+body:has(.page--home) .how__svg-label {
+  font-weight: 600;
+}
+
+body:has(.page--home) .how__num {
+  font-weight: var(--weight-semibold);
+}
+
+body:has(.page--home) .how__step-title {
+  font-family: var(--font-display), var(--font-fallback-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .eamap__photo-name {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .eamap__country {
+  font-weight: 600;
+}
+
+body:has(.page--home) .eamap__city {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .eamap__label {
+  font-weight: 600;
+}
+
+body:has(.page--home) .eamap__label--hub {
+  font-weight: 700;
+}
+
+body:has(.page--home) .about__closing {
+  font-family: var(--font-display), var(--font-fallback-display);
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .about__value-title {
+  font-family: var(--font-display), var(--font-fallback-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .socials-band__title {
+  font-family: var(--font-display), var(--font-fallback-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .socials-band__initial {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fleet-viewer__gallery {
+  font-weight: 600;
+}
+
+body:has(.page--home) .gal__chip {
+  font-weight: 600;
+}
+
+body:has(.page--home) .quote-aside__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .quote-aside__list span {
+  font-weight: 600;
+}
+
+body:has(.page--home) .qf__field label {
+  font-weight: 600;
+}
+
+body:has(.page--home) .qf__status[data-state="error"] {
+  font-weight: 600;
+}
+
+body:has(.page--home) .qf__copy {
+  font-weight: 600;
+}
+
+body:has(.page--home) .ab-letter {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+}
+
+body:has(.page--home) .ab-card__title {
+  font-family: var(--font-display), var(--font-fallback-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .gal__empty-label {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fleet-pane__tab {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fx-card__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+body:has(.page--home) .fx-card__steps-title {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fx-steps li::before {
+  font-weight: 700;
+}
+
+body:has(.page--home) .fx-card__talk a {
+  font-weight: 700;
+}
+
+body:has(.page--home) .fx-field label,
+body:has(.page--home) .fx-label,
+body:has(.page--home) .fx-chips legend {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fx-chip span {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fx-step button {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fx-step output {
+  font-weight: 700;
+}
+
+body:has(.page--home) .fx-submit {
+  font-weight: 700;
+}
+
+body:has(.page--home) .fx-status[data-state="error"] {
+  font-weight: 600;
+}
+
+body:has(.page--home) .fx-done h3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+}
+
+body:has(.page--home) .fx-link {
+  font-weight: 600;
+}
+
+body:has(.page--home) .ct-tile__label {
+  font-weight: 700;
+}
+
+body:has(.page--home) .ct-tile__value {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .ab-company__text {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+body:has(.page--home) .splash__hello {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+}
+
+body:has(.page--home) .splash__tag {
+  font-weight: 600;
+}
+
+@media (min-width: 1101px), (min-width: 768px) and (orientation: landscape) {
+  body:has(.page--home) .hero__title {
+    font-weight: 500;
+  }
+  body:has(.page--home) .hero__support {
+    font-weight: 500;
+  }
+}
+

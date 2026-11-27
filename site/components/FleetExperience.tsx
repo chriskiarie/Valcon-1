@@ -259,6 +259,9 @@ export function FleetExperience({
                         {statusLabel(item)}
                       </span>
                     </span>
+                    {variant === "page" && item.summary ? (
+                      <span className="fleet-card__summary">{item.summary}</span>
+                    ) : null}
                   </span>
                 </button>
               );

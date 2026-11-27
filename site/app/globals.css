@@ -6906,3 +6906,39 @@ body:has(.page--home) .splash__tag {
   }
 }
 
+
+/* Fleet page: two cards centred across the full width, each with its details under the photo. */
+.fleet-grid--page {
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+.fleet-card__summary {
+  color: var(--color-ink-muted);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+@media (min-width: 768px) {
+  .fleet-grid--page {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8);
+  }
+
+  .interior-hero__lede {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fleet-grid--page {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.interior-hero__lede {
+  max-width: none;
+}
